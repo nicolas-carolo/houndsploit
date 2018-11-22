@@ -5,9 +5,22 @@ body {
 h1 {
     text-align: center;
     color: #cc3300;
+    font-size: 60px;
+    margin-bottom: 5px
 }
 
 h2 {
     text-align: center;
     color: #ff9900;
+    font-size: 24px;
+}
+
+form {
+    text-align: center;
+}
+
+input {
+    text-align: center;
+    font-size: 20px;
+    width: 50%;
 }
