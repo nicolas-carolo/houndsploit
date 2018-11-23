@@ -1,3 +1,12 @@
 from django.db import models
 
-# Create your models here.
+
+class Exploit(models.Model):
+    id = models.IntegerField(primary_key=True)
+    file = models.TextField()
+    description = models.TextField()
+    date = models.DateField()
+    author = models.TextField()
+    type = models.TextField()
+    platform = models.TextField()
+    port = models.IntegerField()

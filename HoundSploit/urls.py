@@ -16,7 +16,9 @@ Including another URLconf
 
 from django.conf.urls import include, url
 from searcher import views
+from searcher import urls as searcher_urls
 
 urlpatterns = [
     url(r'^$', views.home_page, name='home_page'),
+    url(r'^searcher/', include(searcher_urls))
 ]

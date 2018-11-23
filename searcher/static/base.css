@@ -19,8 +19,14 @@ form {
     text-align: center;
 }
 
-input {
+input[type=text] {
     text-align: center;
     font-size: 20px;
-    width: 50%;
+    width: 30%;
+}
+
+input[type=submit] {
+    text-align: center;
+    font-size: 20px;
+    width: 10%;
 }
