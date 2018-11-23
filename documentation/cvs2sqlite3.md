@@ -1,4 +1,4 @@
-# How convert `file_exploits.csv` into a sqlite3 db
+# How to convert `file_exploits.csv` into a sqlite3 db
 
 If you are using Linux, probably, you have installed SearchSploit in `/opt`. In this case you can find `file_exploits.csv` in `/opt/exploitdb/`.
 If you are using macOS, you can find the same file in `exploitdb/2018-08-10/share/exploit-database/`. I have found this path using `$ brew list exploitdb`
