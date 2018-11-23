@@ -6,13 +6,14 @@
         <link href="/static/base.css" rel="stylesheet">
     </head>
     <body>
-    <h1>HoundSploit</h1>
-    <h2>An advanced search engine for SearchSploit</h2>
-    <form method="POST">
-        <input type="text" name="search_item"> <input type="submit" value="Search">
-        {% csrf_token %}
-    </form>
-    <table id="id_exploits_table"></table>
-        <tr><td>{{ search_result_item }}</td></tr>
+        <h1>HoundSploit</h1>
+        <h2>An advanced search engine for SearchSploit</h2>
+        <form method="POST">
+            <input type="text" name="search_item"> <input type="submit" value="Search">
+            {% csrf_token %}
+        </form>
+        {% for res in 'result' %}
+            <li>{{ res.id }}</li>
+        {% endfor %}
     </body>
 </html>
