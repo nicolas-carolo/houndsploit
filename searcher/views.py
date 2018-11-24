@@ -8,6 +8,6 @@ def home_page(request):
         print(search_string)
         for exploit in Exploit.objects.raw(search_string):
             print(exploit.id, exploit.file, exploit.description)
-        return redirect("/", {'result': Exploit.objects.raw(search_string)})
+        return render(request, "home.html", {'result': Exploit.objects.raw(search_string)})
     else:
         return render(request, 'home.html')
