@@ -1,13 +1,10 @@
 from django.shortcuts import render, redirect
-from searcher.models import Exploit
+from searcher.search_engine import search_exploits_in_db
 
 
 def home_page(request):
     if request.POST:
-        search_string = 'select * from exploits where ' + request.POST['search_item']
-        print(search_string)
-        for exploit in Exploit.objects.raw(search_string):
-            print(exploit.id, exploit.file, exploit.description)
-        return render(request, "home.html", {'result': Exploit.objects.raw(search_string)})
+        search_text = request.POST['search_item']
+        return render(request, "home.html", {'result': search_exploits_in_db(search_text)})
     else:
         return render(request, 'home.html')
