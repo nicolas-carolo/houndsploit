@@ -12,30 +12,5 @@
             <input type="text" name="search_item"> <input type="submit" value="Search">
             {% csrf_token %}
         </form>
-        <h4>{{ n_results }} results found for "{{ searched_item }}"</h4>
-        <table style="width:95%" align="center">
-            <tr>
-                <th>ID</th>
-                <th>File</th>
-                <th>Description</th>
-                <th>Date</th>
-                <th>Author</th>
-                <th>Type</th>
-                <th>Platform</th>
-                <th>Port</th>
-            </tr>
-            {% for res in results %}
-                <tr>
-                    <td>{{ res.id }}</td>
-                    <td>{{ res.file }}</td>
-                    <td>{{ res.description }}</td>
-                    <td>{{ res.date }}</td>
-                    <td>{{ res.author }}</td>
-                    <td>{{ res.exploit_type }}</td>
-                    <td>{{ res.platform }}</td>
-                    <td>{{ res.port }}</td>
-                </tr>
-            {% endfor %}
-         </table>
     </body>
 </html>
