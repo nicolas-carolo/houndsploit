@@ -47,35 +47,24 @@ table {
     border: 1px solid #000000;
 }
 
-table td{
+table td {
     border: 1px solid #000000;
     background: #FFE5CC;
 }
 
-table th{
+table th {
     border: 1px solid #000000;
     background: #FF9933;
 }
 
-footer.home_page {
+footer {
     position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
+    height: 4%;
     background-color: orange;
     color: white;
     text-align: center;
     font-size: 12px;
-}
-
-footer.results_table {
-    position: marker;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: orange;
-    color: white;
-    text-align: center;
-    font-size: 12px;
-    margin-bottom: 0px;
 }
