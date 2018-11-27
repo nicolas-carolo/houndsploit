@@ -1,44 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>HoundSploit</title>
-        <link href="/static/base.css" rel="stylesheet">
-    </head>
-    <body>
-        <h1>HoundSploit</h1>
-        <h2>An advanced search engine for SearchSploit</h2>
-        <form method="POST">
-            <input type="text" name="search_item"> <input type="submit" value="Search">
-            {% csrf_token %}
-        </form>
-        <h4>{{ n_results }} results found for "{{ searched_item }}"</h4>
-        <table style="width:95%" align="center">
-            <tr>
-                <th>ID</th>
-                <th>File</th>
-                <th>Description</th>
-                <th>Date</th>
-                <th>Author</th>
-                <th>Type</th>
-                <th>Platform</th>
-                <th>Port</th>
-            </tr>
-            {% for res in results %}
+{% extends 'base.html' %}
+{% block results_form %}
+        <form>
+            <h4>{{ n_results }} results found for "{{ searched_item }}"</h4>
+            <table style="width:95%" align="center">
                 <tr>
-                    <td>{{ res.id }}</td>
-                    <td>{{ res.file }}</td>
-                    <td>{{ res.description }}</td>
-                    <td>{{ res.date }}</td>
-                    <td>{{ res.author }}</td>
-                    <td>{{ res.exploit_type }}</td>
-                    <td>{{ res.platform }}</td>
-                    <td>{{ res.port }}</td>
+                    <th>ID</th>
+                    <th>File</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Author</th>
+                    <th>Type</th>
+                    <th>Platform</th>
+                    <th>Port</th>
                 </tr>
-            {% endfor %}
-        </table>
-        <footer>
-            <p>HoundSploit &nbsp;&nbsp; Developed by Nicolas Carolo &nbsp;&nbsp; <a href="https://github.com/nicolas-carolo/HoundSploit">GitHub page of the project</a></p>
-        </footer>
-    </body>
-</html>
+                {% for res in results %}
+                    <tr>
+                        <td>{{ res.id }}</td>
+                        <td>{{ res.file }}</td>
+                        <td>{{ res.description }}</td>
+                        <td>{{ res.date }}</td>
+                        <td>{{ res.author }}</td>
+                        <td>{{ res.exploit_type }}</td>
+                        <td>{{ res.platform }}</td>
+                        <td>{{ res.port }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </form>
+{% endblock %}
