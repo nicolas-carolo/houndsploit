@@ -45,6 +45,7 @@ input[type=submit] {
 table {
     border-collapse: collapse;
     border: 1px solid #000000;
+    margin-bottom: 100px;
 }
 
 table td {
