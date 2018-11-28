@@ -9,7 +9,7 @@ h1 {
     text-align: center;
     color: #cc3300;
     font-size: 60px;
-    margin-bottom: 5px
+    margin-bottom: 5px;
 }
 
 h2 {
@@ -68,4 +68,9 @@ footer {
     color: white;
     text-align: center;
     font-size: 12px;
+}
+
+img {
+    display: block;
+    margin: 50px auto 5px;
 }

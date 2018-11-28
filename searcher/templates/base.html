@@ -6,7 +6,9 @@
         <link href="/static/base.css" rel="stylesheet">
     </head>
     <body>
-        <h1>HoundSploit</h1>
+        {% block icon %}
+        {% endblock %}
+        <h1 {% block h1_style %}{% endblock %}>HoundSploit</h1>
         <h2>An advanced search engine for SearchSploit</h2>
         <form method="POST">
             <input type="text" name="search_item"> <input type="submit" value="Search">
