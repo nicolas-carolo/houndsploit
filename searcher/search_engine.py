@@ -9,7 +9,10 @@ def search_exploits_in_db(search_text):
         search_concat_text = '%'
         for word in words_list:
             search_concat_text = search_concat_text + word.upper() + '%'
-        search_string = 'select * from exploits where ' + 'file like \'' + search_concat_text + '\' or description like \'' + search_concat_text + '\' or author like \'' + search_concat_text + '\' or exploit_type like \'' + search_concat_text + '\' or platform like \'' + search_concat_text + '\''
+        search_string = 'select * from exploits where ' + '(file like \'' + search_concat_text  + '\' or author like \'' + search_concat_text + '\' or exploit_type like \'' + search_concat_text + '\' or platform like \'' + search_concat_text + '\') or (description like \'%' + words_list[0].upper() + '%\''
+        for word in words_list[1:]:
+            search_string = search_string + ' and description like \'%' + word.upper() + '%\''
+        search_string = search_string + ')'
     print(search_string)
     return Exploit.objects.raw(search_string)
 
