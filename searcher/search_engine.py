@@ -3,31 +3,71 @@ from searcher.models import Exploit
 
 def search_exploits_in_db(search_text):
     if is_number(search_text):
-        search_string = 'select * from exploits where ' + 'id = ' + search_text + ' or file like \'%' + search_text + '%\' or description like \'%' + search_text + '%\' or port = ' + search_text
+        return search_exploits_numerical(search_text)
     else:
-        words_list = str(search_text).split()
-        search_concat_text = '%'
-        for word in words_list:
-            search_concat_text = search_concat_text + word.upper() + '%'
-        search_string = 'select * from exploits where ' + '(author like \'' + search_concat_text + '\' or exploit_type like \'' + search_concat_text + '\' or platform like \'' + search_concat_text + '\') or (description like \'%' + words_list[0].upper() + '%\''
-        for word in words_list[1:]:
-            search_string = search_string + ' and description like \'%' + word.upper() + '%\''
-        search_string = search_string + ') or ((file like \'%' + words_list[0].upper() + '%\''
-        for word in words_list[1:]:
-            search_string = search_string + ' or file like \'%' + word.upper() + '%\''
-        if not is_number(words_list[0]):
-            search_string = search_string + ') and (description like \'%' + words_list[0].upper() + '%\''
-            first_alpha = True
+        queryset = search_exploits_for_description(search_text)
+        if len(queryset) > 0:
+            return queryset
         else:
-            search_string = search_string + ') and ('
-            first_alpha = False
-        for word in words_list[1:]:
-            if not is_number(word) and first_alpha == True:
-                search_string = search_string + ' or description like \'%' + word.upper() + '%\''
-            elif not is_number(word) and first_alpha==False:
-                search_string = search_string + 'description like \'%' + word.upper() + '%\''
-                first_alpha = True
-        search_string = search_string + '))'
+            queryset = search_exploits_for_file(search_text)
+            if len(queryset) > 0:
+                return queryset
+            else:
+                return search_exploits_for_author_platform_type_port(search_text)
+
+
+def search_exploits_numerical(search_text):
+    search_string = 'select * from exploits where ' + 'id = ' + search_text + ' or file like \'%' + search_text + '%\' or description like \'%' + search_text + '%\' or port = ' + search_text
+    return Exploit.objects.raw(search_string)
+
+
+def search_exploits_for_description(search_text):
+    words_list = str(search_text).split()
+    search_string = 'select * from exploits where (description like \'%' + words_list[0].upper() + '%\''
+    for word in words_list[1:]:
+        search_string = search_string + ' and description like \'%' + word.upper() + '%\''
+    search_string = search_string + ') or ((file like \'%' + words_list[0].upper() + '%\''
+    for word in words_list[1:]:
+        search_string = search_string + ' or file like \'%' + word.upper() + '%\''
+    if not is_number(words_list[0]):
+        search_string = search_string + ') and (description like \'%' + words_list[0].upper() + '%\''
+        first_alpha = True
+    else:
+        search_string = search_string + ') and ('
+        first_alpha = False
+    for word in words_list[1:]:
+        if not is_number(word) and first_alpha:
+            search_string = search_string + ' or description like \'%' + word.upper() + '%\''
+        elif not is_number(word) and not first_alpha:
+            search_string = search_string + 'description like \'%' + word.upper() + '%\''
+            first_alpha = True
+    search_string = search_string + '))'
+    print(search_string)
+    return Exploit.objects.raw(search_string)
+
+
+def search_exploits_for_file(search_text):
+    words_list = str(search_text).split()
+    search_string = 'select * from exploits where (file like \'%' + words_list[0].upper() + '%\''
+    for word in words_list[1:]:
+        search_string = search_string + ' or file like \'%' + word.upper() + '%\''
+    search_string = search_string + ')'
+    print(search_string)
+    return Exploit.objects.raw(search_string)
+
+
+def search_exploits_for_author_platform_type_port(search_text):
+    words_list = str(search_text).split()
+    search_string = 'select * from exploits where (author like \'%' + words_list[0].upper() + '%\''
+    for word in words_list[1:]:
+        search_string = search_string + ' or author like \'%' + word.upper() + '%\''
+    search_string = search_string + ') or (platform like \'%' + words_list[0].upper() + '%\''
+    for word in words_list[1:]:
+        search_string = search_string + ' or platform like \'%' + word.upper() + '%\''
+    search_string = search_string + ') or (exploit_type like \'%' + words_list[0].upper() + '%\''
+    for word in words_list[1:]:
+        search_string = search_string + ' or platform like \'%' + word.upper() + '%\''
+    search_string = search_string + ')'
     print(search_string)
     return Exploit.objects.raw(search_string)
 
