@@ -3,7 +3,7 @@ from searcher.search_engine import search_exploits_in_db
 
 
 def get_results_table(request):
-    if request.POST:
+    if request.POST and request.POST['search_item'] != "":
         search_text = request.POST['search_item']
         return render(request, "results_table.html", {'searched_item': str(search_text),
                                                       'results': search_exploits_in_db(search_text),
@@ -13,7 +13,7 @@ def get_results_table(request):
 
 
 def home_page(request):
-    if request.POST:
+    if request.POST and request.POST['search_item'] != "":
         search_text = request.POST['search_item']
         return render(request, "results_table.html", {'searched_item': str(search_text),
                                                       'results': search_exploits_in_db(search_text),
