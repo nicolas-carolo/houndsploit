@@ -4,7 +4,6 @@
             <h4>{{ n_results }} results found for "{{ searched_item }}"</h4>
             <table style="width:95%" align="center">
                 <tr>
-                    <th>ID</th>
                     <th>File</th>
                     <th>Description</th>
                     <th>Date</th>
@@ -15,7 +14,6 @@
                 </tr>
                 {% for res in results %}
                     <tr>
-                        <td>{{ res.id }}</td>
                         <td>{{ res.file }}</td>
                         <td>{{ res.description }}</td>
                         <td>{{ res.date }}</td>
