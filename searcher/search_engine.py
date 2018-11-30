@@ -2,6 +2,10 @@ from searcher.models import Exploit
 
 
 def search_exploits_in_db(search_text):
+    words = str(search_text).split()
+    if words[0] == '--exact':
+        return search_exploits_exact(words[1:])
+
     if is_number(search_text):
         return search_exploits_numerical(search_text)
     else:
@@ -70,6 +74,20 @@ def search_exploits_for_author_platform_type_port(search_text):
     search_string = search_string + ')'
     print(search_string)
     return Exploit.objects.raw(search_string)
+
+
+def search_exploits_exact(words):
+    search_string = words[0]
+    words_index = 1
+    for word in words[1:]:
+        if word != '--in':
+            search_string = search_string + ' ' + word
+            words_index = words_index + 1
+        else:
+            if words[words_index + 1] == 'type':
+                words[words_index + 1] = 'exploit_type'
+            print('select * from exploits where ' + words[words_index + 1] + ' = \'%' + search_string.upper() + '%\'')
+            return Exploit.objects.raw('select * from exploits where ' + words[words_index + 1] + ' like \'%' + search_string.upper() + '%\'')
 
 
 def is_number(s):
