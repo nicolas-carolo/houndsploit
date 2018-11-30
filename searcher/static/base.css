@@ -40,9 +40,29 @@ input[type=text] {
 input[type=submit] {
     text-align: center;
     font-size: 20px;
-    width: 10%;
+    width: 7%;
     margin-bottom: 25px;
     background-color: orange;
+    color: #fff;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #eee;
+
+text-shadow:none;
+}
+
+input[type=submit]:hover {
+    text-align: center;
+    font-size: 20px;
+    width: 7%;
+    margin-bottom: 25px;
+    background-color: darkorange;
+    color: #fff;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #eee;
+
+text-shadow:none;
 }
 
 table {
