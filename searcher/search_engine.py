@@ -1,5 +1,3 @@
-from django.db.models import QuerySet
-
 from searcher.models import Exploit
 
 
@@ -101,4 +99,11 @@ def is_number(s):
         float(s)
         return True
     except ValueError:
+        return False
+
+
+def is_valid_input(string):
+    if not string.isspace() and string != '' and not str(string).__contains__('\''):
+        return True
+    else:
         return False
