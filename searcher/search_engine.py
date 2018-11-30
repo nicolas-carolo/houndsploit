@@ -5,7 +5,7 @@ from searcher.models import Exploit
 
 def search_exploits_in_db(search_text):
     words = str(search_text).split()
-    if words[0] == '--exact':
+    if words[0] == '--exact' and '--in' in words:
         return search_exploits_exact(words[1:])
 
     if is_number(search_text):
