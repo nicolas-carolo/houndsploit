@@ -1,3 +1,5 @@
+from django.db.models import QuerySet
+
 from searcher.models import Exploit
 
 
@@ -77,6 +79,7 @@ def search_exploits_for_author_platform_type_port(search_text):
 
 
 def search_exploits_exact(words):
+    accepted_fileds = ['file', 'description', 'author', 'type', 'platform']
     search_string = words[0]
     words_index = 1
     for word in words[1:]:
@@ -84,6 +87,9 @@ def search_exploits_exact(words):
             search_string = search_string + ' ' + word
             words_index = words_index + 1
         else:
+            if words[words_index + 1] not in accepted_fileds:
+                words[words_index + 1] = 'description'
+                search_string = 'blablabla'
             if words[words_index + 1] == 'type':
                 words[words_index + 1] = 'exploit_type'
             print('select * from exploits where ' + words[words_index + 1] + ' = \'%' + search_string.upper() + '%\'')
