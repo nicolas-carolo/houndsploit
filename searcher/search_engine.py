@@ -30,21 +30,12 @@ def search_exploits_for_description(search_text):
     search_string = 'select * from exploits where (description like \'%' + words_list[0].upper() + '%\''
     for word in words_list[1:]:
         search_string = search_string + ' and description like \'%' + word.upper() + '%\''
-    search_string = search_string + ') or ((file like \'%' + words_list[0].upper() + '%\''
+    search_string = search_string + ') or ((id like \'%' + words_list[0].upper() + '%\''
     for word in words_list[1:]:
-        search_string = search_string + ' or file like \'%' + word.upper() + '%\''
-    if not is_number(words_list[0]):
-        search_string = search_string + ') and (description like \'%' + words_list[0].upper() + '%\''
-        first_alpha = True
-    else:
-        search_string = search_string + ') and ('
-        first_alpha = False
+        search_string = search_string + ' or id like \'%' + word.upper() + '%\''
+    search_string = search_string + ') and (description like \'%' + words_list[0].upper() + '%\''
     for word in words_list[1:]:
-        if not is_number(word) and first_alpha:
-            search_string = search_string + ' or description like \'%' + word.upper() + '%\''
-        elif not is_number(word) and not first_alpha:
-            search_string = search_string + 'description like \'%' + word.upper() + '%\''
-            first_alpha = True
+        search_string = search_string + ' or description like \'%' + word.upper() + '%\''
     search_string = search_string + '))'
     print(search_string)
     return Exploit.objects.raw(search_string)
