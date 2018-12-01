@@ -68,7 +68,7 @@ def search_exploits_for_author_platform_type_port(search_text):
 
 
 def search_exploits_exact(words):
-    accepted_fileds = ['file', 'description', 'author', 'type', 'platform']
+    accepted_fileds = ['file', 'description', 'author', 'type', 'platform', 'port']
     search_string = words[0]
     words_index = 1
     for word in words[1:]:
@@ -82,7 +82,11 @@ def search_exploits_exact(words):
             if words[words_index + 1] == 'type':
                 words[words_index + 1] = 'exploit_type'
             print('select * from exploits where ' + words[words_index + 1] + ' = \'%' + search_string.upper() + '%\'')
-            return Exploit.objects.raw('select * from exploits where ' + words[words_index + 1] + ' like \'%' + search_string.upper() + '%\'')
+            if words[words_index + 1] == 'port' and search_string.isnumeric():
+                return Exploit.objects.raw('select * from exploits where port = ' + search_string.upper())
+
+            else:
+                return Exploit.objects.raw('select * from exploits where ' + words[words_index + 1] + ' like \'%' + search_string.upper() + '%\'')
 
 
 def is_number(s):
