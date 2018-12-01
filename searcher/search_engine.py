@@ -6,7 +6,7 @@ def search_exploits_in_db(search_text):
     if words[0] == '--exact' and '--in' in words:
         return search_exploits_exact(words[1:])
 
-    if is_number(search_text):
+    if str(search_text).isnumeric():
         return search_exploits_numerical(search_text)
     else:
         queryset = search_exploits_for_description(search_text)
@@ -87,14 +87,6 @@ def search_exploits_exact(words):
 
             else:
                 return Exploit.objects.raw('select * from exploits where ' + words[words_index + 1] + ' like \'%' + search_string.upper() + '%\'')
-
-
-def is_number(s):
-    try:
-        float(s)
-        return True
-    except ValueError:
-        return False
 
 
 def is_valid_input(string):
