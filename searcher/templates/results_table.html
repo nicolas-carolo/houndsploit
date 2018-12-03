@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-{% block results_form %}
+{% block exploits_results_form %}
         <form>
-            <h4>{{ n_results }} results found for "{{ searched_item }}"</h4>
+            <h4>{{ n_exploits_results }} exploits found for "{{ searched_item }}"</h4>
             <table style="width:95%" align="center">
                 <tr>
                     <th>File</th>
@@ -12,7 +12,7 @@
                     <th>Platform</th>
                     <th>Port</th>
                 </tr>
-                {% for res in results %}
+                {% for res in exploits_results %}
                     <tr>
                         <td>{{ res.file }}</td>
                         <td>{{ res.description }}</td>
