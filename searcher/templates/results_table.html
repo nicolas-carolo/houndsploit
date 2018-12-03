@@ -24,5 +24,26 @@
                     </tr>
                 {% endfor %}
             </table>
+            <h4>{{ n_shellcodes_results }} shellcodes found for "{{ searched_item }}"</h4>
+            <table style="width:95%" align="center">
+                <tr>
+                    <th>File</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Author</th>
+                    <th>Type</th>
+                    <th>Platform</th>
+                </tr>
+                {% for res in shellcodes_results %}
+                    <tr>
+                        <td>{{ res.file }}</td>
+                        <td>{{ res.description }}</td>
+                        <td>{{ res.date }}</td>
+                        <td>{{ res.author }}</td>
+                        <td>{{ res.exploit_type }}</td>
+                        <td>{{ res.platform }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
         </form>
 {% endblock %}

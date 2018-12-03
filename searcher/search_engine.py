@@ -1,23 +1,23 @@
 from searcher.models import Exploit, Shellcode
 
 
-def search_vulnerabilities_in_db(search_text):
+def search_vulnerabilities_in_db(search_text, vulnerability_type):
     words = str(search_text).split()
     if words[0] == '--exact' and '--in' in words:
         return search_exploits_exact(words[1:])
 
     if str(search_text).isnumeric():
-        return search_vulnerabilities_numerical(search_text, 'exploits')
+        return search_vulnerabilities_numerical(search_text, vulnerability_type)
     else:
-        queryset = search_vulnerabilities_for_description(search_text, 'exploits')
+        queryset = search_vulnerabilities_for_description(search_text, vulnerability_type)
         if len(queryset) > 0:
             return queryset
         else:
-            queryset = search_vulnerabilities_for_file(search_text, 'exploits')
+            queryset = search_vulnerabilities_for_file(search_text, vulnerability_type)
             if len(queryset) > 0:
                 return queryset
             else:
-                return search_vulnerabilities_for_author_platform_type(search_text, 'exploits')
+                return search_vulnerabilities_for_author_platform_type(search_text, vulnerability_type)
 
 
 def search_vulnerabilities_numerical(search_text, vulnerability_type):
