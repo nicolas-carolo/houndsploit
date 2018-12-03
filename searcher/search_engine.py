@@ -17,7 +17,7 @@ def search_exploits_in_db(search_text):
             if len(queryset) > 0:
                 return queryset
             else:
-                return search_exploits_for_author_platform_type_port(search_text)
+                return search_exploits_for_author_platform_type(search_text)
 
 
 def search_exploits_numerical(search_text):
@@ -51,7 +51,7 @@ def search_exploits_for_file(search_text):
     return Exploit.objects.raw(search_string)
 
 
-def search_exploits_for_author_platform_type_port(search_text):
+def search_exploits_for_author_platform_type(search_text):
     words_list = str(search_text).split()
     search_string = 'select * from exploits where (author like \'%' + words_list[0].upper() + '%\''
     for word in words_list[1:]:
