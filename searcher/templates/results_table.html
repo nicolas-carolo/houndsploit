@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block exploits_results_form %}
         <form>
-            <h4>{{ n_exploits_results }} exploits and {{ n_shellcodes_results }} shellcodes found for "{{ searched_item }}"</h4>
-            <h2 class="vulnerability_type">Exploits</h2>
+            <h4>{{ n_exploits_results }} <a href="#exploits_list">exploits</a> and {{ n_shellcodes_results }} <a href="#shellcodes_list">shellcodes</a> found for "{{ searched_item }}"</h4>
+            <a name="exploits_list"><h2 class="vulnerability_type">Exploits</h2></a>
             <table style="width:95%" align="center">
                 <tr>
                     <th>File</th>
@@ -25,7 +25,7 @@
                     </tr>
                 {% endfor %}
             </table>
-            <h2 class="vulnerability_type">Shellcodes</h2>
+            <a name="shellcodes_list"><h2 class="vulnerability_type">Shellcodes</h2></a>
             <table style="width:95%" align="center">
                 <tr>
                     <th>File</th>
@@ -46,5 +46,6 @@
                     </tr>
                 {% endfor %}
             </table>
+            <a href="#top"><h4 class="link_to_top">Go to the top!</h4></a>
         </form>
 {% endblock %}

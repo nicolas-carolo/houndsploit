@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from searcher.search_engine import search_vulnerabilities_in_db
 from searcher.search_engine import is_valid_input
 
