@@ -10,7 +10,7 @@ def get_results_table(request):
                                                       'exploits_results': search_vulnerabilities_in_db(search_text, 'exploits'),
                                                       'n_exploits_results': len(search_vulnerabilities_in_db(search_text, 'exploits')),
                                                       'shellcodes_results': search_vulnerabilities_in_db(search_text, 'shellcodes'),
-                                                      'n_shellcodes_results': len(search_vulnerabilities_in_db(search_text, 'exploits'))
+                                                      'n_shellcodes_results': len(search_vulnerabilities_in_db(search_text, 'shellcodes'))
                                                       })
     else:
         return render(request, 'results_table.html')
@@ -23,7 +23,7 @@ def home_page(request):
                                                       'exploits_results': search_vulnerabilities_in_db(search_text, 'exploits'),
                                                       'n_exploits_results': len(search_vulnerabilities_in_db(search_text, 'exploits')),
                                                       'shellcodes_results': search_vulnerabilities_in_db(search_text,'shellcodes'),
-                                                      'n_shellcodes_results': len(search_vulnerabilities_in_db(search_text, 'exploits'))
+                                                      'n_shellcodes_results': len(search_vulnerabilities_in_db(search_text, 'shellcodes'))
                                                       })
     else:
         return render(request, 'home.html')
