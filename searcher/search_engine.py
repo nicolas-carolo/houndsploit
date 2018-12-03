@@ -1,33 +1,36 @@
 from searcher.models import Exploit
 
 
-def search_exploits_in_db(search_text):
+def search_vulnerabilities_in_db(search_text):
     words = str(search_text).split()
     if words[0] == '--exact' and '--in' in words:
         return search_exploits_exact(words[1:])
 
     if str(search_text).isnumeric():
-        return search_exploits_numerical(search_text)
+        return search_vulnerabilities_numerical(search_text, 'exploits')
     else:
-        queryset = search_exploits_for_description(search_text)
+        queryset = search_vulnerabilities_for_description(search_text, 'exploits')
         if len(queryset) > 0:
             return queryset
         else:
-            queryset = search_exploits_for_file(search_text)
+            queryset = search_vulnerabilities_for_file(search_text, 'exploits')
             if len(queryset) > 0:
                 return queryset
             else:
-                return search_exploits_for_author_platform_type(search_text)
+                return search_vulnerabilities_for_author_platform_type(search_text, 'exploits')
 
 
-def search_exploits_numerical(search_text):
-    search_string = 'select * from exploits where ' + 'id = ' + search_text + ' or file like \'%' + search_text + '%\' or description like \'%' + search_text + '%\' or port = ' + search_text
+def search_vulnerabilities_numerical(search_text, vulnerability_type):
+    if vulnerability_type == 'exploits':
+        search_string = 'select * from exploits where ' + 'id = ' + search_text + ' or file like \'%' + search_text + '%\' or description like \'%' + search_text + '%\' or port = ' + search_text
+    else:
+        search_string = 'select * from shellcodes where ' + 'id = ' + search_text + ' or file like \'%' + search_text + '%\' or description like \'%' + search_text + '%\' or port = ' + search_text
     return Exploit.objects.raw(search_string)
 
 
-def search_exploits_for_description(search_text):
+def search_vulnerabilities_for_description(search_text, vulnerability_type):
     words_list = str(search_text).split()
-    search_string = 'select * from exploits where (description like \'%' + words_list[0].upper() + '%\''
+    search_string = 'select * from ' + vulnerability_type + ' where (description like \'%' + words_list[0].upper() + '%\''
     for word in words_list[1:]:
         search_string = search_string + ' and description like \'%' + word.upper() + '%\''
     search_string = search_string + ') or ((id like \'%' + words_list[0].upper() + '%\''
@@ -41,9 +44,9 @@ def search_exploits_for_description(search_text):
     return Exploit.objects.raw(search_string)
 
 
-def search_exploits_for_file(search_text):
+def search_vulnerabilities_for_file(search_text, vulnerability_type):
     words_list = str(search_text).split()
-    search_string = 'select * from exploits where (file like \'%' + words_list[0].upper() + '%\''
+    search_string = 'select * from ' + vulnerability_type + ' where (file like \'%' + words_list[0].upper() + '%\''
     for word in words_list[1:]:
         search_string = search_string + ' or file like \'%' + word.upper() + '%\''
     search_string = search_string + ')'
@@ -51,9 +54,9 @@ def search_exploits_for_file(search_text):
     return Exploit.objects.raw(search_string)
 
 
-def search_exploits_for_author_platform_type(search_text):
+def search_vulnerabilities_for_author_platform_type(search_text, vulnerability_type):
     words_list = str(search_text).split()
-    search_string = 'select * from exploits where (author like \'%' + words_list[0].upper() + '%\''
+    search_string = 'select * from ' + vulnerability_type + ' where (author like \'%' + words_list[0].upper() + '%\''
     for word in words_list[1:]:
         search_string = search_string + ' or author like \'%' + word.upper() + '%\''
     search_string = search_string + ') or (platform like \'%' + words_list[0].upper() + '%\''
