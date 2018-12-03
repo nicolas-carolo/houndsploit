@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% block exploits_results_form %}
         <form>
-            <h4>{{ n_exploits_results }} exploits found for "{{ searched_item }}"</h4>
+            <h4>{{ n_exploits_results }} exploits and {{ n_shellcodes_results }} shellcodes found for "{{ searched_item }}"</h4>
+            <h2 class="vulnerability_type">Exploits</h2>
             <table style="width:95%" align="center">
                 <tr>
                     <th>File</th>
@@ -18,13 +19,13 @@
                         <td>{{ res.description }}</td>
                         <td>{{ res.date }}</td>
                         <td>{{ res.author }}</td>
-                        <td>{{ res.exploit_type }}</td>
+                        <td>{{ res.vulnerability_type }}</td>
                         <td>{{ res.platform }}</td>
                         <td>{{ res.port }}</td>
                     </tr>
                 {% endfor %}
             </table>
-            <h4>{{ n_shellcodes_results }} shellcodes found for "{{ searched_item }}"</h4>
+            <h2 class="vulnerability_type">Shellcodes</h2>
             <table style="width:95%" align="center">
                 <tr>
                     <th>File</th>
@@ -40,7 +41,7 @@
                         <td>{{ res.description }}</td>
                         <td>{{ res.date }}</td>
                         <td>{{ res.author }}</td>
-                        <td>{{ res.exploit_type }}</td>
+                        <td>{{ res.vulnerability_type }}</td>
                         <td>{{ res.platform }}</td>
                     </tr>
                 {% endfor %}
