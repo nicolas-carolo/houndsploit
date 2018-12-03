@@ -1,4 +1,4 @@
-from searcher.models import Exploit
+from searcher.models import Exploit, Shellcode
 
 
 def search_vulnerabilities_in_db(search_text):
@@ -23,9 +23,10 @@ def search_vulnerabilities_in_db(search_text):
 def search_vulnerabilities_numerical(search_text, vulnerability_type):
     if vulnerability_type == 'exploits':
         search_string = 'select * from exploits where ' + 'id = ' + search_text + ' or file like \'%' + search_text + '%\' or description like \'%' + search_text + '%\' or port = ' + search_text
+        return Exploit.objects.raw(search_string)
     else:
         search_string = 'select * from shellcodes where ' + 'id = ' + search_text + ' or file like \'%' + search_text + '%\' or description like \'%' + search_text + '%\' or port = ' + search_text
-    return Exploit.objects.raw(search_string)
+        return Shellcode.objects.raw(search_string)
 
 
 def search_vulnerabilities_for_description(search_text, vulnerability_type):
@@ -41,7 +42,10 @@ def search_vulnerabilities_for_description(search_text, vulnerability_type):
         search_string = search_string + ' or description like \'%' + word.upper() + '%\''
     search_string = search_string + '))'
     print(search_string)
-    return Exploit.objects.raw(search_string)
+    if vulnerability_type == 'exploits':
+        return Exploit.objects.raw(search_string)
+    else:
+        return Shellcode.objects.raw(search_string)
 
 
 def search_vulnerabilities_for_file(search_text, vulnerability_type):
@@ -51,7 +55,10 @@ def search_vulnerabilities_for_file(search_text, vulnerability_type):
         search_string = search_string + ' or file like \'%' + word.upper() + '%\''
     search_string = search_string + ')'
     print(search_string)
-    return Exploit.objects.raw(search_string)
+    if vulnerability_type == 'exploits':
+        return Exploit.objects.raw(search_string)
+    else:
+        return Shellcode.objects.raw(search_string)
 
 
 def search_vulnerabilities_for_author_platform_type(search_text, vulnerability_type):
@@ -67,7 +74,10 @@ def search_vulnerabilities_for_author_platform_type(search_text, vulnerability_t
         search_string = search_string + ' or platform like \'%' + word.upper() + '%\''
     search_string = search_string + ')'
     print(search_string)
-    return Exploit.objects.raw(search_string)
+    if vulnerability_type == 'exploits':
+        return Exploit.objects.raw(search_string)
+    else:
+        return Shellcode.objects.raw(search_string)
 
 
 def search_exploits_exact(words):
