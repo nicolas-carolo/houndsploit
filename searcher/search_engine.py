@@ -59,7 +59,7 @@ def search_exploits_for_author_platform_type(search_text):
     search_string = search_string + ') or (platform like \'%' + words_list[0].upper() + '%\''
     for word in words_list[1:]:
         search_string = search_string + ' or platform like \'%' + word.upper() + '%\''
-    search_string = search_string + ') or (exploit_type like \'%' + words_list[0].upper() + '%\''
+    search_string = search_string + ') or (vulnerability_type like \'%' + words_list[0].upper() + '%\''
     for word in words_list[1:]:
         search_string = search_string + ' or platform like \'%' + word.upper() + '%\''
     search_string = search_string + ')'
@@ -80,7 +80,7 @@ def search_exploits_exact(words):
                 words[words_index + 1] = 'description'
                 search_string = 'blablabla'
             if words[words_index + 1] == 'type':
-                words[words_index + 1] = 'exploit_type'
+                words[words_index + 1] = 'vulnerability_type'
             print('select * from exploits where ' + words[words_index + 1] + ' = \'%' + search_string.upper() + '%\'')
             if words[words_index + 1] == 'port' and search_string.isnumeric():
                 return Exploit.objects.raw('select * from exploits where port = ' + search_string.upper())
