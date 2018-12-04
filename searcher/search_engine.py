@@ -84,7 +84,6 @@ def search_vulnerabilities_for_author_platform_type(search_text, vulnerability_t
 
 
 def search_exploits_exact(words):
-    print('exploits')
     accepted_fileds = ['file', 'description', 'author', 'type', 'platform', 'port']
     search_string = words[0]
     words_index = 1
@@ -106,7 +105,6 @@ def search_exploits_exact(words):
 
 
 def search_shellcodes_exact(words):
-    print('shellcodes')
     accepted_fileds = ['file', 'description', 'author', 'type', 'platform']
     search_string = words[0]
     words_index = 1
