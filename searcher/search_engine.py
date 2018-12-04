@@ -2,11 +2,11 @@ from searcher.models import Exploit, Shellcode
 
 
 def search_vulnerabilities_in_db(search_text, vulnerability_type):
-    words = str(search_text).split()
-    if (words[0] == '--exact' and '--in' in words) and vulnerability_type == 'exploits':
+    words = (str(search_text).upper()).split()
+    if (words[0] == '--EXACT' and '--IN' in words) and vulnerability_type == 'exploits':
         return search_exploits_exact(words[1:])
 
-    if (words[0] == '--exact' and '--in' in words) and vulnerability_type == 'shellcodes':
+    if (words[0] == '--EXACT' and '--IN' in words) and vulnerability_type == 'shellcodes':
         return search_shellcodes_exact(words[1:])
 
     if str(search_text).isnumeric():
@@ -84,20 +84,20 @@ def search_vulnerabilities_for_author_platform_type(search_text, vulnerability_t
 
 
 def search_exploits_exact(words):
-    accepted_fileds = ['file', 'description', 'author', 'type', 'platform', 'port']
+    accepted_fileds = ['FILE', 'DESCRIPTION', 'AUTHOR', 'TYPE', 'PLATFORM', 'PORT']
     search_string = words[0]
     words_index = 1
     for word in words[1:]:
-        if word != '--in':
+        if word != '--IN':
             search_string = search_string + ' ' + word
             words_index = words_index + 1
         else:
             if words[words_index + 1] not in accepted_fileds:
-                words[words_index + 1] = 'description'
+                words[words_index + 1] = 'DESCRIPTION'
                 search_string = 'blablabla'
-            if words[words_index + 1] == 'type':
-                words[words_index + 1] = 'vulnerability_type'
-            if words[words_index + 1] == 'port' and search_string.isnumeric():
+            if words[words_index + 1] == 'TYPE':
+                words[words_index + 1] = 'VULNERABILITY_TYPE'
+            if words[words_index + 1] == 'PORT' and search_string.isnumeric():
                 return Exploit.objects.raw('select * from exploits where port = ' + search_string.upper())
 
             else:
@@ -105,19 +105,19 @@ def search_exploits_exact(words):
 
 
 def search_shellcodes_exact(words):
-    accepted_fileds = ['file', 'description', 'author', 'type', 'platform']
+    accepted_fileds = ['FILE', 'DESCRIPTION', 'AUTHOR', 'TYPE', 'PLATFORM']
     search_string = words[0]
     words_index = 1
     for word in words[1:]:
-        if word != '--in':
+        if word != '--IN':
             search_string = search_string + ' ' + word
             words_index = words_index + 1
         else:
             if words[words_index + 1] not in accepted_fileds:
-                words[words_index + 1] = 'description'
+                words[words_index + 1] = 'DESCRIPTION'
                 search_string = 'blablabla'
-            if words[words_index + 1] == 'type':
-                words[words_index + 1] = 'vulnerability_type'
+            if words[words_index + 1] == 'TYPE':
+                words[words_index + 1] = 'VULNERABILITY_TYPE'
             return Exploit.objects.raw('select * from shellcodes where ' + words[words_index + 1] + ' like \'%' + search_string.upper() + '%\'')
 
 
