@@ -72,18 +72,35 @@ input[type=submit]:hover {
 
 table {
     border-collapse: collapse;
-    border: 1px solid #000000;
-    margin-bottom: 50px;
+    border-spacing: 0;
+    width: 99%;
+    border: 1px solid #ddd;
+    margin: auto;
 }
 
-table td {
-    border: 1px solid #000000;
-    background: #FFE5CC;
+th {
+    text-align: center;
+    background-color: #FF9933;
+    padding: 16px;
+    font-size: 20px;
 }
 
-table th {
-    border: 1px solid #000000;
-    background: #FF9933;
+td {
+    text-align: center;
+    padding: 16px;
+    font-size: 16px;
+}
+
+tr:nth-child(even) {
+    background-color: #FFE39E;
+}
+
+tr:nth-of-type(odd) {
+    background: #FFD779;
+}
+
+tr:hover {
+    background-color: #FFB266;
 }
 
 footer {
