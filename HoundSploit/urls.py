@@ -19,6 +19,6 @@ from searcher import views
 from searcher import urls as searcher_urls
 
 urlpatterns = [
-    url(r'^$', views.home_page, name='home_page'),
+    url(r'^$', views.get_results_table, name='get_results_table'),
     url(r'^searcher/', include(searcher_urls))
 ]
