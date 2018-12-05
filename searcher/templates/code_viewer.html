@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block very_important_script %}
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+{% endblock %}
+{% block code_viewer %}
+    <pre class="prettyprint">
+        {{ vulnerability_code }}
+    </pre>
+{% endblock %}
