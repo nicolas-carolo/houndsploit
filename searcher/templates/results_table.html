@@ -19,6 +19,7 @@
                     <th>Type</th>
                     <th>Platform</th>
                     <th>Port</th>
+                    <th></th>
                 </tr>
                 {% for res in exploits_results %}
                     <tr>
@@ -29,6 +30,7 @@
                         <td>{{ res.vulnerability_type }}</td>
                         <td>{{ res.platform }}</td>
                         <td>{{ res.port }}</td>
+                        <td><input type="button" value="Inspect code"></td>
                     </tr>
                 {% endfor %}
             </table>
@@ -43,6 +45,7 @@
                     <th>Author</th>
                     <th>Type</th>
                     <th>Platform</th>
+                    <th></th>
                 </tr>
                 {% for res in shellcodes_results %}
                     <tr>
@@ -52,6 +55,7 @@
                         <td>{{ res.author }}</td>
                         <td>{{ res.vulnerability_type }}</td>
                         <td>{{ res.platform }}</td>
+                        <td><input type="button" value="Inspect code"></td>
                     </tr>
                 {% endfor %}
             </table>

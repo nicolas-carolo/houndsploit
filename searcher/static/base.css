@@ -70,12 +70,32 @@ input[type=submit]:hover {
     text-shadow:none;
 }
 
+input[type=button] {
+    text-align: center;
+    font-size: 16px;
+    background-color: orange;
+    color: #fff;
+    border-radius: 20px;
+    text-shadow:none;
+    margin: auto;
+}
+
+input[type=button]:hover {
+    text-align: center;
+    font-size: 16px;
+    background-color: darkorange;
+    color: #fff;
+    border-radius: 20px;
+    text-shadow:none;
+    margin: auto;
+}
+
 table {
     border-collapse: collapse;
     border-spacing: 0;
     width: 99%;
     border: 1px solid #ddd;
-    margin: auto;
+    margin: auto auto 50px;
 }
 
 th {
@@ -88,7 +108,7 @@ th {
 
 td {
     text-align: center;
-    padding: 16px;
+    padding: 12px;
     font-size: 16px;
 }
 
