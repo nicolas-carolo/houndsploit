@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from searcher.search_engine import search_vulnerabilities_in_db
 from searcher.search_engine import is_valid_input
+from searcher.models import Exploit
 
 
 def get_results_table(request):
@@ -16,9 +17,8 @@ def get_results_table(request):
         return render(request, 'home.html')
 
 
-def view_code(request, id):
-    print('It works!')
-    return render(request, 'code_viewer.html', {'vulnerability_id': id})
+def view_exploit_code(request, exploit_id):
+    return render(request, 'code_viewer.html', {'exploit_id': exploit_id})
 
 
 
