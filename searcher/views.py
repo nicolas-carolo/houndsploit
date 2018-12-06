@@ -16,3 +16,8 @@ def get_results_table(request):
         return render(request, 'home.html')
 
 
+def print_test(request):
+    print('It works!')
+    return render(request, 'code_viewer.html')
+
+

@@ -70,24 +70,30 @@ input[type=submit]:hover {
     text-shadow:none;
 }
 
-input[type=button] {
+button {
     text-align: center;
-    font-size: 16px;
+    font-size: 14px;
+    width: auto;
     background-color: orange;
     color: #fff;
+    border: 1px solid #eee;
     border-radius: 20px;
+    box-shadow: 5px 5px 5px #eee;
     text-shadow:none;
-    margin: auto;
+    padding: 0px;
 }
 
-input[type=button]:hover {
+button:hover {
     text-align: center;
-    font-size: 16px;
+    font-size: 14px;
+    width: auto;
     background-color: darkorange;
     color: #fff;
+    border: 1px solid #eee;
     border-radius: 20px;
+    box-shadow: 5px 5px 5px #eee;
     text-shadow:none;
-    margin: auto;
+    padding: 0px;
 }
 
 table {
