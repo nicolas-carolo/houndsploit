@@ -147,6 +147,10 @@ img {
     margin: 50px auto 5px;
 }
 
+pre {
+    font-size: 14px;
+}
+
 
 .link_to_top {
     margin-bottom: 70px;
