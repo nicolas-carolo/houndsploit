@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from searcher.search_engine import search_vulnerabilities_in_db
 from searcher.search_engine import is_valid_input
-from searcher.models import Exploit
+from searcher.models import Exploit, Shellcode
 import os
 
 
@@ -22,10 +22,20 @@ def view_exploit_code(request, exploit_id):
     exploit = Exploit.objects.get(id=exploit_id)
     pwd = os.path.dirname(__file__)
     file = open(pwd + '/static/vulnerability/' + exploit.file, 'r')
-    exploit_code = ''
+    vulnerability_code = ''
     for line in file:
-        exploit_code = exploit_code + line
-    return render(request, 'code_viewer.html', {'exploit_code': exploit_code})
+        vulnerability_code = vulnerability_code + line
+    return render(request, 'code_viewer.html', {'vulnerability_code': vulnerability_code})
+
+
+def view_shellcode_code(request, shellcode_id):
+    shellcode = Shellcode.objects.get(id=shellcode_id)
+    pwd = os.path.dirname(__file__)
+    file = open(pwd + '/static/vulnerability/' + shellcode.file, 'r')
+    vulnerability_code = ''
+    for line in file:
+        vulnerability_code = vulnerability_code + line
+    return render(request, 'code_viewer.html', {'vulnerability_code': vulnerability_code})
 
 
 

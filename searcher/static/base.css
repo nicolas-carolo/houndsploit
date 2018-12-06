@@ -73,12 +73,12 @@ input[type=submit]:hover {
 button {
     text-align: center;
     font-size: 14px;
-    width: auto;
+    width: 75px;
     background-color: orange;
     color: #fff;
     border: 1px solid #eee;
     border-radius: 20px;
-    box-shadow: 5px 5px 5px #eee;
+    box-shadow: 1px 1px 1px #eee;
     text-shadow:none;
     padding: 0px;
 }
@@ -86,12 +86,12 @@ button {
 button:hover {
     text-align: center;
     font-size: 14px;
-    width: auto;
+    width: 75px;
     background-color: darkorange;
     color: #fff;
     border: 1px solid #eee;
     border-radius: 20px;
-    box-shadow: 5px 5px 5px #eee;
+    box-shadow: 1px 1px 1px #eee;
     text-shadow:none;
     padding: 0px;
 }
@@ -152,8 +152,8 @@ pre {
 }
 
 div.code-container {
-    margin: auto;
     width: 95%;
+    margin: auto auto 50px;
 }
 
 
