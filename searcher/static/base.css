@@ -151,6 +151,11 @@ pre {
     font-size: 14px;
 }
 
+div.code-container {
+    margin: auto;
+    width: 95%;
+}
+
 
 .link_to_top {
     margin-bottom: 70px;
