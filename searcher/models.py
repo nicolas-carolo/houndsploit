@@ -9,7 +9,7 @@ class Exploit(models.Model):
     author = models.TextField()
     vulnerability_type = models.TextField()
     platform = models.TextField()
-    port = models.IntegerField()
+    port = models.IntegerField(blank=True)
 
 
 class Shellcode(models.Model):
