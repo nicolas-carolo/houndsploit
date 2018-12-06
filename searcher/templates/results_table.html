@@ -30,7 +30,7 @@
                         <td>{{ res.vulnerability_type }}</td>
                         <td>{{ res.platform }}</td>
                         <td>{{ res.port }}</td>
-                        <td><a href="{% url 'print_test' %}"><button type="button">Inspect code</button></a></td>
+                        <td><a href="/searcher/view/{{ res.id }}"><button type="button">Inspect code</button></a></td>
                     </tr>
                 {% endfor %}
             </table>
@@ -55,7 +55,7 @@
                         <td>{{ res.author }}</td>
                         <td>{{ res.vulnerability_type }}</td>
                         <td>{{ res.platform }}</td>
-                        <td><button>Inspect code</button></td>
+                        <td></td>
                     </tr>
                 {% endfor %}
             </table>

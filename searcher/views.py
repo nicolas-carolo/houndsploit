@@ -16,8 +16,9 @@ def get_results_table(request):
         return render(request, 'home.html')
 
 
-def print_test(request):
+def view_code(request, id):
     print('It works!')
-    return render(request, 'code_viewer.html')
+    return render(request, 'code_viewer.html', {'vulnerability_id': id})
+
 
 
