@@ -1,9 +1,15 @@
-{% extends 'base.html' %}
-{% block very_important_script %}
-    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
-{% endblock %}
-{% block code_viewer %}
-    <div class="vulnerability_info">
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>HoundSploit</title>
+        <link href="/static/base.css" rel="stylesheet">
+        <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    </head>
+    <body>
+        <h1 {% block h1_style %}{% endblock %}>HoundSploit</h1>
+        <h2>An advanced search engine for SearchSploit</h2>
+        <div class="vulnerability_info">
         <p class="vulnerability_info_bold">Description: </p><p class="vulnerability_info">{{ vulnerability_description }}</p><br>
         <p class="vulnerability_info_bold">Author: </p><p class="vulnerability_info">{{ vulnerability_author }}</p><br>
         <p class="vulnerability_info_bold">File: </p><p class="vulnerability_info">{{ vulnerability_file }}</p><br>
@@ -13,10 +19,13 @@
         {% if vulnerability_port %}
            <p class="vulnerability_info_bold">Port: </p><p class="vulnerability_info">{{ vulnerability_port }}</p><br>
         {% endif %}
-    </div>
-    <div class="code-container">
-        <pre class="prettyprint linenums:1">
-            {{ vulnerability_code }}
-        </pre>
-    </div>
-{% endblock %}
+        </div>
+        <div class="code-container">
+            <pre class="prettyprint linenums:1">
+                {{ vulnerability_code }}
+            </pre>
+        </div>
+        <footer>
+            <p>HoundSploit &nbsp;&nbsp; Developed by Nicolas Carolo &nbsp;&nbsp; <a href="https://github.com/nicolas-carolo/HoundSploit">GitHub page of the project</a></p>
+        </footer>
+    </body>
