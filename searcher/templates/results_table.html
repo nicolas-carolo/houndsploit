@@ -1,10 +1,4 @@
 {% extends 'base.html' %}
-{% block input_form %}
-    <form action="{% url 'get_results_table' %}" method="POST">
-        <input type="text" name="search_item"> <input type="submit" value="Search">
-        {% csrf_token %}
-    </form>
-{% endblock %}
 {% block results_form %}
     <form>
         <h4>{{ n_exploits_results }} <a href="#exploits_list">exploits</a> and {{ n_shellcodes_results }} <a href="#shellcodes_list">shellcodes</a> found for "{{ searched_item }}"</h4>
