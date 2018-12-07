@@ -3,6 +3,17 @@
     <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
 {% endblock %}
 {% block code_viewer %}
+    <div class="vulnerability_info">
+        <p>Description: {{ vulnerability_description }}</p>
+        <p>Author: {{ vulnerability_author }}</p>
+        <p>File: {{ vulnerability_file }}</p>
+        <p>Date: {{ vulnerability_date }}</p>
+        <p>Type: {{ vulnerability_type }}</p>
+        <p>Platform: {{ vulnerability_platform }}</p>
+        {% if vulnerability_port %}
+           <p>Port: {{ vulnerability_port }}</p>
+        {% endif %}
+    </div>
     <div class="code-container">
         <pre class="prettyprint linenums:1">
             {{ vulnerability_code }}
