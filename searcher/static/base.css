@@ -50,10 +50,10 @@ input[type=submit] {
     width: 7%;
     margin-bottom: 25px;
     background-color: orange;
-    color: #fff;
-    border: 1px solid #eee;
+    color: #FFFFFF;
+    border: 1px solid #EEEEEE;
     border-radius: 20px;
-    box-shadow: 5px 5px 5px #eee;
+    box-shadow: 5px 5px 5px #EEEEEE;
     text-shadow:none;
 }
 
@@ -63,7 +63,7 @@ input[type=submit]:hover {
     width: 7%;
     margin-bottom: 25px;
     background-color: darkorange;
-    color: #fff;
+    color: #FFFFFF;
     border: 1px solid #eee;
     border-radius: 20px;
     box-shadow: 5px 5px 5px #eee;
@@ -75,10 +75,10 @@ button {
     font-size: 14px;
     width: 75px;
     background-color: orange;
-    color: #fff;
+    color: #FFFFFF;
     border: 1px solid #eee;
     border-radius: 20px;
-    box-shadow: 1px 1px 1px #eee;
+    box-shadow: 1px 1px 1px #EEEEEE;
     text-shadow:none;
     padding: 0px;
 }
@@ -88,7 +88,7 @@ button:hover {
     font-size: 14px;
     width: 75px;
     background-color: darkorange;
-    color: #fff;
+    color: #FFFFFF;
     border: 1px solid #eee;
     border-radius: 20px;
     box-shadow: 1px 1px 1px #eee;
@@ -100,7 +100,7 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
     width: 99%;
-    border: 1px solid #ddd;
+    border: 1px solid #DDDDDD;
     margin: auto auto 50px;
 }
 
@@ -177,8 +177,20 @@ li.L5, li.L6, li.L7, li.L8 {
 div.vulnerability_info {
     width: 40%;
     margin: 0 auto;
-    border: 1px solid #ddd;
-    background-color: lightgrey;
-    padding: 5px;
+    border: 1px solid #DDDDDD;
+    background-color: #EEEEEE;
+    padding: 15px;
+    border-radius: 20px;
+}
+
+p.vulnerability_info {
+    display:inline;
     font-size: 16px;
+}
+
+p.vulnerability_info_bold {
+    display: inline;
+    font-weight: bold;
+    color: darkred;
+    font-size: 18px;
 }
