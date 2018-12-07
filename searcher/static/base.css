@@ -149,14 +149,20 @@ img {
 
 pre {
     font-size: 14px;
+    border-collapse: collapse;
 }
 
 div.code-container {
-    width: 95%;
+    width: 100%;
     margin: auto auto 50px;
+    border-collapse: collapse;
 }
 
 
 .link_to_top {
     margin-bottom: 70px;
+}
+
+pre.prettyprint {
+    border: none !important;
 }
