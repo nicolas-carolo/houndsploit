@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block important_scripts %}
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify/loader/run_prettify.js"></script>
+{% endblock %}
+{% block code_viewer %}
+    <div class="vulnerability_info">
+        <p class="vulnerability_info_bold">Description: </p><p class="vulnerability_info">{{ vulnerability_description }}</p><br>
+        <p class="vulnerability_info_bold">Author: </p><p class="vulnerability_info">{{ vulnerability_author }}</p><br>
+        <p class="vulnerability_info_bold">File: </p><p class="vulnerability_info">{{ vulnerability_file }}</p><br>
+        <p class="vulnerability_info_bold">Date: </p><p class="vulnerability_info">{{ vulnerability_date }}</p><br>
+        <p class="vulnerability_info_bold">Type: </p><p class="vulnerability_info">{{ vulnerability_type }}</p><br>
+        <p class="vulnerability_info_bold">Platform: </p><p class="vulnerability_info">{{ vulnerability_platform }}</p><br>
+        {% if vulnerability_port %}
+           <p class="vulnerability_info_bold">Port: </p><p class="vulnerability_info">{{ vulnerability_port }}</p><br>
+        {% endif %}
+        <div name="download_button_container">
+            <a href="{{ file_path }}" download="{{ file_name }}"><button>Download</button></a>
+        </div>
+    </div>
+    <div class="code-container">
+        <pre class="prettyprint linenums:1">{{ vulnerability_code }}</pre>
+    </div>
+{% endblock %}

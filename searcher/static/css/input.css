@@ -1,0 +1,52 @@
+input[type=text] {
+    text-align: center;
+    font-size: 20px;
+    width: 30%;
+    margin-bottom: 25px;
+    background-color: white;
+    border: 1px solid lightgray;
+    color: #000000;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #EEEEEE;
+}
+
+input[type=submit] {
+    text-align: center;
+    font-size: 20px;
+    width: 7%;
+    margin-bottom: 25px;
+    background-color: orange;
+    color: #FFFFFF;
+    border: 1px solid #EEEEEE;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #EEEEEE;
+    text-shadow:none;
+}
+
+input[type=submit]:hover {
+    text-align: center;
+    font-size: 20px;
+    width: 7%;
+    margin-bottom: 25px;
+    background-color: darkorange;
+    color: #FFFFFF;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #eee;
+    text-shadow:none;
+}
+
+input[type=number] {
+    background-color: white;
+    color: black;
+}
+
+input[type=date] {
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+    border-color: #EEEEEE;
+    border-bottom-color: #EEEEEE;
+    padding: 2px;
+    margin-top: 25px;
+}

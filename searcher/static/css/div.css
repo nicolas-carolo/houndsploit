@@ -1,0 +1,43 @@
+div.info_container {
+    width: 40%;
+    margin: 0 auto;
+    border: 1px solid #DDDDDD;
+    background-color: #EEEEEE;
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #EEEEEE;
+}
+
+div[name=download_button_container] {
+    text-align: center;
+    width: 100%;
+    margin: 20px auto auto;
+}
+
+div[name=filters_container] {
+    width: 40%;
+    margin: 0 auto;
+    border: 1px solid #DDDDDD;
+    background-color: #EEEEEE;
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #EEEEEE;
+}
+
+div.vulnerability_info {
+    width: 40%;
+    margin: 0 auto;
+    border: 1px solid #DDDDDD;
+    background-color: #EEEEEE;
+    padding: 15px;
+    border-radius: 20px;
+    align-content: center;
+    box-shadow: 5px 5px 5px #EEEEEE;
+}
+
+div.code-container {
+    width: 98%;
+    margin: auto auto 50px;
+    border-collapse: collapse;
+    padding: 10px;
+}

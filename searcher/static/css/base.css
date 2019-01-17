@@ -1,0 +1,109 @@
+body {
+    background-color: #FFFFFF;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+h1 {
+    text-align: center;
+    color: #cc3300;
+    font-size: 60px;
+    margin-bottom: 5px;
+}
+
+h2 {
+    text-align: center;
+    color: #ff9900;
+    font-size: 24px;
+}
+
+.vulnerability_type {
+    color: darkorange;
+}
+
+h4 {
+    text-align: center;
+    font-size: 14px;
+    color: dimgrey;
+    margin-bottom: 30px;
+}
+
+form {
+    text-align: center;
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 4%;
+    background-color: orange;
+    color: white;
+    text-align: center;
+    font-size: 12px;
+}
+
+img {
+    display: block;
+    margin: 50px auto 5px;
+}
+
+pre {
+    font-size: 14px;
+    border-collapse: collapse;
+}
+
+.link_to_top {
+    margin-bottom: 70px;
+}
+
+pre.prettyprint {
+    border: none !important;
+    white-space: pre-wrap !important;
+}
+
+li.L0, li.L1, li.L2, li.L3,
+li.L5, li.L6, li.L7, li.L8 {
+    list-style-type: decimal !important;
+}
+
+
+
+p.vulnerability_info {
+    display:inline;
+    font-size: 16px;
+}
+
+p.vulnerability_info_bold {
+    display: inline;
+    font-weight: bold;
+    color: darkred;
+    font-size: 18px;
+}
+
+.info_container p {
+    text-align: center;
+    font-size: 18px;
+}
+
+option {
+    background-color: white;
+    color: black;
+}
+
+select {
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+    border-color: #EEEEEE;
+    border-bottom-color: #EEEEEE;
+    padding: 2px;
+}
+
+span.keyword {
+    color: red;
+    font-weight: bold;
+}
+
