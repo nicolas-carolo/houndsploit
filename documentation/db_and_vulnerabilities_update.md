@@ -1,4 +1,4 @@
-# How to convert `files_exploits.csv` and 'files_shellcodes.csv' into a sqlite3 db valid for HoundSploit
+# How to convert `files_exploits.csv` and `files_shellcodes.csv` into a sqlite3 db valid for HoundSploit
 
 ## Get the CSV files
 
@@ -45,7 +45,7 @@ For closing sqlite3:
 
 `sqlite> .quit`
 
-# Create initial Django migration for the existing DB schema
+# Create the initial Django migration for the existing DB schema
 
 Only if `db.sqlite3` contains `django_migrations` table:
 
