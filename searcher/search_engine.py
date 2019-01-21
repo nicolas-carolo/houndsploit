@@ -190,16 +190,9 @@ def is_in_version_range_with_x(num_version, software_name, description):
 
 
 def is_equal_with_x(num_version, num_to_compare):
-    version_precision = str(num_to_compare).count('.') + 1
+    version_precision = str(num_to_compare).count('.')
     try:
-        if version_precision == 1:
-            regex = re.search(r'\d+', num_version)
-        elif version_precision == 2:
-            regex = re.search(r'\d+\.\d+', num_version)
-        elif version_precision == 3:
-            regex = re.search(r'\d+\.\d+\.\d+', num_version)
-        elif version_precision == 4:
-            regex = re.search(r'\d+\.\d+\.\d+\.\d+', num_version)
+        regex = re.search(r'\d+(\.\d+){0,%d}' % version_precision, num_version)
         num_version = regex.group()
     except AttributeError:
         pass
