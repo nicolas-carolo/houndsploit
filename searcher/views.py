@@ -8,6 +8,11 @@ from searcher.forms import OPERATOR_CHOICES, get_type_values, get_platform_value
 
 
 def get_results_table(request):
+    """
+    Render a table with a list of search results.
+    :param request: the HTTP request.
+    :return: results_table.html template with search results.
+    """
     if request.POST:
         form = SimpleSearchForm(request.POST)
         if form.is_valid():
@@ -28,6 +33,12 @@ def get_results_table(request):
 
 
 def view_exploit_code(request, exploit_id):
+    """
+    Open details about the selected exploit, included the source code.
+    :param request: the HTTP request.
+    :param exploit_id: the ID of the exploit we want to open.
+    :return: a template showing the details about the selected exploit and the source code.
+    """
     exploit = Exploit.objects.get(id=exploit_id)
     pwd = os.path.dirname(__file__)
     file_path = '/static/vulnerabilities/' + exploit.file
@@ -52,6 +63,12 @@ def view_exploit_code(request, exploit_id):
 
 
 def view_shellcode_code(request, shellcode_id):
+    """
+    Open details about the selected shellcode, included the source code.
+    :param request: the HTTP request.
+    :param shellcode_id: the ID of the shellcode we want to open.
+    :return: a template showing the details about the selected shellcode and the source code.
+    """
     shellcode = Shellcode.objects.get(id=shellcode_id)
     pwd = os.path.dirname(__file__)
     file_path = '/static/vulnerabilities/' + shellcode.file
@@ -75,20 +92,40 @@ def view_shellcode_code(request, shellcode_id):
 
 
 def show_help(request):
+    """
+    Render a template containing some information about the use of HoundSploit.
+    :param request: the HTTP request.
+    :return: a template containing some information about the use of HoundSploit.
+    """
     return render(request, 'help.html')
 
 
 def show_info(request):
+    """
+    Render a template containing some information about the current version of HoundSploit.
+    :param request: the HTTP request.
+    :return: a template containing some information about the current version of HoundSploit.
+    """
     return render(request, 'about.html')
 
 
 def get_vulnerability_extension(vulnerability_file):
+    """
+    Get the extension of the vulnerability passed as parameter.
+    :param vulnerability_file: the vulnerability we want to get its extension.
+    :return: the extension of the vulnerability passed as parameter.
+    """
     regex = re.search(r'\.(?P<extension>\w+)', vulnerability_file)
     extension = '.' + regex.group('extension')
     return extension
 
 
 def get_results_table_advanced(request):
+    """
+    Render a table with a list of advanced search results.
+    :param request: the HTML request.
+    :return: advanced_results_table.html template with advanced search results.
+    """
     if request.POST:
         form = AdvancedSearchForm(request.POST)
         if form.is_valid():

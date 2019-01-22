@@ -9,6 +9,10 @@ OPERATOR_CHOICES = [
 
 
 def get_type_values():
+    """
+    Get a list containing all the values that 'vulnerability_type' attribute can assume.
+    :return: a list containing all the values that 'vulnerability_type' attribute could assume.
+    """
     index = 1
     type_choices = [(0, 'All')]
     type_list = []
@@ -27,6 +31,10 @@ def get_type_values():
 
 
 def get_platform_values():
+    """
+    Get a list containing all the values that 'platform' attribute can assume.
+    :return: a list containing all the values that 'platform' attribute could assume.
+    """
     index = 1
     platform_choices = [(0, 'All')]
     platform_list = []
@@ -45,6 +53,10 @@ def get_platform_values():
 
 
 class AdvancedSearchForm(forms.Form):
+    """
+    The Django Form containing all the type of filters that the user can use for the
+    advanced search.
+    """
     search_text = forms.CharField(label='', required=False)
     operator = forms.ChoiceField(label='Operator', choices=OPERATOR_CHOICES)
     author = forms.CharField(label='author', max_length=100, required=False)
@@ -56,4 +68,7 @@ class AdvancedSearchForm(forms.Form):
 
 
 class SimpleSearchForm(forms.Form):
+    """
+    The Django Form the is used for the standard search.
+    """
     search_text = forms.CharField(label='', required=True)

@@ -2,6 +2,9 @@ from django.db import models
 
 
 class Exploit(models.Model):
+    """
+    The object Exploit which is uniquely identified with a numerical ID
+    """
     id = models.IntegerField(primary_key=True)
     file = models.TextField()
     description = models.TextField()
@@ -13,6 +16,9 @@ class Exploit(models.Model):
 
 
 class Shellcode(models.Model):
+    """
+    The object Shellcode which is uniquely identified with a numerical ID
+    """
     id = models.IntegerField(primary_key=True)
     file = models.TextField()
     description = models.TextField()

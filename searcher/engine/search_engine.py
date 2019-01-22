@@ -10,6 +10,12 @@ from searcher.engine.filter_query import filter_exploits_with_comparator, filter
 
 
 def search_vulnerabilities_in_db(search_text, db_table):
+    """
+    Return the queryset containing search results with keywords highlighted.
+    :param search_text: the vulnerability that the user is searching for.
+    :param db_table: the DB table in which we want to perform the search.
+    :return: a queryset containing search results with keywords highlighted.
+    """
     words = (str(search_text).upper()).split()
     if str(search_text).isnumeric():
         queryset = search_vulnerabilities_numerical(search_text, db_table)
@@ -39,6 +45,13 @@ def search_vulnerabilities_in_db(search_text, db_table):
 
 
 def search_vulnerabilities_numerical(search_text, db_table):
+    """
+    Perform a search based on vulnerabilities' description, file, id, and port (only if it is an exploit) for an only
+    numerical search input.
+    :param search_text: the search input.
+    :param db_table: the DB table in which we want to perform the search.
+    :return: a queryset with search results.
+    """
     if db_table == 'searcher_exploit':
         return Exploit.objects.filter(
             Q(id__exact=int(search_text)) | Q(file__contains=search_text) | Q(description__contains=search_text) | Q(
@@ -49,6 +62,12 @@ def search_vulnerabilities_numerical(search_text, db_table):
 
 
 def search_vulnerabilities_for_description(search_text, db_table):
+    """
+    Perform a search based on vulnerabilities' description for an input search that does not contain a number of version.
+    :param search_text: the search input.
+    :param db_table: the DB table in which we want to perform the search.
+    :return: a queryset with search results.
+    """
     # I have installed reduce
     words_list = str(search_text).split()
     query = reduce(operator.and_, (Q(description__icontains=word) for word in words_list))
@@ -60,6 +79,12 @@ def search_vulnerabilities_for_description(search_text, db_table):
 
 
 def search_vulnerabilities_for_file(search_text, db_table):
+    """
+    Perform a search based on vulnerabilities' file for an input search that does not contain a number of version.
+    :param search_text: the search input.
+    :param db_table: the DB table in which we want to perform the search.
+    :return: a queryset with search results.
+    """
     words_list = str(search_text).split()
     query = reduce(operator.or_, (Q(file__icontains=word) for word in words_list))
     if db_table == 'searcher_exploit':
@@ -70,6 +95,12 @@ def search_vulnerabilities_for_file(search_text, db_table):
 
 
 def search_vulnerabilities_for_author(search_text, db_table):
+    """
+    Perform a search based on vulnerabilities' author for an input search that does not contain a number of version.
+    :param search_text: the search input.
+    :param db_table: the DB table in which we want to perform the search.
+    :return: a queryset with search results.
+    """
     words_list = str(search_text).split()
     query = reduce(operator.and_, (Q(author__icontains=word) for word in words_list))
     if db_table == 'searcher_exploit':
@@ -80,6 +111,12 @@ def search_vulnerabilities_for_author(search_text, db_table):
 
 
 def search_vulnerabilities_version(search_text, db_table):
+    """
+    Perform a search based on vulnerabilities' description for an input search that contains a number of version.
+    :param search_text: the search input containing also the number of version.
+    :param db_table: the DB table in which we want to perform the search.
+    :return: a queryset with search results.
+    """
     words = str(search_text).upper().split()
     software_name = words[0]
     for word in words[1:]:
@@ -94,6 +131,13 @@ def search_vulnerabilities_version(search_text, db_table):
 
 
 def search_exploits_version(software_name, num_version):
+    """
+    Perform a search based on exploits' description for an input search that contains a number of version.
+    This function is called by 'search_vulnerabilities_version' method.
+    :param software_name: the name of the software that the user is searching for.
+    :param num_version: the specific number of version the user is searching for.
+    :return: a queryset with search result found in 'searcher_exploit' DB table.
+    """
     queryset = Exploit.objects.filter(description__icontains=software_name)
     for exploit in queryset:
         # if exploit not contains '<'
@@ -106,6 +150,13 @@ def search_exploits_version(software_name, num_version):
 
 
 def search_shellcodes_version(software_name, num_version):
+    """
+    Perform a search based on shellcodes' description for an input search that contains a number of version.
+    This function is called by 'search_vulnerabilities_version' method.
+    :param software_name: the name of the software that the user is searching for.
+    :param num_version: the specific number of version the user is searching for.
+    :return: a queryset with search result found in 'searcher_shellcode' DB table.
+    """
     queryset = Shellcode.objects.filter(description__icontains=software_name)
     for shellcode in queryset:
         # if shellcode not contains '<'
@@ -117,7 +168,22 @@ def search_shellcodes_version(software_name, num_version):
     return queryset
 
 
-def search_vulnerabilities_advanced(search_text, db_table, operator_filter, type_filter, platform_filter, author_filter, port_filter, start_date_filter, end_date_filter):
+def search_vulnerabilities_advanced(search_text, db_table, operator_filter, type_filter, platform_filter, author_filter,
+                                    port_filter, start_date_filter, end_date_filter):
+    """
+    Perform a search based on filter selected by the user for an input search.
+    :param search_text: the search input.
+    :param db_table: the DB table in which we want to perform the search.
+    :param operator_filter: OR operator matches all search results that contain at least one search keyword,
+                            AND operator matches only search results that contain all the search keywords.
+    :param type_filter: the filter on the vulnerabilities' type.
+    :param platform_filter: the filter on the vulnerabilities' platform.
+    :param author_filter: the filter on the vulnerabilities' author.
+    :param port_filter: the filter on the exploits' port.
+    :param start_date_filter: the filter on the vulnerabilities' date (from).
+    :param end_date_filter: the filter on the vulnerabilities' date (to).
+    :return: a queryset containing all the search results.
+    """
     words_list = str(search_text).upper().split()
     if operator_filter == 'AND' and search_text != '':
         queryset = search_vulnerabilities_for_description_advanced(search_text, db_table)
@@ -159,7 +225,15 @@ def search_vulnerabilities_advanced(search_text, db_table, operator_filter, type
 
 
 def search_vulnerabilities_for_description_advanced(search_text, db_table):
-    if str_is_num_version(str(search_text)) and str(search_text).__contains__(' ') and not str(search_text).__contains__('<'):
+    """
+    If the search input contains a number of version, it calls 'search_vulnerabilities_version' method,
+    else it calls 'search_vulnerabilities_for_description'.
+    :param search_text: the search input.
+    :param db_table: the DB table in which we want to perform the search.
+    :return: a queryset containing all the search results that can be filtered with the filters selected by the user.
+    """
+    if str_is_num_version(str(search_text)) and str(search_text).__contains__(' ')\
+            and not str(search_text).__contains__('<'):
         queryset = search_vulnerabilities_version(search_text, db_table)
     else:
         queryset = search_vulnerabilities_for_description(search_text, db_table)
@@ -167,6 +241,14 @@ def search_vulnerabilities_for_description_advanced(search_text, db_table):
 
 
 def search_vulnerabilities_for_text_input(search_text, db_table):
+    """
+    Perform a search in description based on characters contained by this attribute.
+    This queryset can be joined with the search results based on the number of version.
+    :param search_text: the search input.
+    :param db_table: the DB table in which we want to perform the search.
+    :return: a queryset containing the search results found with a search based on the characters contained by
+                the attribute 'description'
+    """
     if db_table == 'searcher_exploit':
         queryset = Exploit.objects.filter(description__icontains=search_text)
     else:
