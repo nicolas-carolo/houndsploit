@@ -193,6 +193,9 @@ def search_vulnerabilities_advanced(search_text, db_table, operator_filter, type
     words_list = str(search_text).upper().split()
     if operator_filter == 'AND' and search_text != '':
         queryset = search_vulnerabilities_for_description_advanced(search_text, db_table)
+        # union with standard research (test)
+        queryset_std = search_vulnerabilities_for_text_input(search_text, db_table)
+        queryset = queryset.union(queryset_std)
     elif operator_filter == 'OR':
         try:
             query = reduce(operator.or_, (Q(description__icontains=word) for word in words_list))
