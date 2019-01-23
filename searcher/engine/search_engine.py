@@ -139,6 +139,9 @@ def search_exploits_version(software_name, num_version):
     :return: a queryset with search result found in 'searcher_exploit' DB table.
     """
     queryset = Exploit.objects.filter(description__icontains=software_name)
+    # this if condition fix 'Expression Tree is to large' bug
+    if queryset.count() > 1000:
+        return Exploit.objects.none()
     for exploit in queryset:
         # if exploit not contains '<'
         if not str(exploit.description).__contains__('<'):
@@ -158,6 +161,9 @@ def search_shellcodes_version(software_name, num_version):
     :return: a queryset with search result found in 'searcher_shellcode' DB table.
     """
     queryset = Shellcode.objects.filter(description__icontains=software_name)
+    # this if condition fix 'Expression Tree is to large' bug
+    if queryset.count() > 1000:
+        return Shellcode.objects.none()
     for shellcode in queryset:
         # if shellcode not contains '<'
         if not str(shellcode.description).__contains__('<'):
