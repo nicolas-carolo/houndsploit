@@ -5,6 +5,7 @@ import os
 import re
 from searcher.forms import AdvancedSearchForm, SimpleSearchForm
 from searcher.forms import OPERATOR_CHOICES, get_type_values, get_platform_values
+from searcher.engine.date_validator import is_date_range_valid
 
 
 def get_results_table(request):
@@ -128,7 +129,7 @@ def get_results_table_advanced(request):
     """
     if request.POST:
         form = AdvancedSearchForm(request.POST)
-        if form.is_valid():
+        if form.is_valid() and is_date_range_valid(form.cleaned_data['start_date'], form.cleaned_data['end_date']):
             search_text = form.cleaned_data['search_text']
             operator_filter_index = int(form.cleaned_data['operator'])
             operator_filter = OPERATOR_CHOICES.__getitem__(operator_filter_index)[1]
@@ -152,7 +153,9 @@ def get_results_table_advanced(request):
                                                                    })
         else:
             form = AdvancedSearchForm()
-            return render(request, 'advanced_searcher.html', {'form': form})
+            return render(request, 'advanced_searcher.html', {'form': form,
+                                                              'date_range_error': 'ERROR: Bad date range!'
+                                                              })
     else:
         form = AdvancedSearchForm()
         return render(request, 'advanced_searcher.html', {'form': form})

@@ -19,6 +19,9 @@
             {{ form.start_date }}
             <label>To:</label>
             {{ form.end_date }}
+            {% if date_range_error %}
+                <br><p style="color: red">{{ date_range_error }}</p>
+            {% endif %}
         </div>
     </form>
 {% endblock %}
