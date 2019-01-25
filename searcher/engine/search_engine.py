@@ -268,6 +268,18 @@ def search_vulnerabilities_for_text_input(search_text, db_table):
 
 def search_vulnerabilities_for_text_input_advanced(search_text, db_table, type_filter, platform_filter, author_filter,
                                                    port_filter, start_date_filter, end_date_filter):
+    """
+    Perform a search based on characters contained by this attribute.
+    :param search_text: the search input.
+    :param db_table: the DB table in which we want to perform the search.
+    :param type_filter: the filter on the vulnerabilities' type.
+    :param platform_filter: the filter on the vulnerabilities' platform.
+    :param author_filter: the filter on the vulnerabilities' author.
+    :param port_filter: the filter on the exploits' port.
+    :param start_date_filter: the filter on the vulnerabilities' date (from).
+    :param end_date_filter: the filter on the vulnerabilities' date (to).
+    :return: a queryset containing all the search results.
+    """
     if db_table == 'searcher_exploit':
         queryset = Exploit.objects.filter(description__icontains=search_text)
     else:
