@@ -3,9 +3,9 @@ from searcher.models import Exploit, Shellcode
 from django.db.models import Q
 import operator
 from searcher.engine.string import str_is_num_version
-from searcher.engine.keywords_highlighter import highlight_keywords_in_description, highlight_keywords_in_file,\
+from searcher.engine.keywords_highlighter import highlight_keywords_in_description, highlight_keywords_in_file, \
     highlight_keywords_in_author, highlight_keywords_in_port
-from searcher.engine.filter_query import filter_exploits_with_comparator, filter_exploits_without_comparator,\
+from searcher.engine.filter_query import filter_exploits_with_comparator, filter_exploits_without_comparator, \
     filter_shellcodes_with_comparator, filter_shellcodes_without_comparator
 
 
@@ -193,9 +193,6 @@ def search_vulnerabilities_advanced(search_text, db_table, operator_filter, type
     words_list = str(search_text).upper().split()
     if operator_filter == 'AND' and search_text != '':
         queryset = search_vulnerabilities_for_description_advanced(search_text, db_table)
-        # TODO union with standard research (test) already filtered (write a new method)
-        # queryset_std = search_vulnerabilities_for_text_input(search_text, db_table)
-        # queryset = queryset.union(queryset_std)
     elif operator_filter == 'OR':
         try:
             query = reduce(operator.or_, (Q(description__icontains=word) for word in words_list))
@@ -226,11 +223,15 @@ def search_vulnerabilities_advanced(search_text, db_table, operator_filter, type
         pass
     if port_filter is not None and db_table == 'searcher_exploit':
         queryset = queryset.filter(port__exact=port_filter)
-        return highlight_keywords_in_description(words_list, queryset)
     elif port_filter is not None and db_table == 'searcher_shellcode':
-        return Shellcode.objects.none()
-    else:
-        return highlight_keywords_in_description(words_list, queryset)
+        queryset = Shellcode.objects.none()
+
+    queryset_std = search_vulnerabilities_for_text_input_advanced(search_text, db_table, type_filter, platform_filter,
+                                                                  author_filter, port_filter, start_date_filter,
+                                                                  end_date_filter)
+    queryset = queryset.union(queryset_std)
+
+    return highlight_keywords_in_description(words_list, queryset)
 
 
 def search_vulnerabilities_for_description_advanced(search_text, db_table):
@@ -241,7 +242,7 @@ def search_vulnerabilities_for_description_advanced(search_text, db_table):
     :param db_table: the DB table in which we want to perform the search.
     :return: a queryset containing all the search results that can be filtered with the filters selected by the user.
     """
-    if str_is_num_version(str(search_text)) and str(search_text).__contains__(' ')\
+    if str_is_num_version(str(search_text)) and str(search_text).__contains__(' ') \
             and not str(search_text).__contains__('<'):
         queryset = search_vulnerabilities_version(search_text, db_table)
     else:
@@ -262,4 +263,29 @@ def search_vulnerabilities_for_text_input(search_text, db_table):
         queryset = Exploit.objects.filter(description__icontains=search_text)
     else:
         queryset = Shellcode.objects.filter(description__icontains=search_text)
+    return queryset
+
+
+def search_vulnerabilities_for_text_input_advanced(search_text, db_table, type_filter, platform_filter, author_filter,
+                                                   port_filter, start_date_filter, end_date_filter):
+    if db_table == 'searcher_exploit':
+        queryset = Exploit.objects.filter(description__icontains=search_text)
+    else:
+        queryset = Shellcode.objects.filter(description__icontains=search_text)
+
+    if type_filter != 'All':
+        queryset = queryset.filter(vulnerability_type__exact=type_filter)
+    if platform_filter != 'All':
+        queryset = queryset.filter(platform__exact=platform_filter)
+    if author_filter != '':
+        queryset = queryset.filter(author__icontains=author_filter)
+    try:
+        queryset = queryset.filter(date__gte=start_date_filter)
+        queryset = queryset.filter(date__lte=end_date_filter)
+    except ValueError:
+        pass
+    if port_filter is not None and db_table == 'searcher_exploit':
+        queryset = queryset.filter(port__exact=port_filter)
+    elif port_filter is not None and db_table == 'searcher_shellcode':
+        queryset = Shellcode.objects.none()
     return queryset
