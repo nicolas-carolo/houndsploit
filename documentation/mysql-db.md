@@ -30,7 +30,7 @@
 1. Open the Terminal and execute `sudo apt-get install libmysqlclient-dev`.
 2. Now you can install _mysqlclient_: `pip install mysqlclient`.
 
-## Create HOUNDSPLOIT DB connection and the relative tablese
+## Create HOUNDSPLOIT DB connection and the relative tables
 
 ### Starting from .csv files
 1. Get `files_exploits.csv` and `files_shellcodes.csv` from the [Exploit-DB repository on GitHub](https://github.com/offensive-security/exploitdb).
