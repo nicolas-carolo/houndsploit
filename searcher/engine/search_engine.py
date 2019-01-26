@@ -8,6 +8,8 @@ from searcher.engine.keywords_highlighter import highlight_keywords_in_descripti
 from searcher.engine.filter_query import filter_exploits_with_comparator, filter_exploits_without_comparator, \
     filter_shellcodes_with_comparator, filter_shellcodes_without_comparator
 
+N_MAX_RESULTS_NUMB_VERSION = 20000
+
 
 def search_vulnerabilities_in_db(search_text, db_table):
     """
@@ -139,8 +141,8 @@ def search_exploits_version(software_name, num_version):
     :return: a queryset with search result found in 'searcher_exploit' DB table.
     """
     queryset = Exploit.objects.filter(description__icontains=software_name)
-    # this if condition fix 'Expression Tree is to large' bug
-    if queryset.count() > 1000:
+    # limit the time spent for searching useless results.
+    if queryset.count() > N_MAX_RESULTS_NUMB_VERSION:
         return Exploit.objects.none()
     for exploit in queryset:
         # if exploit not contains '<'
@@ -161,8 +163,8 @@ def search_shellcodes_version(software_name, num_version):
     :return: a queryset with search result found in 'searcher_shellcode' DB table.
     """
     queryset = Shellcode.objects.filter(description__icontains=software_name)
-    # this if condition fix 'Expression Tree is to large' bug
-    if queryset.count() > 1000:
+    # limit the time spent for searching useless results.
+    if queryset.count() > N_MAX_RESULTS_NUMB_VERSION:
         return Shellcode.objects.none()
     for shellcode in queryset:
         # if shellcode not contains '<'
