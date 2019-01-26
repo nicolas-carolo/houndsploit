@@ -79,7 +79,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'HOUNDSPLOIT',
         'USER': 'hound-user',
-        'PASSWORD': 'hound-password',
+        'PASSWORD': 'Hound-password9',
         'HOST': 'localhost',
         'PORT': '3306',
     }
