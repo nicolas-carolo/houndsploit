@@ -18,12 +18,17 @@ def get_results_table(request):
         form = SimpleSearchForm(request.POST)
         if form.is_valid():
             search_text = form.cleaned_data['search_text']
+            exploits_results = search_vulnerabilities_in_db(search_text, 'searcher_exploit')
+            for result in exploits_results:
+                if result.port is None:
+                    result.port = ''
+            shellcodes_results = search_vulnerabilities_in_db(search_text, 'searcher_shellcode')
             return render(request, "results_table.html", {'form': form,
                                                           'searched_item': str(search_text),
-                                                          'exploits_results': search_vulnerabilities_in_db(search_text, 'searcher_exploit'),
-                                                          'n_exploits_results': len(search_vulnerabilities_in_db(search_text,'searcher_exploit')),
-                                                          'shellcodes_results': search_vulnerabilities_in_db(search_text, 'searcher_shellcode'),
-                                                          'n_shellcodes_results': len(search_vulnerabilities_in_db(search_text, 'searcher_shellcode'))
+                                                          'exploits_results': exploits_results,
+                                                          'n_exploits_results': len(exploits_results),
+                                                          'shellcodes_results': shellcodes_results,
+                                                          'n_shellcodes_results': len(shellcodes_results)
                                                           })
         else:
             form = SimpleSearchForm()
@@ -142,14 +147,19 @@ def get_results_table_advanced(request):
             start_date_filter = form.cleaned_data['start_date']
             end_date_filter = form.cleaned_data['end_date']
 
-            func_exploits = search_vulnerabilities_advanced(search_text,'searcher_exploit', operator_filter, type_filter, platform_filter, author_filter, port_filter, start_date_filter, end_date_filter)
-            func_shellcodes = search_vulnerabilities_advanced(search_text, 'searcher_shellcode', operator_filter, type_filter, platform_filter, author_filter, port_filter, start_date_filter, end_date_filter)
+            exploits_results = search_vulnerabilities_advanced(search_text,'searcher_exploit', operator_filter, type_filter, platform_filter, author_filter, port_filter, start_date_filter, end_date_filter)
+            shellcodes_results = search_vulnerabilities_advanced(search_text, 'searcher_shellcode', operator_filter, type_filter, platform_filter, author_filter, port_filter, start_date_filter, end_date_filter)
+
+            for result in exploits_results:
+                if result.port is None:
+                    result.port = ''
+
             return render(request, 'advanced_results_table.html', {'form': form,
                                                                    'searched_item': str(search_text),
-                                                                   'exploits_results': func_exploits,
-                                                                   'n_exploits_results': len(func_exploits),
-                                                                   'shellcodes_results': func_shellcodes,
-                                                                   'n_shellcodes_results': len(func_shellcodes)
+                                                                   'exploits_results': exploits_results,
+                                                                   'n_exploits_results': len(exploits_results),
+                                                                   'shellcodes_results': shellcodes_results,
+                                                                   'n_shellcodes_results': len(shellcodes_results)
                                                                    })
         else:
             form = AdvancedSearchForm()
