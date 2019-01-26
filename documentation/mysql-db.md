@@ -1,4 +1,4 @@
-# How create a MySQL DB for HoundSploit
+# How to create a MySQL DB for HoundSploit
 
 ## Download and configure MySQL
 
