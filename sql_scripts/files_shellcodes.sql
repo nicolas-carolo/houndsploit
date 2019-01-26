@@ -1,11 +1,15 @@
+USE HOUNDSPLOIT;
+
+DROP TABLE IF EXISTS searcher_shellcode;
+
 CREATE TABLE searcher_shellcode(
-   id                 INTEGER  NOT NULL PRIMARY KEY 
-  ,file               VARCHAR(35) NOT NULL
-  ,description        VARCHAR(174) NOT NULL
-  ,date               DATE  NOT NULL
-  ,author             VARCHAR(30) NOT NULL
-  ,vulnerability_type VARCHAR(9) NOT NULL
-  ,platform           VARCHAR(14) NOT NULL
+	id                 INTEGER  NOT NULL PRIMARY KEY,
+	file               VARCHAR(35) NOT NULL,
+	description        VARCHAR(174) NOT NULL,
+	date               DATE  NOT NULL,
+    author             VARCHAR(30) NOT NULL,
+    vulnerability_type VARCHAR(9) NOT NULL,
+    platform           VARCHAR(14) NOT NULL
 );
 INSERT INTO searcher_shellcode(id,file,description,date,author,vulnerability_type,platform) VALUES (14113,'shellcodes/arm/14113.c','Linux/ARM - setuid(0) + execve(_/bin/sh___/bin/sh__0) Shellcode (38 bytes)','2010-06-29','Jonathan Salwan','shellcode','arm');
 INSERT INTO searcher_shellcode(id,file,description,date,author,vulnerability_type,platform) VALUES (13241,'shellcodes/aix/13241.c','AIX - execve(/bin/sh) Shellcode (88 bytes)','2004-09-26','Georgi Guninski','shellcode','aix');
