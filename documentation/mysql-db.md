@@ -41,7 +41,7 @@
 **N.B.:** In this guide I am going to describe the procedure using _MySQLWorkbench_.
 
 1. Open _MySQLWorkbench_.
-2. Create a new connection named `HOUNDSPLOIT`.
+2. Create a new connection named `HOUNDSPLOIT` on `localhost` (IP address `127.0.0.1`) and port `3306`.
 3. Create a new schema named `HOUNDSPLOIT` and select `utf32` as `Character set` and `Default Collation` as `Collation`. This choice is necessary because some vulnerabilities' authors have names that contain a set of characters that belong to a great variety of alphabets.
 4. Create `searcher_exploit` and `searcher_shellcode` tables executing `files_exploits.sql` and `files_shellcodes.sql` scripts.
 5. Create a new db user:
