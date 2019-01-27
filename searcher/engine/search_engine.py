@@ -70,7 +70,6 @@ def search_vulnerabilities_for_description(search_text, db_table):
     :param db_table: the DB table in which we want to perform the search.
     :return: a queryset with search results.
     """
-    # I have installed reduce
     words_list = str(search_text).split()
     query = reduce(operator.and_, (Q(description__icontains=word) for word in words_list))
     if db_table == 'searcher_exploit':
