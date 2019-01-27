@@ -140,12 +140,12 @@ def is_in_version_range_with_x(num_version, software_name, description):
 
 def is_equal_with_x(num_version, num_to_compare):
     """
-    Check if the number of version searched by the user is equal to the number of version (with x) of the software contained
-    in the vulnerability's description.
+    Check if the number of version searched by the user is equal to the number of version (with x) of the software
+    contained in the vulnerability's description.
     :param num_version: the number of version searched by the user.
     :param num_to_compare: the number of version (containing the x) in the vulnerability's description.
-    :return: True if the number of version searched by the user is equal to the number of version (with x) of the software contained
-                in the vulnerability's description.
+    :return: True if the number of version searched by the user is equal to the number of version (with x) of the
+                software contained in the vulnerability's description.
     """
     version_precision = str(num_to_compare).count('.')
     try:

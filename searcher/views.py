@@ -57,11 +57,12 @@ def view_exploit_code(request, exploit_id):
                                                     'vulnerability_file': exploit.file,
                                                     'vulnerability_author': exploit.author,
                                                     'vulnerability_date': exploit.date,
-                                                    'vulnerability_type': exploit.vulnerability_type,
+                                                    'type': exploit.type,
                                                     'vulnerability_platform': exploit.platform,
                                                     'vulnerability_port': exploit.port,
                                                     'file_path': file_path,
-                                                    'file_name': exploit.description + get_vulnerability_extension(exploit.file),
+                                                    'file_name': exploit.description
+                                                    + get_vulnerability_extension(exploit.file),
                                                     })
     except FileNotFoundError:
         error_msg = 'Sorry! This file does not exist :('
@@ -87,10 +88,11 @@ def view_shellcode_code(request, shellcode_id):
                                                     'vulnerability_file': shellcode.file,
                                                     'vulnerability_author': shellcode.author,
                                                     'vulnerability_date': shellcode.date,
-                                                    'vulnerability_type': shellcode.vulnerability_type,
+                                                    'type': shellcode.type,
                                                     'vulnerability_platform': shellcode.platform,
                                                     'file_path': file_path,
-                                                    'file_name': shellcode.description + get_vulnerability_extension(shellcode.file),
+                                                    'file_name': shellcode.description
+                                                    + get_vulnerability_extension(shellcode.file),
                                                     })
     except FileNotFoundError:
         error_msg = 'Sorry! This file does not exist :('
@@ -147,8 +149,12 @@ def get_results_table_advanced(request):
             start_date_filter = form.cleaned_data['start_date']
             end_date_filter = form.cleaned_data['end_date']
 
-            exploits_results = search_vulnerabilities_advanced(search_text,'searcher_exploit', operator_filter, type_filter, platform_filter, author_filter, port_filter, start_date_filter, end_date_filter)
-            shellcodes_results = search_vulnerabilities_advanced(search_text, 'searcher_shellcode', operator_filter, type_filter, platform_filter, author_filter, port_filter, start_date_filter, end_date_filter)
+            exploits_results = search_vulnerabilities_advanced(search_text,'searcher_exploit', operator_filter,
+                                                               type_filter, platform_filter, author_filter, port_filter,
+                                                               start_date_filter, end_date_filter)
+            shellcodes_results = search_vulnerabilities_advanced(search_text, 'searcher_shellcode', operator_filter,
+                                                                 type_filter, platform_filter, author_filter,
+                                                                 port_filter, start_date_filter, end_date_filter)
 
             for result in exploits_results:
                 if result.port is None:

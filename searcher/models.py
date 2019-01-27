@@ -10,7 +10,7 @@ class Exploit(models.Model):
     description = models.TextField()
     date = models.DateField()
     author = models.TextField()
-    vulnerability_type = models.TextField()
+    type = models.TextField()
     platform = models.TextField()
     port = models.TextField()
 
@@ -24,5 +24,5 @@ class Shellcode(models.Model):
     description = models.TextField()
     date = models.DateField()
     author = models.TextField()
-    vulnerability_type = models.TextField()
+    type = models.TextField()
     platform = models.TextField()

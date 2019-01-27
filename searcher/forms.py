@@ -10,22 +10,23 @@ OPERATOR_CHOICES = [
 
 def get_type_values():
     """
-    Get a list containing all the values that 'vulnerability_type' attribute can assume.
-    :return: a list containing all the values that 'vulnerability_type' attribute could assume.
+    Get a list containing all the values that 'type' attribute can assume.
+    :return: a list containing all the values that 'type' attribute could assume.
     """
     index = 1
     type_choices = [(0, 'All')]
     type_list = []
-    queryset = Exploit.objects.order_by().values('vulnerability_type').distinct().exclude(vulnerability_type__exact='')
-    for vulnerability_type in queryset:
-        type_list.append(dict(vulnerability_type).get('vulnerability_type'))
-    queryset = Shellcode.objects.order_by().values('vulnerability_type').distinct().exclude(vulnerability_type__exact='')
-    for vulnerability_type in queryset:
-        if not type_list.__contains__(dict(vulnerability_type).get('vulnerability_type')):
-            type_list.append(dict(vulnerability_type).get('vulnerability_type'))
+    queryset = Exploit.objects.order_by().values('type').distinct().exclude(type__exact='')
+    for type in queryset:
+        type_list.append(dict(type).get('type'))
+    queryset = Shellcode.objects.order_by().values('type').distinct()\
+        .exclude(type__exact='')
+    for type in queryset:
+        if not type_list.__contains__(dict(type).get('type')):
+            type_list.append(dict(type).get('type'))
     type_list = sorted(type_list)
-    for vulnerability_type in type_list:
-        type_choices.append((index, vulnerability_type))
+    for type in type_list:
+        type_choices.append((index, type))
         index = index + 1
     return type_choices
 

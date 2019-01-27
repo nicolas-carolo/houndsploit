@@ -65,7 +65,8 @@ def search_vulnerabilities_numerical(search_text, db_table):
 
 def search_vulnerabilities_for_description(search_text, db_table):
     """
-    Perform a search based on vulnerabilities' description for an input search that does not contain a number of version.
+    Perform a search based on vulnerabilities' description for an input search that does not contain a number
+    of version.
     :param search_text: the search input.
     :param db_table: the DB table in which we want to perform the search.
     :return: a queryset with search results.
@@ -212,7 +213,7 @@ def search_vulnerabilities_advanced(search_text, db_table, operator_filter, type
         else:
             queryset = Shellcode.objects.all()
     if type_filter != 'All':
-        queryset = queryset.filter(vulnerability_type__exact=type_filter)
+        queryset = queryset.filter(type__exact=type_filter)
     if platform_filter != 'All':
         queryset = queryset.filter(platform__exact=platform_filter)
     if author_filter != '':
@@ -287,7 +288,7 @@ def search_vulnerabilities_for_text_input_advanced(search_text, db_table, type_f
         queryset = Shellcode.objects.filter(description__icontains=search_text)
 
     if type_filter != 'All':
-        queryset = queryset.filter(vulnerability_type__exact=type_filter)
+        queryset = queryset.filter(type__exact=type_filter)
     if platform_filter != 'All':
         queryset = queryset.filter(platform__exact=platform_filter)
     if author_filter != '':
