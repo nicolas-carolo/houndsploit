@@ -1,3 +1,5 @@
+USE HOUNDSPLOIT;
+
 DROP TABLE IF EXISTS searcher_shellcode;
 CREATE TABLE searcher_shellcode(
 	id          INTEGER  NOT NULL PRIMARY KEY,
@@ -8,6 +10,7 @@ CREATE TABLE searcher_shellcode(
 	type        VARCHAR(9) NOT NULL,
 	platform    VARCHAR(14) NOT NULL
 );
+
 INSERT INTO searcher_shellcode(id,file,description,date,author,type,platform) VALUES (14113,'shellcodes/arm/14113.c','Linux/ARM - setuid(0) + execve(_/bin/sh___/bin/sh__0) Shellcode (38 bytes)','2010-06-29','Jonathan Salwan','shellcode','arm');
 INSERT INTO searcher_shellcode(id,file,description,date,author,type,platform) VALUES (13241,'shellcodes/aix/13241.c','AIX - execve(/bin/sh) Shellcode (88 bytes)','2004-09-26','Georgi Guninski','shellcode','aix');
 INSERT INTO searcher_shellcode(id,file,description,date,author,type,platform) VALUES (13242,'shellcodes/bsd/13242.txt','BSD - Reverse (127.0.0.1:31337/TCP) Shell (/bin/sh) Shellcode (124 bytes)','2000-11-19','Scrippie','shellcode','bsd');

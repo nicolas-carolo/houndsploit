@@ -26,3 +26,12 @@ class Shellcode(models.Model):
     author = models.TextField()
     type = models.TextField()
     platform = models.TextField()
+
+
+class Suggestion(models.Model):
+    """
+    The object Suggestion is used to help the user to search for the most common results.
+    """
+    searched = models.TextField(primary_key=True)
+    suggestion = models.TextField(null=False)
+    replace_searched = models.BooleanField(null=False)

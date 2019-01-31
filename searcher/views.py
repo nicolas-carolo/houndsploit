@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from searcher.engine.search_engine import search_vulnerabilities_in_db, search_vulnerabilities_advanced
+from searcher.engine.search_engine import search_vulnerabilities_in_db, search_vulnerabilities_advanced,\
+    substitute_with_suggestions
 from searcher.models import Exploit, Shellcode
 import os
 import re
@@ -17,7 +18,8 @@ def get_results_table(request):
     if request.POST:
         form = SimpleSearchForm(request.POST)
         if form.is_valid():
-            search_text = form.cleaned_data['search_text']
+            user_input = form.cleaned_data['search_text']
+            search_text = substitute_with_suggestions(user_input)
             exploits_results = search_vulnerabilities_in_db(search_text, 'searcher_exploit')
             for result in exploits_results:
                 if result.port is None:

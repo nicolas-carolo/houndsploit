@@ -1,5 +1,5 @@
 from functools import reduce
-from searcher.models import Exploit, Shellcode
+from searcher.models import Exploit, Shellcode, Suggestion
 from django.db.models import Q
 import operator
 from searcher.engine.string import str_is_num_version
@@ -303,3 +303,14 @@ def search_vulnerabilities_for_text_input_advanced(search_text, db_table, type_f
     elif port_filter is not None and db_table == 'searcher_shellcode':
         queryset = Shellcode.objects.none()
     return queryset
+
+
+def substitute_with_suggestions(search_text):
+    words = str(search_text).split()
+    for word in words:
+        suggestion_queryset = Suggestion.objects.filter(searched__iexact=word);
+        if suggestion_queryset.count() == 1:
+            if suggestion_queryset[0].replace_searched is True:
+                word_suggested = suggestion_queryset[0].suggestion
+                search_text = str(search_text).replace(word, word_suggested)
+    return search_text
