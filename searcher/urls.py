@@ -7,5 +7,6 @@ urlpatterns = [
     url(r'^shellcode_view/(?P<shellcode_id>\d+)', views.view_shellcode_code, name='view_shellcode_code'),
     url(r'^help/', views.show_help, name='show_help'),
     url(r'^about/', views.show_info, name='show_info'),
-    url(r'^advanced/$', views.get_results_table_advanced, name='get_results_table_advanced')
+    url(r'^advanced/$', views.get_results_table_advanced, name='get_results_table_advanced'),
+    url(r'^search_suggested/(?P<suggested_input>[^/]*)', views.change_user_input, name='change_user_input')
 ]

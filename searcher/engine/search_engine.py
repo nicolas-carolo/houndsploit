@@ -314,3 +314,17 @@ def substitute_with_suggestions(search_text):
                 word_suggested = suggestion_queryset[0].suggestion
                 search_text = str(search_text).replace(word, word_suggested)
     return search_text
+
+
+def propose_suggestions(search_text):
+    search_text = str(search_text).upper()
+    suggested_search_text = ''
+    words = str(search_text).split()
+    for word in words:
+        suggestion_queryset = Suggestion.objects.filter(searched__iexact=word)
+        if suggestion_queryset.count() == 1:
+            if suggestion_queryset[0].replace_searched is False and \
+                    not search_text.__contains__(str(suggestion_queryset[0].suggestion).upper()):
+                word_suggested = suggestion_queryset[0].suggestion
+                suggested_search_text = str(search_text).replace(word, word_suggested)
+    return suggested_search_text

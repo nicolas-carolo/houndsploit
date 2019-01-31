@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from searcher.engine.search_engine import search_vulnerabilities_in_db, search_vulnerabilities_advanced,\
-    substitute_with_suggestions
+    substitute_with_suggestions, propose_suggestions
 from searcher.models import Exploit, Shellcode
 import os
 import re
@@ -20,6 +20,7 @@ def get_results_table(request):
         if form.is_valid():
             user_input = form.cleaned_data['search_text']
             search_text = substitute_with_suggestions(user_input)
+            suggested_search_text = propose_suggestions(user_input)
             exploits_results = search_vulnerabilities_in_db(search_text, 'searcher_exploit')
             for result in exploits_results:
                 if result.port is None:
@@ -30,7 +31,8 @@ def get_results_table(request):
                                                           'exploits_results': exploits_results,
                                                           'n_exploits_results': len(exploits_results),
                                                           'shellcodes_results': shellcodes_results,
-                                                          'n_shellcodes_results': len(shellcodes_results)
+                                                          'n_shellcodes_results': len(shellcodes_results),
+                                                          'suggested_search_text': suggested_search_text
                                                           })
         else:
             form = SimpleSearchForm()
@@ -177,3 +179,22 @@ def get_results_table_advanced(request):
     else:
         form = AdvancedSearchForm()
         return render(request, 'advanced_searcher.html', {'form': form})
+
+
+def change_user_input(request, suggested_input):
+    form = SimpleSearchForm()
+    print(suggested_input)
+    form.initial['search_text'] = suggested_input
+    exploits_results = search_vulnerabilities_in_db(suggested_input, 'searcher_exploit')
+    for result in exploits_results:
+        if result.port is None:
+            result.port = ''
+    shellcodes_results = search_vulnerabilities_in_db(suggested_input, 'searcher_shellcode')
+    return render(request, "results_table.html", {'form': form,
+                                                  'searched_item': str(suggested_input),
+                                                  'exploits_results': exploits_results,
+                                                  'n_exploits_results': len(exploits_results),
+                                                  'shellcodes_results': shellcodes_results,
+                                                  'n_shellcodes_results': len(shellcodes_results)
+                                                  })
+
