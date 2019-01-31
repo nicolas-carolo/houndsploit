@@ -282,6 +282,8 @@ def search_vulnerabilities_for_text_input_advanced(search_text, db_table, type_f
     :param end_date_filter: the filter on the vulnerabilities' date (to).
     :return: a queryset containing all the search results.
     """
+    print('date: ', start_date_filter, end_date_filter)
+
     if db_table == 'searcher_exploit':
         queryset = Exploit.objects.filter(description__icontains=search_text)
     else:

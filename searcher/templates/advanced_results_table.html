@@ -2,6 +2,9 @@
 {% block results_form %}
     <form>
         <h4>{{ n_exploits_results }} <a href="#exploits_list">exploits</a> and {{ n_shellcodes_results }} <a href="#shellcodes_list">shellcodes</a> found for "{{ searched_item }}"</h4>
+        {% if suggested_search_text %}
+            <h4>Search instead for "<a href="/searcher/search_suggested_advanced/{{ suggested_search_text }}">{{ suggested_search_text }}</a>"</h4>
+        {% endif %}
         {% if n_exploits_results > 0 %}
             <a name="exploits_list"><h2 class="vulnerability_type">Exploits</h2></a>
             <table>

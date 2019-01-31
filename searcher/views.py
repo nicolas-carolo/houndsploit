@@ -141,7 +141,9 @@ def get_results_table_advanced(request):
     if request.POST:
         form = AdvancedSearchForm(request.POST)
         if form.is_valid() and is_date_range_valid(form.cleaned_data['start_date'], form.cleaned_data['end_date']):
-            search_text = form.cleaned_data['search_text']
+            user_input = form.cleaned_data['search_text']
+            search_text = substitute_with_suggestions(user_input)
+            suggested_search_text = propose_suggestions(user_input)
             operator_filter_index = int(form.cleaned_data['operator'])
             operator_filter = OPERATOR_CHOICES.__getitem__(operator_filter_index)[1]
             type_filter_index = int(form.cleaned_data['type'])
@@ -169,7 +171,8 @@ def get_results_table_advanced(request):
                                                                    'exploits_results': exploits_results,
                                                                    'n_exploits_results': len(exploits_results),
                                                                    'shellcodes_results': shellcodes_results,
-                                                                   'n_shellcodes_results': len(shellcodes_results)
+                                                                   'n_shellcodes_results': len(shellcodes_results),
+                                                                   'suggested_search_text': suggested_search_text
                                                                    })
         else:
             form = AdvancedSearchForm()
@@ -183,7 +186,6 @@ def get_results_table_advanced(request):
 
 def change_user_input(request, suggested_input):
     form = SimpleSearchForm()
-    print(suggested_input)
     form.initial['search_text'] = suggested_input
     exploits_results = search_vulnerabilities_in_db(suggested_input, 'searcher_exploit')
     for result in exploits_results:
@@ -197,4 +199,41 @@ def change_user_input(request, suggested_input):
                                                   'shellcodes_results': shellcodes_results,
                                                   'n_shellcodes_results': len(shellcodes_results)
                                                   })
+
+
+def change_user_input_advanced(request, suggested_input):
+    form = AdvancedSearchForm(initial={'operator': '0', 'type': '0', 'platform': '0'})
+    print(suggested_input)
+    form.initial['search_text'] = suggested_input
+    form.initial['author'] = ''
+    form.initial['port'] = None
+    form.initial['start_date'] = None
+    form.initial['end_date'] = None
+
+    operator_filter = 'AND'
+    type_filter = 'All'
+    platform_filter = 'All'
+    author_filter = ''
+    port_filter = None
+    start_date_filter = None
+    end_date_filter = None
+
+    exploits_results = search_vulnerabilities_advanced(suggested_input, 'searcher_exploit', operator_filter,
+                                                       type_filter, platform_filter, author_filter, port_filter,
+                                                       start_date_filter, end_date_filter)
+    shellcodes_results = search_vulnerabilities_advanced(suggested_input, 'searcher_shellcode', operator_filter,
+                                                         type_filter, platform_filter, author_filter,
+                                                         port_filter, start_date_filter, end_date_filter)
+
+    for result in exploits_results:
+        if result.port is None:
+            result.port = ''
+
+    return render(request, "advanced_results_table.html", {'form': form,
+                                                            'searched_item': str(suggested_input),
+                                                            'exploits_results': exploits_results,
+                                                            'n_exploits_results': len(exploits_results),
+                                                            'shellcodes_results': shellcodes_results,
+                                                            'n_shellcodes_results': len(shellcodes_results)
+                                                            })
 
