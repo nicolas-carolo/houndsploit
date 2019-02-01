@@ -311,29 +311,23 @@ def search_vulnerabilities_for_text_input_advanced(search_text, db_table, type_f
 
 
 def substitute_with_suggestions(search_text):
-    words = str(search_text).split()
-    for word in words:
-        suggestion_queryset = Suggestion.objects.filter(searched__iexact=word);
-        if suggestion_queryset.count() == 1:
-            if suggestion_queryset[0].replace_searched is True:
-                word_suggested = suggestion_queryset[0].suggestion
-                search_text = str(search_text).replace(word, word_suggested)
+    suggestions = Suggestion.objects.all()
+    for suggested_word in suggestions:
+        if search_text.lower().__contains__(suggested_word.searched.lower())\
+                and suggested_word.replace_searched is True:
+            print('search_text: ', search_text.lower(), 'searched: ', suggested_word.searched, 'suggestion: ', suggested_word.suggestion)
+            search_text = str(search_text.lower()).replace(suggested_word.searched.lower(), suggested_word.suggestion.lower())
     return search_text
 
 
 def propose_suggestions(search_text):
-    search_text = str(search_text).upper()
     suggested_search_text = ''
-    words = str(search_text).split()
-    for word in words:
-        suggestion_queryset = Suggestion.objects.filter(searched__iexact=word)
-        if suggestion_queryset.count() == 1:
-            if suggestion_queryset[0].replace_searched is False and \
-                    not search_text.__contains__(str(suggestion_queryset[0].suggestion).upper()):
-                word_suggested = suggestion_queryset[0].suggestion
-                suggested_search_text = str(search_text).replace(word, word_suggested)
+    suggestions = Suggestion.objects.all()
+    for suggested_word in suggestions:
+        if search_text.lower().__contains__(suggested_word.searched.lower()) \
+                and suggested_word.replace_searched is False:
+            print('search_text: ', search_text.lower(), 'searched: ', suggested_word.searched, 'suggestion: ',
+                  suggested_word.suggestion)
+            suggested_search_text = str(search_text.lower()).replace(suggested_word.searched.lower(),
+                                                                     suggested_word.suggestion.lower())
     return suggested_search_text
-
-
-def get_link_suggested_search_advanced():
-    pass
