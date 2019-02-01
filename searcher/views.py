@@ -156,12 +156,17 @@ def get_results_table_advanced(request):
             start_date_filter = form.cleaned_data['start_date']
             end_date_filter = form.cleaned_data['end_date']
 
+            if author_filter == '':
+                author_filter_link = '_None_'
+            else:
+                author_filter_link = author_filter
+
             relative_suggested_link = None
             if not suggested_search_text == '':
                 relative_suggested_link = suggested_search_text + '/' + str(operator_filter_index)\
                                           + '/' + str(type_filter_index) + '/' + str(platform_filter_index) + '/'\
-                                          + author_filter + '/' + str(port_filter) + '/' + str(start_date_filter) + '/'\
-                                          + str(end_date_filter)
+                                          + author_filter_link + '/' + str(port_filter) + '/' + str(start_date_filter)\
+                                          + '/' + str(end_date_filter)
 
             exploits_results = search_vulnerabilities_advanced(search_text,'searcher_exploit', operator_filter,
                                                                type_filter, platform_filter, author_filter, port_filter,
@@ -225,6 +230,9 @@ def change_user_input_advanced(request, suggested_input, operator_index, type_in
     except ValueError:
         start_date_filter = None
         end_date_filter = None
+
+    if author == '_None_':
+        author = ''
 
     form.initial['search_text'] = suggested_input
     form.initial['author'] = author
