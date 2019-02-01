@@ -1,4 +1,7 @@
 from functools import reduce
+
+from django.core.exceptions import ValidationError
+
 from searcher.models import Exploit, Shellcode, Suggestion
 from django.db.models import Q
 import operator
@@ -297,6 +300,8 @@ def search_vulnerabilities_for_text_input_advanced(search_text, db_table, type_f
         queryset = queryset.filter(date__gte=start_date_filter)
         queryset = queryset.filter(date__lte=end_date_filter)
     except ValueError:
+        pass
+    except ValidationError:
         pass
     if port_filter is not None and db_table == 'searcher_exploit':
         queryset = queryset.filter(port__exact=port_filter)

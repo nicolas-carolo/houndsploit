@@ -7,6 +7,7 @@ import re
 from searcher.forms import AdvancedSearchForm, SimpleSearchForm
 from searcher.forms import OPERATOR_CHOICES, get_type_values, get_platform_values
 from searcher.engine.date_validator import is_date_range_valid
+import datetime
 
 
 def get_results_table(request):
@@ -217,6 +218,14 @@ def change_user_input_advanced(request, suggested_input, operator_index, type_in
         port_int = int(port)
     except ValueError:
         port_int = None
+
+    try:
+        start_date_filter = datetime.datetime.strptime(start_date, '%Y-%m-%d')
+        end_date_filter = datetime.datetime.strptime(end_date, '%Y-%m-%d')
+    except ValueError:
+        start_date_filter = None
+        end_date_filter = None
+
     form.initial['search_text'] = suggested_input
     form.initial['author'] = author
     form.initial['port'] = port_int
@@ -228,8 +237,6 @@ def change_user_input_advanced(request, suggested_input, operator_index, type_in
     platform_filter = get_platform_values().__getitem__(int(platform_index))[1]
     author_filter = author
     port_filter = port_int
-    start_date_filter = start_date
-    end_date_filter = end_date
 
     exploits_results = search_vulnerabilities_advanced(suggested_input, 'searcher_exploit', operator_filter,
                                                        type_filter, platform_filter, author_filter, port_filter,
