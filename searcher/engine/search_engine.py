@@ -2,7 +2,7 @@ from functools import reduce
 
 from django.core.exceptions import ValidationError
 
-from searcher.models import Exploit, Shellcode, Suggestion
+from searcher.models import Exploit, Shellcode
 from django.db.models import Q
 import operator
 from searcher.engine.string import str_is_num_version
@@ -308,34 +308,3 @@ def search_vulnerabilities_for_text_input_advanced(search_text, db_table, type_f
     elif port_filter is not None and db_table == 'searcher_shellcode':
         queryset = Shellcode.objects.none()
     return queryset
-
-
-def substitute_with_suggestions(search_text):
-    """
-    Substitute automatically an user's input with an appropriate suggestion.
-    :param search_text: the user's input.
-    :return: the new input to use for the search.
-    """
-    suggestions = Suggestion.objects.all()
-    for suggested_word in suggestions:
-        if search_text.lower().__contains__(suggested_word.searched.lower())\
-                and suggested_word.replace_searched is True:
-            search_text = str(search_text.lower()).replace(suggested_word.searched.lower(),
-                                                           suggested_word.suggestion.lower())
-    return search_text
-
-
-def propose_suggestions(search_text):
-    """
-    Suggest to the user a related search that he can do.
-    :param search_text: the user's input.
-    :return: the suggested search.
-    """
-    suggested_search_text = ''
-    suggestions = Suggestion.objects.all()
-    for suggested_word in suggestions:
-        if search_text.lower().__contains__(suggested_word.searched.lower()) \
-                and suggested_word.replace_searched is False:
-            suggested_search_text = str(search_text.lower()).replace(suggested_word.searched.lower(),
-                                                                     suggested_word.suggestion.lower())
-    return suggested_search_text

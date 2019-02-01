@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from searcher.engine.search_engine import search_vulnerabilities_in_db, search_vulnerabilities_advanced,\
-    substitute_with_suggestions, propose_suggestions
+from searcher.engine.search_engine import search_vulnerabilities_in_db, search_vulnerabilities_advanced
+from searcher.engine.suggestions import substitute_with_suggestions, propose_suggestions
 from searcher.models import Exploit, Shellcode
 import os
 import re
