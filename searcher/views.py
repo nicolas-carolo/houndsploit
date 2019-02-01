@@ -198,7 +198,13 @@ def get_results_table_advanced(request):
         return render(request, 'advanced_searcher.html', {'form': form})
 
 
-def change_user_input(request, suggested_input):
+def suggested_search(request, suggested_input):
+    """
+    Perform the suggested search.
+    :param request: the HTTP request.
+    :param suggested_input: the suggested input.
+    :return: results_table.html template with search results.
+    """
     form = SimpleSearchForm()
     form.initial['search_text'] = suggested_input
     exploits_results = search_vulnerabilities_in_db(suggested_input, 'searcher_exploit')
@@ -215,8 +221,21 @@ def change_user_input(request, suggested_input):
                                                   })
 
 
-def change_user_input_advanced(request, suggested_input, operator_index, type_index, platform_index, author, port,
-                               start_date, end_date):
+def suggested_search_advanced(request, suggested_input, operator_index, type_index, platform_index, author, port,
+                              start_date, end_date):
+    """
+    Perform the advanced suggested search.
+    :param request: the HTTP request.
+    :param suggested_input: the suggested input.
+    :param operator_index: the index related to the selected operator filter.
+    :param type_index: the index related to the selected type filter.
+    :param platform_index: the index related to the selected platform filter.
+    :param author: the author filter.
+    :param port: the port filter.
+    :param start_date: the start date filter.
+    :param end_date: the end date filter.
+    :return: advanced_results_table.html template with advanced search results.
+    """
     form = AdvancedSearchForm(initial={'operator': int(operator_index), 'type': int(type_index),
                                        'platform': int(platform_index)})
     try:
