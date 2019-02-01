@@ -1,16 +1,18 @@
+# Last update: February 1, 2019
+
 USE HOUNDSPLOIT;
 
 DROP TABLE IF EXISTS searcher_shellcode;
-CREATE TABLE searcher_shellcode(
-	id          INTEGER  NOT NULL PRIMARY KEY,
-	file        VARCHAR(35) NOT NULL,
-	description VARCHAR(174) NOT NULL,
-	date        DATE  NOT NULL,
-	author      VARCHAR(30) NOT NULL,
-	type        VARCHAR(9) NOT NULL,
-	platform    VARCHAR(14) NOT NULL
-);
 
+CREATE TABLE searcher_shellcode(
+   id          INTEGER  NOT NULL PRIMARY KEY 
+  ,file        VARCHAR(35) NOT NULL
+  ,description VARCHAR(174) NOT NULL
+  ,date        DATE  NOT NULL
+  ,author      VARCHAR(30) NOT NULL
+  ,type        VARCHAR(9) NOT NULL
+  ,platform    VARCHAR(14) NOT NULL
+);
 INSERT INTO searcher_shellcode(id,file,description,date,author,type,platform) VALUES (14113,'shellcodes/arm/14113.c','Linux/ARM - setuid(0) + execve(_/bin/sh___/bin/sh__0) Shellcode (38 bytes)','2010-06-29','Jonathan Salwan','shellcode','arm');
 INSERT INTO searcher_shellcode(id,file,description,date,author,type,platform) VALUES (13241,'shellcodes/aix/13241.c','AIX - execve(/bin/sh) Shellcode (88 bytes)','2004-09-26','Georgi Guninski','shellcode','aix');
 INSERT INTO searcher_shellcode(id,file,description,date,author,type,platform) VALUES (13242,'shellcodes/bsd/13242.txt','BSD - Reverse (127.0.0.1:31337/TCP) Shell (/bin/sh) Shellcode (124 bytes)','2000-11-19','Scrippie','shellcode','bsd');
@@ -943,3 +945,10 @@ INSERT INTO searcher_shellcode(id,file,description,date,author,type,platform) VA
 INSERT INTO searcher_shellcode(id,file,description,date,author,type,platform) VALUES (46103,'shellcodes/linux_x86/46103.c','Linux/x86 - wget chmod execute over execve /bin/sh -c Shellcode (119 bytes)','2019-01-09','strider','shellcode','linux_x86');
 INSERT INTO searcher_shellcode(id,file,description,date,author,type,platform) VALUES (46123,'shellcodes/generator/46123.py','Windows/x86 - Download With TFTP And Execute Shellcode (51-60 bytes) (Generator)','2019-01-11','Semen Alexandrovich Lyhin','shellcode','generator');
 INSERT INTO searcher_shellcode(id,file,description,date,author,type,platform) VALUES (46166,'shellcodes/linux_x86/46166.c','Linux/x86 - Bind (4444/TCP) Shell (/bin/sh) Shellcode (100 bytes)','2019-01-15','Joao Batista','shellcode','linux_x86');
+INSERT INTO searcher_shellcode(id,file,description,date,author,type,platform) VALUES (46275,'shellcodes/linux_x86/46275.c','Linux/x86 - execve() - Terminal Calculator (bc) Shellcode (53 bytes)','2019-01-29','Daniele Votta','shellcode','linux_x86');
+INSERT INTO searcher_shellcode(id,file,description,date,author,type,platform) VALUES (46256,'shellcodes/linux_x86/46256.c','Linux/x86 - exit(0) Shellcode (5 bytes)','2019-01-28','Daniele Votta','shellcode','linux_x86');
+INSERT INTO searcher_shellcode(id,file,description,date,author,type,platform) VALUES (46257,'shellcodes/linux_x86/46257.c','Linux/x86 - Read /etc/passwd Shellcode (58 Bytes) (2)','2019-01-28','Joao Batista','shellcode','linux_x86');
+INSERT INTO searcher_shellcode(id,file,description,date,author,type,platform) VALUES (46258,'shellcodes/arm/46258.s','Linux/ARM - Reverse TCP (192.168.1.124:4321) Shell (/bin/sh) Shellcode (64 bytes)','2019-01-28','Gokul Babu','shellcode','arm');
+INSERT INTO searcher_shellcode(id,file,description,date,author,type,platform) VALUES (46281,'shellcodes/windows_x86/46281.c','Windows/x86 - ''msiexec.exe'' Download and Execute Shellcode (95 bytes)','2019-01-30','Kartik Durg','shellcode','windows_x86');
+INSERT INTO searcher_shellcode(id,file,description,date,author,type,platform) VALUES (46264,'shellcodes/arm/46264.s','Linux/ARM -  Bind TCP (0.0.0.0:4321) Shell (/bin/sh) + Null-Free Shellcode (84 bytes)','2019-01-28','Gokul Babu','shellcode','arm');
+INSERT INTO searcher_shellcode(id,file,description,date,author,type,platform) VALUES (46277,'shellcodes/linux_x86/46277.c','Linux/x86 - execve(/bin/sh) + RShift-1 Encoded Shellcode (29 bytes)','2019-01-29','Joao Batista','shellcode','linux_x86');

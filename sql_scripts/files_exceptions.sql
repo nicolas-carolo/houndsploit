@@ -1,3 +1,5 @@
+# Last update: February 1, 2019
+
 USE HOUNDSPLOIT;
 
 DROP TABLE IF EXISTS searcher_suggestion;
