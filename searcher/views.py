@@ -155,6 +155,13 @@ def get_results_table_advanced(request):
             start_date_filter = form.cleaned_data['start_date']
             end_date_filter = form.cleaned_data['end_date']
 
+            relative_suggested_link = None
+            if not suggested_search_text == '':
+                relative_suggested_link = suggested_search_text + '/' + str(operator_filter_index)\
+                                          + '/' + str(type_filter_index) + '/' + str(platform_filter_index) + '/'\
+                                          + author_filter + '/' + str(port_filter) + '/' + str(start_date_filter) + '/'\
+                                          + str(end_date_filter)
+
             exploits_results = search_vulnerabilities_advanced(search_text,'searcher_exploit', operator_filter,
                                                                type_filter, platform_filter, author_filter, port_filter,
                                                                start_date_filter, end_date_filter)
@@ -172,7 +179,8 @@ def get_results_table_advanced(request):
                                                                    'n_exploits_results': len(exploits_results),
                                                                    'shellcodes_results': shellcodes_results,
                                                                    'n_shellcodes_results': len(shellcodes_results),
-                                                                   'suggested_search_text': suggested_search_text
+                                                                   'suggested_search_text': suggested_search_text,
+                                                                   'relative_suggested_link': relative_suggested_link
                                                                    })
         else:
             form = AdvancedSearchForm()
@@ -201,22 +209,27 @@ def change_user_input(request, suggested_input):
                                                   })
 
 
-def change_user_input_advanced(request, suggested_input):
-    form = AdvancedSearchForm(initial={'operator': '0', 'type': '0', 'platform': '0'})
-    print(suggested_input)
+def change_user_input_advanced(request, suggested_input, operator_index, type_index, platform_index, author, port,
+                               start_date, end_date):
+    form = AdvancedSearchForm(initial={'operator': int(operator_index), 'type': int(type_index),
+                                       'platform': int(platform_index)})
+    try:
+        port_int = int(port)
+    except ValueError:
+        port_int = None
     form.initial['search_text'] = suggested_input
-    form.initial['author'] = ''
-    form.initial['port'] = None
-    form.initial['start_date'] = None
-    form.initial['end_date'] = None
+    form.initial['author'] = author
+    form.initial['port'] = port_int
+    form.initial['start_date'] = start_date
+    form.initial['end_date'] = end_date
 
-    operator_filter = 'AND'
-    type_filter = 'All'
-    platform_filter = 'All'
-    author_filter = ''
-    port_filter = None
-    start_date_filter = None
-    end_date_filter = None
+    operator_filter = OPERATOR_CHOICES.__getitem__(int(operator_index))[1]
+    type_filter = get_type_values().__getitem__(int(type_index))[1]
+    platform_filter = get_platform_values().__getitem__(int(platform_index))[1]
+    author_filter = author
+    port_filter = port_int
+    start_date_filter = start_date
+    end_date_filter = end_date
 
     exploits_results = search_vulnerabilities_advanced(suggested_input, 'searcher_exploit', operator_filter,
                                                        type_filter, platform_filter, author_filter, port_filter,
