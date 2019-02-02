@@ -1,0 +1,1 @@
+Now a notification in shown if an upgrade is available

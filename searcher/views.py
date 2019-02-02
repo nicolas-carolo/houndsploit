@@ -8,6 +8,7 @@ from searcher.forms import AdvancedSearchForm, SimpleSearchForm
 from searcher.forms import OPERATOR_CHOICES, get_type_values, get_platform_values
 from searcher.engine.date_validator import is_date_range_valid
 import datetime
+from searcher.engine.updates import is_update_available
 
 
 def get_results_table(request):
@@ -119,7 +120,7 @@ def show_info(request):
     :param request: the HTTP request.
     :return: a template containing some information about the current version of HoundSploit.
     """
-    return render(request, 'about.html')
+    return render(request, 'about.html', {'update_available': is_update_available()})
 
 
 def get_vulnerability_extension(vulnerability_file):

@@ -41,3 +41,21 @@ div.code-container {
     border-collapse: collapse;
     padding: 10px;
 }
+
+div.upgrade_info {
+    text-align: center;
+    width: 40%;
+    border: 1px solid #DDDDDD;
+    background-color: #EEEEEE;
+    padding: 15px;
+    border-radius: 20px;
+    align-content: center;
+    box-shadow: 5px 5px 5px #EEEEEE;
+    margin: 20px auto 0;
+}
+
+div[name=upgrade_button_container] {
+    text-align: center;
+    width: 100%;
+    margin: 20px auto auto;
+}

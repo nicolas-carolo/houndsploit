@@ -83,6 +83,13 @@ p.vulnerability_info_bold {
     font-size: 18px;
 }
 
+p.upgrade_info {
+    display: inline;
+    font-weight: bold;
+    color: darkred;
+    font-size: 18px;
+}
+
 .info_container p {
     text-align: center;
     font-size: 18px;

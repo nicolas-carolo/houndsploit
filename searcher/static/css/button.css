@@ -55,3 +55,15 @@ button[name=advanced_search_btn]:hover {
     padding: auto;
     font-size: 20px;
 }
+
+button[name=download_upgrade_btn] {
+    width: 150px;
+    height: 55px;
+    font-size: 20px;
+}
+
+button[name=download_upgrade_btn]:hover {
+    width: 150px;
+    height: 55px;
+    font-size: 20px;
+}
