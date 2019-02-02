@@ -14,4 +14,5 @@ INSERT INTO searcher_suggestion(searched, suggestion, replace_searched) VALUES (
 INSERT INTO searcher_suggestion(searched, suggestion, replace_searched) VALUES ('PHPBB', 'PNPHPBB2', false);
 INSERT INTO searcher_suggestion(searched, suggestion, replace_searched) VALUES ('macOS', 'Mac OS X', false);
 INSERT INTO searcher_suggestion(searched, suggestion, replace_searched) VALUES ('Mac OS X', 'macOS', false);
+INSERT INTO searcher_suggestion(searched, suggestion, replace_searched) VALUES ('HTML 5', 'HTML5', true);
 
