@@ -9,3 +9,4 @@ Install these packages using pip:
 * Django
 * mysqlclient
 * functools
+* requests
