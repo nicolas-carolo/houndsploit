@@ -31,5 +31,4 @@ def propose_suggestions(search_text):
                 and not str(search_text).lower().__contains__(suggested_word.suggestion.lower()):
             suggested_search_text = str(search_text.lower()).replace(suggested_word.searched.lower(),
                                                                      suggested_word.suggestion.lower())
-            print(suggested_search_text)
     return suggested_search_text

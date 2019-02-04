@@ -1,1 +1,1 @@
-Bug fix in suggestions
+Bug fix in suggestions v.2
