@@ -59,7 +59,7 @@ scripts.
 
     password: `Hound-password9`
 
-    and remember to assign him the privileges to run `CREATE`, `INSERT`, `SELECT` operations.
+    and remember to assign him the privileges to run `ALTER`, `CREATE`, `DELETE`, `INSERT`, `REFERENCES`, `SELECT`, `UPDATE` operations.
     If you want to user other parameters for the connection to the database, such as a different user or a different
     password or a different connection name, you have to edit the configurations parameters of the constant `DATABASES`
     in `HoundSploit/settings.py`.

@@ -1,3 +1,4 @@
+from django.db.models import Max
 from django.shortcuts import render
 from searcher.engine.search_engine import search_vulnerabilities_in_db, search_vulnerabilities_advanced
 from searcher.engine.suggestions import substitute_with_suggestions, propose_suggestions
@@ -300,6 +301,11 @@ def suggested_search_advanced(request, suggested_input, operator_index, type_ind
 
 
 def add_suggestion(request):
+    """
+    Add a new suggestion inserted by the user.
+    :param request: the HTTP request.
+    :return: the 'suggestions.html' template. In case of error it shows an error message.
+    """
     if request.method == 'POST':
         form = SuggestionsForm(request.POST)
         if form.is_valid():
@@ -309,7 +315,9 @@ def add_suggestion(request):
             autoreplacement = BOOLEAN_CHOICES.__getitem__(autoreplacement_index)[1]
             queryset = Suggestion.objects.filter(searched__iexact=searched)
             if queryset.count() == 0:
-                id = Suggestion.objects.count() + 1
+                sugg_max_id = Suggestion.objects.all()
+                max_id = int(dict(sugg_max_id.aggregate(Max('id'))).get('id__max'))
+                id = max_id + 1
                 Suggestion.objects.create(searched=searched.lower(), suggestion=suggestion.lower(),
                                           autoreplacement=autoreplacement, id=id)
             else:
@@ -324,6 +332,12 @@ def add_suggestion(request):
 
 
 def delete_suggestion(request, suggestion_id):
+    """
+    Delete a suggestion selected by the user.
+    :param request: the HTTP request.
+    :param suggestion_id: the id of the suggestion the user want to delete.
+    :return: the 'suggestions.html' template. In case of error it shows an error message.
+    """
     queryset = Suggestion.objects.filter(id=suggestion_id)
     if queryset.count() == 1:
         Suggestion.objects.get(id=suggestion_id).delete()

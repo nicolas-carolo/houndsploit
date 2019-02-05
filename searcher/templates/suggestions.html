@@ -24,7 +24,6 @@
                 <th>Word searched</th>
                 <th>Suggestion</th>
                 <th>Automatic replacement</th>
-                <th>Edit</th>
                 <th>Delete</th>
                 </tr>
             {% for res in suggestions %}
@@ -32,7 +31,6 @@
                     <td>{{ res.searched }}</td>
                     <td>{{ res.suggestion }}</td>
                     <td>{{ res.autoreplacement }}</td>
-                    <td><a href=""><button type="button">Edit</button></a></td>
                     <td><a href="/searcher/delete_suggestion/{{ res.id }}"><button type="button">Delete</button></a></td>
                 </tr>
             {% endfor %}
