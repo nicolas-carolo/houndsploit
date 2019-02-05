@@ -50,3 +50,11 @@ input[type=date] {
     padding: 2px;
     margin-top: 25px;
 }
+
+input[name=searched] {
+    width: 60%;
+}
+
+input[name=suggestion] {
+    width: 60%;
+}

@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from searcher.engine.search_engine import search_vulnerabilities_in_db, search_vulnerabilities_advanced
 from searcher.engine.suggestions import substitute_with_suggestions, propose_suggestions
-from searcher.models import Exploit, Shellcode
+from searcher.models import Exploit, Shellcode, Suggestion
 import os
 import re
-from searcher.forms import AdvancedSearchForm, SimpleSearchForm
-from searcher.forms import OPERATOR_CHOICES, get_type_values, get_platform_values
+from searcher.forms import AdvancedSearchForm, SimpleSearchForm, SuggestionsForm
+from searcher.forms import BOOLEAN_CHOICES, OPERATOR_CHOICES, get_type_values, get_platform_values
 from searcher.engine.date_validator import is_date_range_valid
 import datetime
 from searcher.engine.updates import is_update_available
@@ -105,13 +105,26 @@ def view_shellcode_code(request, shellcode_id):
         return render(request, 'error_page.html', {'error': error_msg})
 
 
-def show_help(request):
+def show_settings(request):
     """
-    Render a template containing some information about the use of HoundSploit.
+    Render a template containing settings.
     :param request: the HTTP request.
-    :return: a template containing some information about the use of HoundSploit.
+    :return: a template containing settings.
     """
-    return render(request, 'help.html')
+    return render(request, 'settings.html')
+
+
+def show_suggestions(request):
+    """
+    Render a template in which the user can manage suggestions.
+    :param request: the HTTP request.
+    :return: a template in which the user can manage suggestions.
+    """
+    suggestions = Suggestion.objects.all()
+    form = SuggestionsForm()
+    return render(request, 'suggestions.html', {'suggestions': suggestions,
+                                                'form': form
+                                                })
 
 
 def show_info(request):
@@ -284,4 +297,43 @@ def suggested_search_advanced(request, suggested_input, operator_index, type_ind
                                                             'shellcodes_results': shellcodes_results,
                                                             'n_shellcodes_results': len(shellcodes_results)
                                                             })
+
+
+def add_suggestion(request):
+    if request.method == 'POST':
+        form = SuggestionsForm(request.POST)
+        if form.is_valid():
+            searched = form.cleaned_data['searched']
+            suggestion = form.cleaned_data['suggestion']
+            autoreplacement_index = int(form.cleaned_data['autoreplacement'])
+            autoreplacement = BOOLEAN_CHOICES.__getitem__(autoreplacement_index)[1]
+            queryset = Suggestion.objects.filter(searched__iexact=searched)
+            if queryset.count() == 0:
+                id = Suggestion.objects.count() + 1
+                Suggestion.objects.create(searched=searched.lower(), suggestion=suggestion.lower(),
+                                          autoreplacement=autoreplacement, id=id)
+            else:
+                suggestions = Suggestion.objects.all()
+                form = SuggestionsForm()
+                error = 'ERROR: This suggestion already exists!'
+                return render(request, 'suggestions.html', {'suggestions': suggestions,
+                                                            'form': form,
+                                                            'suggestion_error': error
+                                                            })
+    return show_suggestions(request)
+
+
+def delete_suggestion(request, suggestion_id):
+    queryset = Suggestion.objects.filter(id=suggestion_id)
+    if queryset.count() == 1:
+        Suggestion.objects.get(id=suggestion_id).delete()
+        return show_suggestions(request)
+    else:
+        suggestions = Suggestion.objects.all()
+        form = SuggestionsForm()
+        error = 'ERROR: The suggestion you want to delete does not exist!'
+        return render(request, 'suggestions.html', {'suggestions': suggestions,
+                                                    'form': form,
+                                                    'suggestion_error': error
+                                                    })
 

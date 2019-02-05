@@ -7,6 +7,11 @@ OPERATOR_CHOICES = [
         (1, u'OR'),
     ]
 
+BOOLEAN_CHOICES = [
+        (0, u'False'),
+        (1, u'True'),
+    ]
+
 
 def get_type_values():
     """
@@ -73,3 +78,9 @@ class SimpleSearchForm(forms.Form):
     The Django Form the is used for the standard search.
     """
     search_text = forms.CharField(label='', required=True)
+
+
+class SuggestionsForm(forms.Form):
+    searched = forms.CharField(label='', required=True)
+    suggestion = forms.CharField(label='', required=True)
+    autoreplacement = forms.ChoiceField(label='', required=True, choices=BOOLEAN_CHOICES)

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block input_form %}
+    <form action="{% url 'add_suggestion' %}" method="POST">
+        {% csrf_token %}
+        <div id="suggestions_input_container" class="suggestions_input_container">
+            <label>Word searched:</label>
+            {{ form.searched }}<br>
+            <label>Suggestion:</label>
+            {{ form.suggestion }}<br>
+            <label>Automatic replacement:</label>
+            {{ form.autoreplacement }}<br>
+            <button type="submit">Add</button>
+            {% if suggestion_error %}
+                <br><p style="color: red">{{ suggestion_error }}</p>
+            {% endif %}
+        </div>
+    </form>
+{% endblock %}
+{% block results_form %}
+    <form>
+        <h2 class="vulnerability_type">Suggestions</h2>
+        <table>
+            <tr>
+                <th>Word searched</th>
+                <th>Suggestion</th>
+                <th>Automatic replacement</th>
+                <th>Edit</th>
+                <th>Delete</th>
+                </tr>
+            {% for res in suggestions %}
+                <tr>
+                    <td>{{ res.searched }}</td>
+                    <td>{{ res.suggestion }}</td>
+                    <td>{{ res.autoreplacement }}</td>
+                    <td><a href=""><button type="button">Edit</button></a></td>
+                    <td><a href="/searcher/delete_suggestion/{{ res.id }}"><button type="button">Delete</button></a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </form>
+{% endblock %}

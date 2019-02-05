@@ -8,6 +8,28 @@ div.info_container {
     box-shadow: 5px 5px 5px #EEEEEE;
 }
 
+div.settings_container {
+    width: 40%;
+    margin: 0 auto;
+    border: 1px solid #DDDDDD;
+    background-color: #EEEEEE;
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #EEEEEE;
+    text-align: center;
+}
+
+div.suggestions_input_container {
+    width: 40%;
+    margin: 0 auto;
+    border: 1px solid #DDDDDD;
+    background-color: #EEEEEE;
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #EEEEEE;
+    text-align: center;
+}
+
 div[name=download_button_container] {
     text-align: center;
     width: 100%;

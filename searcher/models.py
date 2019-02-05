@@ -32,6 +32,7 @@ class Suggestion(models.Model):
     """
     The object Suggestion is used to help the user to search for the most common results.
     """
-    searched = models.TextField(primary_key=True)
-    suggestion = models.TextField(null=False)
-    replace_searched = models.BooleanField(null=False)
+    id = models.AutoField(primary_key=True)
+    searched = models.TextField(null=False, blank=False, unique=True)
+    suggestion = models.TextField(null=False, blank=False)
+    autoreplacement = models.BooleanField(null=False)
