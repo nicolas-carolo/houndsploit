@@ -1,1 +1,1 @@
-Bug fix in adding new suggestions
+Layout improvements in settings

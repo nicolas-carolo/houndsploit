@@ -9,9 +9,9 @@
             {{ form.suggestion }}<br>
             <label>Automatic replacement:</label>
             {{ form.autoreplacement }}<br>
-            <button type="submit">Add</button>
+            <button name="add_suggestion" type="submit">Add</button>
             {% if suggestion_error %}
-                <br><p style="color: red">{{ suggestion_error }}</p>
+                <br><p style="color: red; text-align: center">{{ suggestion_error }}</p>
             {% endif %}
         </div>
     </form>

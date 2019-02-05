@@ -27,7 +27,7 @@ div.suggestions_input_container {
     padding: 15px;
     border-radius: 20px;
     box-shadow: 5px 5px 5px #EEEEEE;
-    text-align: center;
+    text-align: left;
 }
 
 div[name=download_button_container] {

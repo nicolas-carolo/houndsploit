@@ -67,3 +67,10 @@ button[name=download_upgrade_btn]:hover {
     height: 55px;
     font-size: 20px;
 }
+
+button[name=add_suggestion] {
+    margin-top: 20px;
+    width: 10%;
+    margin-left: 45%;
+    margin-right: 45%;
+}
