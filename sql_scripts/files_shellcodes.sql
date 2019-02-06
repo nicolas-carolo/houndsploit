@@ -2,13 +2,13 @@ USE HOUNDSPLOIT;
 
 DROP TABLE IF EXISTS searcher_shellcode;
 CREATE TABLE searcher_shellcode(
-	id          INTEGER  NOT NULL PRIMARY KEY, 
-	file        VARCHAR(35) NOT NULL,
-	description VARCHAR(174) NOT NULL,
-	date        DATE  NOT NULL,
-	author      VARCHAR(30) NOT NULL,
-	type        VARCHAR(9) NOT NULL,
-	platform    VARCHAR(14) NOT NULL
+   id          INTEGER  NOT NULL PRIMARY KEY 
+  ,file        VARCHAR(35) NOT NULL
+  ,description VARCHAR(174) NOT NULL
+  ,date        DATE  NOT NULL
+  ,author      VARCHAR(30) NOT NULL
+  ,type        VARCHAR(9) NOT NULL
+  ,platform    VARCHAR(14) NOT NULL
 );
 INSERT INTO searcher_shellcode(id,file,description,date,author,type,platform) VALUES (14113,'shellcodes/arm/14113.c','Linux/ARM - setuid(0) + execve(_/bin/sh___/bin/sh__0) Shellcode (38 bytes)','2010-06-29','Jonathan Salwan','shellcode','arm');
 INSERT INTO searcher_shellcode(id,file,description,date,author,type,platform) VALUES (13241,'shellcodes/aix/13241.c','AIX - execve(/bin/sh) Shellcode (88 bytes)','2004-09-26','Georgi Guninski','shellcode','aix');
@@ -950,3 +950,4 @@ INSERT INTO searcher_shellcode(id,file,description,date,author,type,platform) VA
 INSERT INTO searcher_shellcode(id,file,description,date,author,type,platform) VALUES (46264,'shellcodes/arm/46264.s','Linux/ARM -  Bind TCP (0.0.0.0:4321) Shell (/bin/sh) + Null-Free Shellcode (84 bytes)','2019-01-28','Gokul Babu','shellcode','arm');
 INSERT INTO searcher_shellcode(id,file,description,date,author,type,platform) VALUES (46277,'shellcodes/linux_x86/46277.c','Linux/x86 - execve(/bin/sh) + RShift-1 Encoded Shellcode (29 bytes)','2019-01-29','Joao Batista','shellcode','linux_x86');
 INSERT INTO searcher_shellcode(id,file,description,date,author,type,platform) VALUES (46302,'shellcodes/linux_x86/46302.c','Linux/x86 - Read /etc/passwd Shellcode (58 Bytes) (3)','2019-02-01','Kiewicz','shellcode','linux_x86');
+INSERT INTO searcher_shellcode(id,file,description,date,author,type,platform) VALUES (46323,'shellcodes/linux_x86/46323.py','Linux/x86 - Random Insertion Encoder and Decoder Shellcode (Generator)','2019-02-05','Aditya Chaudhary','shellcode','linux_x86');

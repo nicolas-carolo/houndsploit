@@ -1,1 +1,1 @@
-bug fix in is_in_version_range_with_x
+Last DB update on February 6, 2019
