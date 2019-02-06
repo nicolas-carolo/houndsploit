@@ -1,1 +1,1 @@
-DB updated on February 4, 2019
+Now the user can edit suggestions

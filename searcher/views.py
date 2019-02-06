@@ -321,13 +321,10 @@ def add_suggestion(request):
                 Suggestion.objects.create(searched=searched.lower(), suggestion=suggestion.lower(),
                                           autoreplacement=autoreplacement, id=id)
             else:
-                suggestions = Suggestion.objects.all()
-                form = SuggestionsForm()
-                error = 'ERROR: This suggestion already exists!'
-                return render(request, 'suggestions.html', {'suggestions': suggestions,
-                                                            'form': form,
-                                                            'suggestion_error': error
-                                                            })
+                edited_suggestion = Suggestion.objects.get(searched__iexact=searched)
+                edited_suggestion.suggestion = suggestion
+                edited_suggestion.autoreplacement = autoreplacement
+                edited_suggestion.save()
     return show_suggestions(request)
 
 
