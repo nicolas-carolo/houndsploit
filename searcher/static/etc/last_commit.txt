@@ -1,1 +1,1 @@
-Improvements in search engine
+Bug fix in advanced search

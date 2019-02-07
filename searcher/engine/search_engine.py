@@ -275,14 +275,22 @@ def search_vulnerabilities_for_text_input(search_text, db_table):
             words_list.remove(word)
             words_list_num.append(' ' + word)
             words_list_num.append('/' + word)
-    query = reduce(operator.and_, (Q(description__icontains=word) for word in words_list))
-    if db_table == 'searcher_exploit':
-        queryset = Exploit.objects.filter(query)
-    else:
-        queryset = Shellcode.objects.filter(query)
-
-    query = reduce(operator.or_, (Q(description__icontains=word) for word in words_list_num))
-    queryset = queryset.filter(query)
+    try:
+        query = reduce(operator.and_, (Q(description__icontains=word) for word in words_list))
+        if db_table == 'searcher_exploit':
+            queryset = Exploit.objects.filter(query)
+        else:
+            queryset = Shellcode.objects.filter(query)
+    except TypeError:
+        if db_table == 'searcher_exploit':
+            queryset = Exploit.objects.none()
+        else:
+            queryset = Shellcode.objects.none()
+    try:
+        query = reduce(operator.or_, (Q(description__icontains=word) for word in words_list_num))
+        queryset = queryset.filter(query)
+    except TypeError:
+        pass
     return queryset
 
 
