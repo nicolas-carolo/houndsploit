@@ -264,10 +264,25 @@ def search_vulnerabilities_for_text_input(search_text, db_table):
     :return: a queryset containing the search results found with a search based on the characters contained by
                 the attribute 'description'
     """
+    words_list = str(search_text).split()
+    words_list_num = []
+    for word in words_list:
+        if word.isnumeric():
+            words_list.remove(word)
+            words_list_num.append(' ' + word)
+            words_list_num.append('/' + word)
+        if word.__contains__('.'):
+            words_list.remove(word)
+            words_list_num.append(' ' + word)
+            words_list_num.append('/' + word)
+    query = reduce(operator.and_, (Q(description__icontains=word) for word in words_list))
     if db_table == 'searcher_exploit':
-        queryset = Exploit.objects.filter(description__icontains=search_text)
+        queryset = Exploit.objects.filter(query)
     else:
-        queryset = Shellcode.objects.filter(description__icontains=search_text)
+        queryset = Shellcode.objects.filter(query)
+
+    query = reduce(operator.or_, (Q(description__icontains=word) for word in words_list_num))
+    queryset = queryset.filter(query)
     return queryset
 
 
@@ -285,11 +300,7 @@ def search_vulnerabilities_for_text_input_advanced(search_text, db_table, type_f
     :param end_date_filter: the filter on the vulnerabilities' date (to).
     :return: a queryset containing all the search results.
     """
-    if db_table == 'searcher_exploit':
-        queryset = Exploit.objects.filter(description__icontains=search_text)
-    else:
-        queryset = Shellcode.objects.filter(description__icontains=search_text)
-
+    queryset = search_vulnerabilities_for_text_input(search_text, db_table)
     if type_filter != 'All':
         queryset = queryset.filter(type__exact=type_filter)
     if platform_filter != 'All':
