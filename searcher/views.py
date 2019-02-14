@@ -64,7 +64,7 @@ def view_exploit_code(request, exploit_id):
                                                     'vulnerability_file': exploit.file,
                                                     'vulnerability_author': exploit.author,
                                                     'vulnerability_date': exploit.date,
-                                                    'type': exploit.type,
+                                                    'vulnerability_type': exploit.type,
                                                     'vulnerability_platform': exploit.platform,
                                                     'vulnerability_port': exploit.port,
                                                     'file_path': file_path,
@@ -95,7 +95,7 @@ def view_shellcode_code(request, shellcode_id):
                                                     'vulnerability_file': shellcode.file,
                                                     'vulnerability_author': shellcode.author,
                                                     'vulnerability_date': shellcode.date,
-                                                    'type': shellcode.type,
+                                                    'vulnerability_type': shellcode.type,
                                                     'vulnerability_platform': shellcode.platform,
                                                     'file_path': file_path,
                                                     'file_name': shellcode.description

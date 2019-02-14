@@ -1,1 +1,1 @@
-Bug fix in advanced search
+Bug fix views.py and in code_viewer.html
