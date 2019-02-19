@@ -7,3 +7,4 @@ HoundSploit/__pycache__
 HoundSploit/.DS_Store
 functional_tests/geckodriver.log
 searcher/engine/__pycache__
+venv/
