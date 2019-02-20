@@ -3,7 +3,7 @@
     <form action="{% url 'add_suggestion' %}" method="POST">
         {% csrf_token %}
         <div id="suggestions_input_container" class="suggestions_input_container">
-            <label>Word searched:</label>
+            <label>Searched words:</label>
             {{ form.searched }}<br>
             <label>Suggestion:</label>
             {{ form.suggestion }}<br>
@@ -21,7 +21,7 @@
         <h2 class="vulnerability_type">Suggestions</h2>
         <table>
             <tr>
-                <th>Word searched</th>
+                <th>Searched words</th>
                 <th>Suggestion</th>
                 <th>Automatic replacement</th>
                 <th>Delete</th>
