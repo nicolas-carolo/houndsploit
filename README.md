@@ -10,8 +10,8 @@ the most accurate search results.
 * Effective version number filtering
 * Advanced filtering
 * Search suggestions with customization
-* Syntax highlighting of the source code of exploits or shellcodes
-* Downloading of the source code of exploits or shellcodes
+* Syntax highlighting of the source code of exploits and shellcodes
+* Downloading of the source code of exploits and shellcodes
 * Highlighting of searched words in search results
 * Automatic check for updates
 
@@ -71,7 +71,7 @@ results:
 
 You can choose to show a particular suggestion for a given searched string.
 For each case you can also decide to use automatic replacement or not.
-It is possible to add new suggestions and delete the existing suggestions
+It is possible to add new suggestions and delete the existing suggestions.
 
 
 ## Documentation
