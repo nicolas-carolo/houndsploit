@@ -1,5 +1,3 @@
-USE HOUNDSPLOIT;
-
 DROP TABLE IF EXISTS searcher_shellcode;
 CREATE TABLE searcher_shellcode(
    id          INTEGER  NOT NULL PRIMARY KEY 
