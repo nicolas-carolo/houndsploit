@@ -1,8 +1,10 @@
 # Minimum requirements
 
-## Interpreter
+## Interpreter and software dependencies
 
-* Python 3 (I have used Python 3.7)
+* Python 3
+* MySQL
+* venv [optional]
 
 ## Requested packages
 Install these packages using pip:

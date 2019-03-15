@@ -74,6 +74,14 @@ For each case you can also decide to use automatic replacement or not.
 It is possible to add new suggestions and delete the existing suggestions.
 
 
+## Installation procedure
+
+1. [Download](https://github.com/nicolas-carolo/HoundSploit/archive/master.zip) HoundSploit and decompress the zip archive
+2. [Install](https://github.com/nicolas-carolo/HoundSploit/blob/master/documentation/minimum-requirements.md) software dependencies
+3. [Configure](https://github.com/nicolas-carolo/HoundSploit/blob/master/documentation/mysql-db.md) MySQL Database
+
+
+
 ## Documentation
 [Here](https://github.com/nicolas-carolo/HoundSploit/tree/master/documentation)
 you can read the software documentation.
