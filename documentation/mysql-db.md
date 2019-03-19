@@ -11,9 +11,9 @@ manage the DB.
 1. Go to `sql_scripts` directory.
 2. Run `houndsploit_db_setup.sql script`: `$ mysql -u root -p < houndsploit_db_setup.sql`
 3. Run also the following scripts:
-    * `files_exploits.sql`: `$ mysql -u root -p HOUNDSPLOIT < sql_scripts/files_exploits.sql`
-    * `files_shellcodes.sql`: `$ mysql -u root -p HOUNDSPLOIT < sql_scripts/files_shellcodes.sql`
-    * `files_exceptions.sql`: `$ mysql -u root -p HOUNDSPLOIT < sql_scripts/files_exceptions.sql`
+    * `files_exploits.sql`: `$ mysql -u root -p HOUNDSPLOIT < files_exploits.sql`
+    * `files_shellcodes.sql`: `$ mysql -u root -p HOUNDSPLOIT < files_shellcodes.sql`
+    * `files_exceptions.sql`: `$ mysql -u root -p HOUNDSPLOIT < files_exceptions.sql`
 4. Now you can run _HoundSploit_.
 
 ### Download and install _mysqlclient_ on macOS
