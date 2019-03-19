@@ -6,6 +6,16 @@
 manage the DB.
 2. Download and install _mysqlclient_.
 
+### Automated procedure
+
+1. Go to `sql_scripts` directory.
+2. Run `houndsploit_db_setup.sql script`: `$ mysql -u root -p < houndsploit_db_setup.sql`
+3. Run also the following scripts:
+    * `files_exploits.sql`: `$ mysql -u root -p HOUNDSPLOIT < sql_scripts/files_exploits.sql`
+    * `files_shellcodes.sql`: `$ mysql -u root -p HOUNDSPLOIT < sql_scripts/files_shellcodes.sql`
+    * `files_exceptions.sql`: `$ mysql -u root -p HOUNDSPLOIT < sql_scripts/files_exceptions.sql`
+4. Now you can run _HoundSploit_.
+
 ### Download and install _mysqlclient_ on macOS
 1. Get _Homebrew_ if you haven't installed it yet.
 2. Open the Terminal and execute `brew install mysql-connector-c`.
