@@ -8,6 +8,9 @@ manage the DB.
 
 ### Automated procedure
 
+**N.B.:** For the following steps, if your computer is running macOS, you have to run the command `/usr/local/mysql/bin/mysql -u root -p [...]`
+instead of the command `mysql -u root -p [...]`.
+
 1. Go to `sql_scripts` directory.
 2. Run `houndsploit_db_setup.sql script`: `$ mysql -u root -p < houndsploit_db_setup.sql`
 3. Run also the following scripts:
