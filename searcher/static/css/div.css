@@ -73,7 +73,7 @@ div.upgrade_info {
     border-radius: 20px;
     align-content: center;
     box-shadow: 5px 5px 5px #EEEEEE;
-    margin: 20px auto 0;
+    margin: 20px auto 60px;
 }
 
 div[name=upgrade_button_container] {
