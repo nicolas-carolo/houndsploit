@@ -1,1 +1,1 @@
-1.1.8: Last DB update on May 24, 2019
+1.1.9: Last DB update on June 1, 2019
