@@ -8,3 +8,5 @@ HoundSploit/.DS_Store
 functional_tests/geckodriver.log
 searcher/engine/__pycache__
 venv/
+__pycache__/
+searcher/db_manager/__pycache__
