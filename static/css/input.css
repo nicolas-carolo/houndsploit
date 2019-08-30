@@ -1,3 +1,20 @@
+input[type=button] {
+    text-align: center;
+    font-size: 1em;
+    width: 75px;
+    background-color: orange;
+    color: #FFFFFF;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    box-shadow: 1px 1px 1px #EEEEEE;
+    text-shadow:none;
+    padding: 3px;
+}
+
+input[type=button]:hover {
+    background-color: darkorange;
+}
+
 input[type=text] {
     text-align: center;
     font-size: 20px;

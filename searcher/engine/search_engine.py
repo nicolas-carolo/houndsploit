@@ -1,3 +1,5 @@
+import re
+
 from searcher.engine.string import str_is_num_version
 from searcher.engine.filter_query import filter_exploits_without_comparator, filter_exploits_with_comparator,\
     filter_shellcodes_without_comparator, filter_shellcodes_with_comparator
@@ -236,3 +238,29 @@ def search_vulnerabilities_for_text_input(searched_text, db_table):
     except TypeError:
         pass
     return final_result_set
+
+
+def get_exploit_by_id(exploit_id):
+    session = start_session()
+    exploit = session.query(Exploit).get(exploit_id)
+    session.close()
+    return exploit
+
+
+def get_shellcode_by_id(shellcode_id):
+    session = start_session()
+    shellcode = session.query(Shellcode).get(shellcode_id)
+    session.close()
+    return shellcode
+
+
+def get_vulnerability_extension(vulnerability_file):
+    """
+    Get the extension of the vulnerability passed as parameter.
+    :param vulnerability_file: the vulnerability we want to get its extension.
+    :return: the extension of the vulnerability passed as parameter.
+    """
+    regex = re.search(r'\.(?P<extension>\w+)', vulnerability_file)
+    extension = '.' + regex.group('extension')
+    return extension
+

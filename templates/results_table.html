@@ -1,7 +1,7 @@
 {% extends 'base_searcher.html' %}
 {% block results_form %}
     <form>
-        <h4>{{ exploits_list|length }} <a href="#exploits_list">exploits</a> and {{ shellcodes_lists|length }} <a href="#shellcodes_list">shellcodes</a> found for "{{ searched_item }}"</h4>
+        <h4>{{ exploits_list|length }} <a href="#exploits_list">exploits</a> and {{ shellcodes_list|length }} <a href="#shellcodes_list">shellcodes</a> found for "{{ searched_item }}"</h4>
         {% if suggested_search_text %}
             <h4>I also suggest you search for "<a href="/searcher/suggested/{{ suggested_search_text }}">{{ suggested_search_text }}</a>"</h4>
         {% endif %}
@@ -27,7 +27,7 @@
                         <td>{{ exploit.type }}</td>
                         <td>{{ exploit.platform }}</td>
                         <td>{% autoescape off %}{{ exploit.port }}{% endautoescape %}</td>
-                        <td><a href="/searcher/exploit_view/{{ exploit.id }}"><button type="button">Inspect code</button></a></td>
+                        <td><input type="button" id="exploit-details-button" name="expoit-details-button" value="Code" onclick="window.location.href = '/exploit-details?exploit-id={{ exploit.id }}'"></td>
                     </tr>
                 {% endfor %}
             </table>
@@ -52,7 +52,7 @@
                         <td>{% autoescape off %}{{ shellcode.author }}{% endautoescape %}</td>
                         <td>{{ shellcode.type }}</td>
                         <td>{{ shellcode.platform }}</td>
-                        <td><a href="/searcher/shellcode_view/{{ shellcode.id }}"><button type="button">Inspect code</button></a></td>
+                        <td><input type="button" id="shellcode-details-button" name="shellcode-details-button" value="Code" onclick="window.location.href = '/shellcode-details?shellcode-id={{ shellcode.id }}'"></td>
                     </tr>
                 {% endfor %}
             </table>
