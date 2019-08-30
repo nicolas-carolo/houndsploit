@@ -1,8 +1,0 @@
-{% extends 'base.html' %}
-{% block input_form %}
-    <form action="{% url 'get_results_table' %}" method="POST">
-        {% csrf_token %}
-        {{ form.search_text }}
-        <button name="advanced_search_btn" type="submit">Search</button>
-    </form>
-{% endblock %}

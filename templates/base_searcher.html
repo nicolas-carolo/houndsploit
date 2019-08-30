@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block input_form %}
+    <form action="/" method="POST">
+        {% if searched_text %}
+            <input type="text" id="searched-text" name="searched-text" value="{{ searched_text }}">
+        {% else %}
+            <input type="text" id="searched-text" name="searched-text">
+        {% endif %}
+        <input type="submit" id="search-button" name="search-button" value="Search">
+    </form>
+{% endblock %}
