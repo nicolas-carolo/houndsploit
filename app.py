@@ -2,7 +2,7 @@ import os
 
 from flask import Flask, render_template, request
 from searcher.engine.search_engine import search_vulnerabilities_in_db, get_exploit_by_id, get_shellcode_by_id,\
-    get_vulnerability_extension, get_vulnerability_filters
+    get_vulnerability_extension, get_vulnerability_filters, search_vulnerabilities_advanced
 
 app = Flask(__name__)
 
@@ -37,13 +37,21 @@ def get_results_table_advanced():
         searched_text = request.form['searched-text']
         operator_filter = request.form['search-operator']
         author_filter = request.form['author']
-        type_filter = request.form['author']
-        exploits_list = search_vulnerabilities_in_db(searched_text, 'searcher_exploit')
+        type_filter = request.form['type']
+        platform_filter = request.form['platform']
+        port_filter = request.form['port']
+        date_from_filter = request.form['date-from']
+        date_to_filter = request.form['date-to']
+        exploits_list = search_vulnerabilities_advanced(searched_text, 'searcher_exploit', operator_filter, type_filter,
+                                                        platform_filter, author_filter, port_filter, date_from_filter,
+                                                        date_to_filter)
         for result in exploits_list:
             if result.port is None:
                 result.port = ''
-        shellcodes_list = search_vulnerabilities_in_db(searched_text, 'searcher_shellcode')
-        return render_template('advanced_searcher.html', searched_item=searched_text,
+        shellcodes_list = search_vulnerabilities_advanced(searched_text, 'searcher_shellcode', operator_filter,
+                                                          type_filter, platform_filter, author_filter, port_filter,
+                                                          date_from_filter, date_to_filter)
+        return render_template('advanced_results_table.html', searched_item=searched_text,
                                exploits_list=exploits_list, shellcodes_list=shellcodes_list,
                                searched_text=searched_text)
     else:
