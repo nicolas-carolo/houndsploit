@@ -8,6 +8,7 @@ from sqlalchemy import and_, or_
 from searcher.db_manager.models import Exploit, Shellcode
 from searcher.db_manager.session_manager import start_session
 from searcher.db_manager.result_set import queryset2list, void_result_set, join_result_sets
+from searcher.engine.lists import remove_duplicates_by_list
 
 N_MAX_RESULTS_NUMB_VERSION = 20000
 
@@ -263,4 +264,29 @@ def get_vulnerability_extension(vulnerability_file):
     regex = re.search(r'\.(?P<extension>\w+)', vulnerability_file)
     extension = '.' + regex.group('extension')
     return extension
+
+
+def get_vulnerability_filters():
+    """
+    Get the list of all vulnerability filters
+    :return: a list containing all vulnerability types and a list containing all platforms
+    """
+    session = start_session()
+    queryset = session.query(Exploit)
+    exploits_list = queryset2list(queryset)
+    types_list = []
+    platform_list = []
+    for exploit in exploits_list:
+        types_list.append(exploit.type)
+        platform_list.append(exploit.platform)
+    queryset = session.query(Shellcode)
+    shellcodes_list = queryset2list(queryset)
+    for shellcode in shellcodes_list:
+        types_list.append(shellcode.type)
+        platform_list.append(shellcode.platform)
+    types_list = sorted(remove_duplicates_by_list(types_list))
+    platform_list = sorted(remove_duplicates_by_list(platform_list))
+    session.close()
+    return types_list, platform_list
+
 

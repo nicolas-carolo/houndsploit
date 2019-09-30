@@ -1,24 +1,36 @@
 {% extends 'base.html' %}
 {% block input_form %}
-    <form action="{% url 'get_results_table_advanced' %}" method="POST">
-        {% csrf_token %}
-        {{ form.search_text }}
-        <button name="advanced_search_btn" type="submit">Search</button>
+    <form action="/advanced-search" method="POST">
+        <input type="text" id="searched-text" name="searched-text">
+        <input type="submit" id="search-button" name="search-button" value="Search">
         <div class="info_container">
-            <label>Search operator:</label>
-            {{ form.operator }}
-            <label>Author:</label>
-            {{ form.author }}<br>
-            <label>Type:</label>
-            {{ form.type }}
-            <label>Platform:</label>
-            {{ form.platform }}
-            <label>Port:</label>
-            {{ form.port }}<br>
-            <label>From:</label>
-            {{ form.start_date }}
-            <label>To:</label>
-            {{ form.end_date }}
+            <label for search-operator>Search operator:</label>
+            <select id="search-operator" name="search-operator">
+                <option value="and" selected="selected">AND</option>
+                <option value="or">OR</option>
+            </select>
+            <label for author>Author:</label>
+            <input type="text" id="author" name="author"><br>
+            <label for type>Type:</label>
+            <select id="type" name="type">
+                <option value="all" selected="selected">all</option>
+                {% for type in vulnerability_types_list %}
+                    <option value="{{ type }}">{{ type }}</option>
+                {% endfor %}
+            </select>
+            <label for platform>Platform:</label>
+            <select id="platform" name="platform">
+                <option value="all" selected="selected">all</option>
+                {% for platform in vulnerability_platforms_list %}
+                    <option value="{{ platform }}">{{ platform }}</option>
+                {% endfor %}
+            </select>
+            <label for port>Port:</label>
+            <input type="number" id="port" name="port" min="0" max="65535"><br>
+            <label for date-from>From:</label>
+            <input type="date" id="date-from" name="date-from">
+            <label for date-to>To:</label>
+            <input type="date" id="date-to" name="date-to">
             {% if date_range_error %}
                 <br><p style="color: red">{{ date_range_error }}</p>
             {% endif %}

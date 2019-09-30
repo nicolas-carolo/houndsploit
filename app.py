@@ -2,7 +2,7 @@ import os
 
 from flask import Flask, render_template, request
 from searcher.engine.search_engine import search_vulnerabilities_in_db, get_exploit_by_id, get_shellcode_by_id,\
-    get_vulnerability_extension
+    get_vulnerability_extension, get_vulnerability_filters
 
 app = Flask(__name__)
 
@@ -25,6 +25,31 @@ def get_results_table():
                                searched_text=searched_text)
     else:
         return render_template('home.html')
+
+
+@app.route('/advanced-search', methods=['GET', 'POST'])
+def get_results_table_advanced():
+    """
+    Render a table with a list of search results.
+    :return: results_table.html template with search results.
+    """
+    if request.method == 'POST':
+        searched_text = request.form['searched-text']
+        operator_filter = request.form['search-operator']
+        author_filter = request.form['author']
+        type_filter = request.form['author']
+        exploits_list = search_vulnerabilities_in_db(searched_text, 'searcher_exploit')
+        for result in exploits_list:
+            if result.port is None:
+                result.port = ''
+        shellcodes_list = search_vulnerabilities_in_db(searched_text, 'searcher_shellcode')
+        return render_template('advanced_searcher.html', searched_item=searched_text,
+                               exploits_list=exploits_list, shellcodes_list=shellcodes_list,
+                               searched_text=searched_text)
+    else:
+        vulnerability_types_list, vulnerability_platforms_list = get_vulnerability_filters()
+        return render_template('advanced_searcher.html', vulnerability_types_list=vulnerability_types_list,
+                               vulnerability_platforms_list=vulnerability_platforms_list)
 
 
 @app.route('/exploit-details')
