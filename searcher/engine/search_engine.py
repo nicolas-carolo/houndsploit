@@ -11,6 +11,8 @@ from searcher.db_manager.models import Exploit, Shellcode
 from searcher.db_manager.session_manager import start_session
 from searcher.db_manager.result_set import queryset2list, void_result_set, join_result_sets
 from searcher.engine.lists import remove_duplicates_by_list
+from searcher.engine.filter_query import filter_vulnerabilities_for_author, filter_vulnerabilities_for_type,\
+    filter_vulnerabilities_for_platform, filter_exploits_for_port
 
 N_MAX_RESULTS_NUMB_VERSION = 20000
 
@@ -311,50 +313,43 @@ def search_vulnerabilities_advanced(searched_text, db_table, operator_filter, ty
     session = start_session()
     words_list = str(searched_text).upper().split()
     if operator_filter == 'AND' and searched_text != '':
-        queryset = search_vulnerabilities_for_description_advanced(searched_text, db_table)
+        vulnerabilities_list = search_vulnerabilities_for_description_advanced(searched_text, db_table)
     elif operator_filter == 'OR':
         if db_table == 'searcher_exploit':
             queryset = session.query(Exploit).filter(or_(Exploit.description.contains(word) for word in words_list))
         else:
             queryset = session.query(Shellcode).filter(or_(Shellcode.description.contains(word) for word in words_list))
+        vulnerabilities_list = queryset2list(queryset)
     else:
         if db_table == 'searcher_exploit':
             queryset = session.query(Exploit)
         else:
             queryset = session.query(Shellcode)
+        vulnerabilities_list = queryset2list(queryset)
     if type_filter != 'all':
-        if db_table == 'searcher_exploit':
-            queryset = queryset.filter(Exploit.type == type_filter)
-        else:
-            queryset = queryset.filter(Shellcode.type == type_filter)
+        vulnerabilities_list = filter_vulnerabilities_for_type(vulnerabilities_list, type_filter)
     if platform_filter != 'all':
-        if db_table == 'searcher_exploit':
-            queryset = queryset.filter(Exploit.platform == platform_filter)
-        else:
-            queryset = queryset.filter(Shellcode.platform == platform_filter)
+        vulnerabilities_list = filter_vulnerabilities_for_platform(vulnerabilities_list, platform_filter)
     if author_filter != '':
-        if db_table == 'searcher_exploit':
-            queryset = queryset.filter(Exploit.author.contains(author_filter))
-        else:
-            queryset = queryset.filter(Shellcode.author.contains(author_filter))
-    try:
-        datetime.datetime.strptime(date_from_filter, '%Y-%m-%d')
-        datetime.datetime.strptime(date_to_filter, '%Y-%m-%d')
-        if db_table == 'searcher_exploit':
-            queryset = queryset.filter(and_(Exploit.date >= date_from_filter, Exploit.date <= date_to_filter))
-        else:
-            queryset = queryset.filter(and_(Shellcode.date >= date_from_filter, Shellcode.date <= date_to_filter))
-    except ValueError:
-        pass
+        vulnerabilities_list = filter_vulnerabilities_for_author(vulnerabilities_list, author_filter)
+    # try:
+    #     datetime.datetime.strptime(date_from_filter, '%Y-%m-%d')
+    #     datetime.datetime.strptime(date_to_filter, '%Y-%m-%d')
+    #     if db_table == 'searcher_exploit':
+    #         queryset = queryset.filter(and_(Exploit.date >= date_from_filter, Exploit.date <= date_to_filter))
+    #     else:
+    #         queryset = queryset.filter(and_(Shellcode.date >= date_from_filter, Shellcode.date <= date_to_filter))
+    # except ValueError:
+    #     pass
     if port_filter != '' and db_table == 'searcher_exploit':
-        queryset = queryset.filter(Exploit.port == port_filter)
+        vulnerabilities_list = filter_exploits_for_port(vulnerabilities_list, port_filter)
     elif port_filter != '' and db_table == 'searcher_shellcode':
-        queryset = session.query(Shellcode).filter(sqlalchemy.sql.false())
+        vulnerabilities_list = []
 
     queryset_std = search_vulnerabilities_for_text_input_advanced(searched_text, db_table, type_filter, platform_filter,
                                                                   author_filter, port_filter, date_from_filter,
                                                                   date_to_filter)
-    results_list = join_result_sets(queryset, queryset_std,db_table)
+    results_list = join_result_sets(vulnerabilities_list, queryset_std, db_table)
     session.close()
     return results_list
 
@@ -376,48 +371,6 @@ def search_vulnerabilities_for_description_advanced(searched_text, db_table):
     return queryset
 
 
-def search_vulnerabilities_for_text_input(searched_text, db_table):
-    """
-    Perform a search in description based on characters contained by this attribute.
-    This queryset can be joined with the search results based on the number of version.
-    :param searched_text: the search input.
-    :param db_table: the DB table in which we want to perform the search.
-    :return: a queryset containing the search results found with a search based on the characters contained by
-                the attribute 'description'
-    """
-    session = start_session()
-    words_list = str(searched_text).split()
-    words_list_num = []
-    for word in words_list:
-        if word.isnumeric():
-            words_list.remove(word)
-            words_list_num.append(' ' + word)
-            words_list_num.append('/' + word)
-        if word.__contains__('.'):
-            words_list.remove(word)
-            words_list_num.append(' ' + word)
-            words_list_num.append('/' + word)
-    try:
-        if db_table == 'searcher_exploit':
-            queryset = session.query(Exploit).filter(and_(Exploit.description.contains(word) for word in words_list))
-        else:
-            queryset = session.query(Shellcode).filter(and_(Shellcode.description.contains(word) for word in words_list))
-    except TypeError:
-        if db_table == 'searcher_exploit':
-            queryset = session.query(Exploit).filter(sqlalchemy.sql.false())
-        else:
-            queryset = session.query(Shellcode).filter(sqlalchemy.sql.false())
-    try:
-        if db_table == 'searcher_exploit':
-            queryset = queryset.filter(or_(Exploit.description.contains(word) for word in words_list_num))
-        else:
-            queryset = queryset.filter(or_(Shellcode.description.contains(word) for word in words_list_num))
-    except TypeError:
-        pass
-    session.close()
-    return queryset
-
-
 def search_vulnerabilities_for_text_input_advanced(searched_text, db_table, type_filter, platform_filter, author_filter,
                                                    port_filter, date_from_filter, date_to_filter):
     """
@@ -432,35 +385,24 @@ def search_vulnerabilities_for_text_input_advanced(searched_text, db_table, type
     :param date_to_filter: the filter on the vulnerabilities' date (to).
     :return: a queryset containing all the search results.
     """
-    session = start_session()
-    queryset = search_vulnerabilities_for_text_input(searched_text, db_table)
+    vulnerabilities_list = search_vulnerabilities_for_text_input(searched_text, db_table)
     if type_filter != 'all':
-        if db_table == 'searcher_exploit':
-            queryset = session.query(Exploit).filter(Exploit.type == type_filter)
-        else:
-            queryset = session.query(Shellcode).filter(Shellcode.type == type_filter)
+        vulnerabilities_list = filter_vulnerabilities_for_type(vulnerabilities_list, type_filter)
     if platform_filter != 'all':
-        if db_table == 'searcher_exploit':
-            queryset = session.query(Exploit).filter(Exploit.platform == platform_filter)
-        else:
-            queryset = session.query(Shellcode).filter(Shellcode.platform == platform_filter)
+        vulnerabilities_list = filter_vulnerabilities_for_platform(vulnerabilities_list, platform_filter)
     if author_filter != '':
-        if db_table == 'searcher_exploit':
-            queryset = queryset.filter(Exploit.author.contains(author_filter))
-        else:
-            queryset = queryset.filter(Shellcode.author.contains(author_filter))
-    try:
-        datetime.datetime.strptime(date_from_filter, '%Y-%m-%d')
-        datetime.datetime.strptime(date_to_filter, '%Y-%m-%d')
-        if db_table == 'searcher_exploit':
-            queryset = queryset.filter(and_(Exploit.date >= date_from_filter, Exploit.date <= date_to_filter))
-        else:
-            queryset = queryset.filter(and_(Shellcode.date >= date_from_filter, Shellcode.date <= date_to_filter))
-    except ValueError:
-        pass
+        vulnerabilities_list = filter_vulnerabilities_for_author(vulnerabilities_list, author_filter)
+    # try:
+    #     datetime.datetime.strptime(date_from_filter, '%Y-%m-%d')
+    #     datetime.datetime.strptime(date_to_filter, '%Y-%m-%d')
+    #     if db_table == 'searcher_exploit':
+    #         queryset = queryset.filter(and_(Exploit.date >= date_from_filter, Exploit.date <= date_to_filter))
+    #     else:
+    #         queryset = queryset.filter(and_(Shellcode.date >= date_from_filter, Shellcode.date <= date_to_filter))
+    # except ValueError:
+    #     pass
     if port_filter != '' and db_table == 'searcher_exploit':
-        queryset = queryset.filter(Exploit.port == port_filter)
+        vulnerabilities_list = filter_exploits_for_port(vulnerabilities_list, port_filter)
     elif port_filter != '' and db_table == 'searcher_shellcode':
-        queryset = session.query(Shellcode).filter(sqlalchemy.sql.false())
-    session.close()
-    return queryset
+        vulnerabilities_list = []
+    return vulnerabilities_list
