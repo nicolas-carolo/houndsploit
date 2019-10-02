@@ -4,6 +4,9 @@ import datetime
 from flask import Flask, render_template, request
 from searcher.engine.search_engine import search_vulnerabilities_in_db, get_exploit_by_id, get_shellcode_by_id,\
     get_vulnerability_extension, get_vulnerability_filters, search_vulnerabilities_advanced
+from searcher.engine.keywords_highlighter import highlight_keywords_in_description, highlight_keywords_in_file, \
+    highlight_keywords_in_author, highlight_keywords_in_port
+
 
 app = Flask(__name__)
 
@@ -18,11 +21,18 @@ def get_results_table():
         searched_text = request.form['searched-text']
         if str(searched_text).isspace() or searched_text == "":
             return render_template('home.html')
+        key_words_list = (str(searched_text).upper()).split()
         exploits_list = search_vulnerabilities_in_db(searched_text, 'searcher_exploit')
         for result in exploits_list:
             if result.port is None:
                 result.port = ''
         shellcodes_list = search_vulnerabilities_in_db(searched_text, 'searcher_shellcode')
+        if str(searched_text).isnumeric():
+            exploits_list = highlight_keywords_in_file(key_words_list, exploits_list)
+            shellcodes_list = highlight_keywords_in_file(key_words_list, shellcodes_list)
+            exploits_list = highlight_keywords_in_port(key_words_list, exploits_list)
+        exploits_list = highlight_keywords_in_description(key_words_list, exploits_list)
+        shellcodes_list = highlight_keywords_in_description(key_words_list, shellcodes_list)
         return render_template('results_table.html', searched_item=searched_text,
                                exploits_list=exploits_list, shellcodes_list=shellcodes_list,
                                searched_text=searched_text)
@@ -49,6 +59,7 @@ def get_results_table_advanced():
         if str(searched_text).isspace() or searched_text == "":
             return render_template('advanced_searcher.html', vulnerability_types_list=vulnerability_types_list,
                                    vulnerability_platforms_list=vulnerability_platforms_list)
+        key_words_list = (str(searched_text).upper()).split()
 
         try:
             date_from = datetime.datetime.strptime(date_from_filter, '%Y-%m-%d')
@@ -70,6 +81,12 @@ def get_results_table_advanced():
         shellcodes_list = search_vulnerabilities_advanced(searched_text, 'searcher_shellcode', operator_filter,
                                                           type_filter, platform_filter, author_filter, port_filter,
                                                           date_from_filter, date_to_filter)
+        if str(searched_text).isnumeric():
+            exploits_list = highlight_keywords_in_file(key_words_list, exploits_list)
+            shellcodes_list = highlight_keywords_in_file(key_words_list, shellcodes_list)
+            exploits_list = highlight_keywords_in_port(key_words_list, exploits_list)
+        exploits_list = highlight_keywords_in_description(key_words_list, exploits_list)
+        shellcodes_list = highlight_keywords_in_description(key_words_list, shellcodes_list)
         return render_template('advanced_results_table.html', searched_item=searched_text,
                                exploits_list=exploits_list, shellcodes_list=shellcodes_list,
                                searched_text=searched_text, vulnerability_types_list=vulnerability_types_list,
