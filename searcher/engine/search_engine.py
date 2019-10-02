@@ -1,5 +1,4 @@
 import re
-import sqlalchemy
 import datetime
 
 from searcher.engine.string import str_is_num_version
@@ -12,7 +11,7 @@ from searcher.db_manager.session_manager import start_session
 from searcher.db_manager.result_set import queryset2list, void_result_set, join_result_sets
 from searcher.engine.lists import remove_duplicates_by_list
 from searcher.engine.filter_query import filter_vulnerabilities_for_author, filter_vulnerabilities_for_type,\
-    filter_vulnerabilities_for_platform, filter_exploits_for_port
+    filter_vulnerabilities_for_platform, filter_exploits_for_port, filter_vulnerabilities_for_date_range
 
 N_MAX_RESULTS_NUMB_VERSION = 20000
 
@@ -332,15 +331,12 @@ def search_vulnerabilities_advanced(searched_text, db_table, operator_filter, ty
         vulnerabilities_list = filter_vulnerabilities_for_platform(vulnerabilities_list, platform_filter)
     if author_filter != '':
         vulnerabilities_list = filter_vulnerabilities_for_author(vulnerabilities_list, author_filter)
-    # try:
-    #     datetime.datetime.strptime(date_from_filter, '%Y-%m-%d')
-    #     datetime.datetime.strptime(date_to_filter, '%Y-%m-%d')
-    #     if db_table == 'searcher_exploit':
-    #         queryset = queryset.filter(and_(Exploit.date >= date_from_filter, Exploit.date <= date_to_filter))
-    #     else:
-    #         queryset = queryset.filter(and_(Shellcode.date >= date_from_filter, Shellcode.date <= date_to_filter))
-    # except ValueError:
-    #     pass
+    try:
+        date_from = datetime.datetime.strptime(date_from_filter, '%Y-%m-%d')
+        date_to = datetime.datetime.strptime(date_to_filter, '%Y-%m-%d')
+        vulnerabilities_list = filter_vulnerabilities_for_date_range(vulnerabilities_list, date_from, date_to)
+    except ValueError:
+        pass
     if port_filter != '' and db_table == 'searcher_exploit':
         vulnerabilities_list = filter_exploits_for_port(vulnerabilities_list, port_filter)
     elif port_filter != '' and db_table == 'searcher_shellcode':
@@ -392,15 +388,12 @@ def search_vulnerabilities_for_text_input_advanced(searched_text, db_table, type
         vulnerabilities_list = filter_vulnerabilities_for_platform(vulnerabilities_list, platform_filter)
     if author_filter != '':
         vulnerabilities_list = filter_vulnerabilities_for_author(vulnerabilities_list, author_filter)
-    # try:
-    #     datetime.datetime.strptime(date_from_filter, '%Y-%m-%d')
-    #     datetime.datetime.strptime(date_to_filter, '%Y-%m-%d')
-    #     if db_table == 'searcher_exploit':
-    #         queryset = queryset.filter(and_(Exploit.date >= date_from_filter, Exploit.date <= date_to_filter))
-    #     else:
-    #         queryset = queryset.filter(and_(Shellcode.date >= date_from_filter, Shellcode.date <= date_to_filter))
-    # except ValueError:
-    #     pass
+    try:
+        date_from = datetime.datetime.strptime(date_from_filter, '%Y-%m-%d')
+        date_to = datetime.datetime.strptime(date_to_filter, '%Y-%m-%d')
+        vulnerabilities_list = filter_vulnerabilities_for_date_range(vulnerabilities_list, date_from, date_to)
+    except ValueError:
+        pass
     if port_filter != '' and db_table == 'searcher_exploit':
         vulnerabilities_list = filter_exploits_for_port(vulnerabilities_list, port_filter)
     elif port_filter != '' and db_table == 'searcher_shellcode':

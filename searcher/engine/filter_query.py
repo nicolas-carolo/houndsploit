@@ -2,6 +2,7 @@ from pkg_resources import parse_version
 from searcher.engine.version_comparator import get_num_version_with_comparator, get_num_version,\
     is_in_version_range_with_x, is_equal_with_x, is_in_version_range, is_lte_with_comparator_x
 from searcher.engine.string import str_contains_num_version_range_with_x, str_contains_num_version_range
+import datetime
 
 
 def filter_exploits_without_comparator(exploit, num_version, software_name, final_result_set):
@@ -210,6 +211,14 @@ def filter_exploits_for_port(input_list, port_filter):
     output_list = []
     for vulnerability in input_list:
         if vulnerability.port == port_filter:
+            output_list.append(vulnerability)
+    return output_list
+
+
+def filter_vulnerabilities_for_date_range(input_list, date_from, date_to):
+    output_list = []
+    for vulnerability in input_list:
+        if date_from < datetime.datetime.strptime(vulnerability.date, '%Y-%m-%d') < date_to:
             output_list.append(vulnerability)
     return output_list
 
