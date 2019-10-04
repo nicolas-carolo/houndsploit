@@ -5,7 +5,8 @@ from flask import Flask, render_template, request
 from searcher.engine.search_engine import search_vulnerabilities_in_db, get_exploit_by_id, get_shellcode_by_id,\
     get_vulnerability_extension, get_vulnerability_filters, search_vulnerabilities_advanced
 from searcher.engine.keywords_highlighter import highlight_keywords_in_description, highlight_keywords_in_file, \
-    highlight_keywords_in_author, highlight_keywords_in_port
+    highlight_keywords_in_port
+from searcher.engine.suggestions import substitute_with_suggestions, propose_suggestions
 
 
 app = Flask(__name__)
@@ -19,6 +20,9 @@ def get_results_table():
     """
     if request.method == 'POST':
         searched_text = request.form['searched-text']
+        searched_text = substitute_with_suggestions(searched_text)
+        suggested_search_text = propose_suggestions(searched_text)
+        print(suggested_search_text)
         if str(searched_text).isspace() or searched_text == "":
             return render_template('home.html')
         key_words_list = (str(searched_text).upper()).split()
@@ -35,7 +39,7 @@ def get_results_table():
         shellcodes_list = highlight_keywords_in_description(key_words_list, shellcodes_list)
         return render_template('results_table.html', searched_item=searched_text,
                                exploits_list=exploits_list, shellcodes_list=shellcodes_list,
-                               searched_text=searched_text)
+                               searched_text=searched_text, suggested_search_text=suggested_search_text)
     else:
         return render_template('home.html')
 
@@ -56,6 +60,9 @@ def get_results_table_advanced():
         port_filter = request.form['port']
         date_from_filter = request.form['date-from']
         date_to_filter = request.form['date-to']
+        searched_text = request.form['searched-text']
+        searched_text = substitute_with_suggestions(searched_text)
+        suggested_search_text = propose_suggestions(searched_text)
         if str(searched_text).isspace() or searched_text == "":
             return render_template('advanced_searcher.html', vulnerability_types_list=vulnerability_types_list,
                                    vulnerability_platforms_list=vulnerability_platforms_list)
@@ -92,7 +99,8 @@ def get_results_table_advanced():
                                searched_text=searched_text, vulnerability_types_list=vulnerability_types_list,
                                vulnerability_platforms_list=vulnerability_platforms_list, author_filter=author_filter,
                                type_filter=type_filter, platform_filter=platform_filter, port_filter=port_filter,
-                               date_from_filter=date_from_filter, date_to_filter=date_to_filter)
+                               date_from_filter=date_from_filter, date_to_filter=date_to_filter,
+                               suggested_search_text=suggested_search_text)
     else:
         return render_template('advanced_searcher.html', vulnerability_types_list=vulnerability_types_list,
                                vulnerability_platforms_list=vulnerability_platforms_list)
