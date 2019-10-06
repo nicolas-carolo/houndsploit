@@ -19,6 +19,15 @@ class Exploit(Base):
     platform = Column(String)
     port = Column(Integer)
 
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self.id == other.id
+        else:
+            return False
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
 
 class Shellcode(Base):
     """
@@ -33,6 +42,15 @@ class Shellcode(Base):
     author = Column(String)
     type = Column(String)
     platform = Column(String)
+
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self.id == other.id
+        else:
+            return False
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
 
 
 class Suggestion(Base):

@@ -8,8 +8,8 @@ from searcher.engine.filter_query import filter_exploits_without_comparator, fil
 from sqlalchemy import and_, or_
 from searcher.db_manager.models import Exploit, Shellcode
 from searcher.db_manager.session_manager import start_session
-from searcher.db_manager.result_set import queryset2list, void_result_set, join_result_sets
-from searcher.engine.lists import remove_duplicates_by_list
+from searcher.db_manager.result_set import queryset2list, void_result_set
+from searcher.engine.lists import remove_duplicates_by_list, join_lists
 from searcher.engine.filter_query import filter_vulnerabilities_for_author, filter_vulnerabilities_for_type,\
     filter_vulnerabilities_for_platform, filter_exploits_for_port, filter_vulnerabilities_for_date_range
 
@@ -31,7 +31,8 @@ def search_vulnerabilities_in_db(searched_text, db_table):
         result_set = search_vulnerabilities_version(word_list, db_table)
         # union with standard research
         std_result_set = search_vulnerabilities_for_text_input(searched_text, db_table)
-        union_result_set = join_result_sets(result_set, std_result_set, db_table)
+        # union_result_set = join_result_sets(result_set, std_result_set, db_table)
+        union_result_set = join_lists(queryset2list(result_set), queryset2list(std_result_set))
         if len(union_result_set) > 0:
             return union_result_set
         else:
@@ -345,7 +346,7 @@ def search_vulnerabilities_advanced(searched_text, db_table, operator_filter, ty
     queryset_std = search_vulnerabilities_for_text_input_advanced(searched_text, db_table, type_filter, platform_filter,
                                                                   author_filter, port_filter, date_from_filter,
                                                                   date_to_filter)
-    results_list = join_result_sets(vulnerabilities_list, queryset_std, db_table)
+    results_list = join_lists(vulnerabilities_list, queryset_std)
     session.close()
     return results_list
 
@@ -399,3 +400,4 @@ def search_vulnerabilities_for_text_input_advanced(searched_text, db_table, type
     elif port_filter != '' and db_table == 'searcher_shellcode':
         vulnerabilities_list = []
     return vulnerabilities_list
+

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block input_form %}
-    <form action="/advanced-search" method="POST">
+    <form action="/advanced-search" method="POST" id="searcher-form" name="searcher-form">
         {% if searched_text %}
             <input type="text" id="searched-text" name="searched-text" value="{{ searched_text }}">
         {% else %}

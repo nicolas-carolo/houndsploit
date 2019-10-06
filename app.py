@@ -22,7 +22,6 @@ def get_results_table():
         searched_text = request.form['searched-text']
         searched_text = substitute_with_suggestions(searched_text)
         suggested_search_text = propose_suggestions(searched_text)
-        print(suggested_search_text)
         if str(searched_text).isspace() or searched_text == "":
             return render_template('home.html')
         key_words_list = (str(searched_text).upper()).split()

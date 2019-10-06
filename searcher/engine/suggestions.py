@@ -18,7 +18,6 @@ def substitute_with_suggestions(searched_text):
                 and not str(searched_text).lower().__contains__(suggested_word.suggestion.lower()):
             searched_text = str(searched_text.lower()).replace(suggested_word.searched.lower(),
                                                                suggested_word.suggestion.lower())
-    print(searched_text)
     return searched_text
 
 
