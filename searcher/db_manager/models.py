@@ -63,3 +63,8 @@ class Suggestion(Base):
     suggestion = Column(String)
     autoreplacement = Column(String)
 
+    def __init__(self, searched, suggestion, autoreplacement):
+        self.searched = searched
+        self.suggestion = suggestion
+        self.autoreplacement = autoreplacement
+

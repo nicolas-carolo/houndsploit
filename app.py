@@ -6,7 +6,8 @@ from searcher.engine.search_engine import search_vulnerabilities_in_db, get_expl
     get_vulnerability_extension, get_vulnerability_filters, search_vulnerabilities_advanced
 from searcher.engine.keywords_highlighter import highlight_keywords_in_description, highlight_keywords_in_file, \
     highlight_keywords_in_port
-from searcher.engine.suggestions import substitute_with_suggestions, propose_suggestions
+from searcher.engine.suggestions import substitute_with_suggestions, propose_suggestions, get_suggestions_list,\
+    new_suggestion, remove_suggestion
 
 
 app = Flask(__name__)
@@ -59,7 +60,6 @@ def get_results_table_advanced():
         port_filter = request.form['port']
         date_from_filter = request.form['date-from']
         date_to_filter = request.form['date-to']
-        searched_text = request.form['searched-text']
         searched_text = substitute_with_suggestions(searched_text)
         suggested_search_text = propose_suggestions(searched_text)
         if str(searched_text).isspace() or searched_text == "":
@@ -153,6 +153,62 @@ def view_shellcode_details():
     except FileNotFoundError:
         error_msg = 'Sorry! This file does not exist :('
         return render_template('error_page.html', error=error_msg)
+
+
+@app.route('/settings')
+def settings():
+    """
+    Open settings
+    :return: settings templates
+    """
+    return render_template('settings.html')
+
+
+@app.route('/about')
+def about():
+    """
+    Show software information
+    :return: about templates
+    """
+    return render_template('about.html')
+
+
+@app.route('/suggestions')
+def suggestions_manager():
+    """
+    Open suggestions manager
+    :return: suggestion manager template
+    """
+    return render_template('suggestions.html', suggestions=get_suggestions_list())
+
+
+@app.route('/add-suggestion', methods=['GET', 'POST'])
+def add_suggestion():
+    """
+    Add a new suggestion inserted by the user.
+    :return: the 'suggestions.html' template. In case of error it shows an error message.
+    """
+    if request.method == 'POST':
+        searched = request.form['searched']
+        suggestion = request.form['suggestion']
+        autoreplacement = request.form['autoreplacement']
+        new_suggestion(searched, suggestion, autoreplacement)
+    return render_template('suggestions.html', suggestions=get_suggestions_list())
+
+
+@app.route('/delete-suggestion')
+def delete_suggestion():
+    """
+    Delete a suggestion selected by the user.
+    :return: the 'suggestions.html' template. In case of error it shows an error message.
+    """
+    searched = request.args.get('searched', None)
+    if remove_suggestion(searched):
+        return render_template('suggestions.html', suggestions=get_suggestions_list())
+    else:
+        error = 'ERROR: The suggestion you want to delete does not exist!'
+        return render_template('suggestions.html', suggestions=get_suggestions_list(), suggestion_error=error)
+
 
 
 if __name__ == '__main__':
