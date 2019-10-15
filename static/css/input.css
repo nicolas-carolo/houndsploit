@@ -75,3 +75,12 @@ input[name=searched] {
 input[name=suggestion] {
     width: 60%;
 }
+
+input[name=add-suggestion] {
+    margin-top: 10px;
+    margin-bottom: 0px;
+    margin-left: 40%;
+    margin-right: 40%;
+    width: 20%;
+    padding: 5px;
+}

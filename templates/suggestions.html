@@ -2,16 +2,26 @@
 {% block input_form %}
     <form action="/add-suggestion" method="POST">
         <div id="suggestions_input_container" class="suggestions_input_container">
-            <label>Searched words:</label>
-            <input type="text" id="searched" name="searched"><br>
-            <label>Suggestion:</label>
-            <input type="text" id="suggestion" name="suggestion"><br>
-            <label>Automatic replacement:</label>
-            <select id="autoreplacement" name="autoreplacement">
-                <option value="false">False</option>
-                <option value="true">True</option>
-            </select><br>
-            <button name="add_suggestion" type="submit">Add</button>
+            <table>
+                <tr>
+                    <td><label>Searched words:</label></td>
+                    <td><input type="text" id="searched" name="searched"><br></td>
+                </tr>
+                <tr>
+                    <td><label>Suggestion:</label></td>
+                    <td><input type="text" id="suggestion" name="suggestion"><br></td>
+                </tr>
+                <tr>
+                    <td><label>Automatic replacement:</label></td>
+                    <td>
+                        <select id="autoreplacement" name="autoreplacement">
+                            <option value="false">False</option>
+                            <option value="true">True</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <input id="add-suggestion" name="add-suggestion" type="submit" value="Add">
             {% if suggestion_error %}
                 <br><p style="color: red; text-align: center">{{ suggestion_error }}</p>
             {% endif %}
