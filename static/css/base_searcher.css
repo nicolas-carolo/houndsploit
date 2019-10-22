@@ -18,7 +18,7 @@ input[type=submit] {
     color: #FFFFFF;
     border: 1px solid #eee;
     border-radius: 20px;
-    box-shadow: 1px 1px 1px #EEEEEE;
+    box-shadow: 5px 5px 5px #EEEEEE;
     text-shadow:none;
     padding: 5px 15px 5px;
 }

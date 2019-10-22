@@ -19,17 +19,6 @@ h2 {
     font-size: 24px;
 }
 
-.vulnerability_type {
-    color: darkorange;
-}
-
-h4 {
-    text-align: center;
-    font-size: 14px;
-    color: dimgrey;
-    margin-bottom: 30px;
-}
-
 footer {
     position: fixed;
     left: 0;
