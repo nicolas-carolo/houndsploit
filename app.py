@@ -155,15 +155,6 @@ def view_shellcode_details():
         return render_template('error_page.html', error=error_msg)
 
 
-@app.route('/settings')
-def settings():
-    """
-    Open settings
-    :return: settings templates
-    """
-    return render_template('settings.html')
-
-
 @app.route('/about')
 def about():
     """

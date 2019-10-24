@@ -1,4 +1,8 @@
 {% extends 'base.html' %}
+{% block scripts_and_css %}
+    <link href="/static/css/advanced_searcher.css" rel="stylesheet">
+    <link href="/static/css/base_searcher.css" rel="stylesheet">
+{% endblock %}
 {% block input_form %}
     <form action="/advanced-search" method="POST" id="searcher-form" name="searcher-form">
         {% if searched_text %}
@@ -7,7 +11,7 @@
             <input type="text" id="searched-text" name="searched-text">
         {% endif %}
         <input type="submit" id="search-button" name="search-button" value="Search">
-        <div class="info_container">
+        <div class="filters-container">
             <label for search-operator>Search operator:</label>
             <select id="search-operator" name="search-operator">
                 <option value="AND" selected="selected">AND</option>

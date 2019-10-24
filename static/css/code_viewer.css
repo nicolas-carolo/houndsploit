@@ -34,6 +34,7 @@ pre {
 pre.prettyprint {
     border: none !important;
     white-space: pre-wrap !important;
+    margin-bottom: 60px;
 }
 
 li.L0, li.L1, li.L2, li.L3,
