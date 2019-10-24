@@ -1,18 +1,21 @@
 {% extends 'base.html' %}
+{% block scripts_and_css %}
+    <link href="/static/css/suggestions.css" rel="stylesheet">
+{% endblock %}
 {% block input_form %}
     <form action="/add-suggestion" method="POST">
         <div id="suggestions_input_container" class="suggestions_input_container">
             <table>
                 <tr>
-                    <td><label>Searched words:</label></td>
+                    <th><label>Searched words:</label></th>
                     <td><input type="text" id="searched" name="searched"><br></td>
                 </tr>
                 <tr>
-                    <td><label>Suggestion:</label></td>
+                    <th><label>Suggestion:</label></th>
                     <td><input type="text" id="suggestion" name="suggestion"><br></td>
                 </tr>
                 <tr>
-                    <td><label>Automatic replacement:</label></td>
+                    <th><label>Automatic replacement:</label></th>
                     <td>
                         <select id="autoreplacement" name="autoreplacement">
                             <option value="false">False</option>
@@ -28,10 +31,10 @@
         </div>
     </form>
 {% endblock %}
-{% block results_form %}
-    <form>
+{% block results_table %}
+    <div>
         <h2 class="vulnerability_type">Suggestions</h2>
-        <table>
+        <table id="suggestions-table" name="suggestions-table" class="suggestions-table">
             <tr>
                 <th>Searched words</th>
                 <th>Suggestion</th>
@@ -47,5 +50,5 @@
                 </tr>
             {% endfor %}
         </table>
-    </form>
+    </div>
 {% endblock %}

@@ -1,15 +1,35 @@
 {% extends 'base.html' %}
+{% block scripts_and_css %}
+    <link href="/static/css/about.css" rel="stylesheet">
+{% endblock %}
 {% block icon %}
     <img src="/static/media/hound.png" alt="HoundSploit">
 {% endblock %}
 {% block h1_style %}style="margin-top: 10px"{% endblock %}
 {% block about %}
     <div class ="info_container">
-        <p>Version: 2.0.0 (alpha)</p>
-        <p>Release date: October 6, 2019</p>
-        <p>Developer: Nicolas Carolo</p>
-        <p>Last Database update: June 14, 2019</p>
-        <p><a href="https://github.com/nicolas-carolo/HoundSploit">GitHub page of the project</a></p>
+        <table>
+            <tr>
+                <th>Version:</th>
+                <td>2.0.0 (alpha)</td>
+            </tr>
+            <tr>
+                <th>Release date:</th>
+                <td>October 6, 2019</td>
+            </tr>
+            <tr>
+                <th>Developer:</th>
+                <td>Nicolas Carolo</td>
+            </tr>
+            <tr>
+                <th>Last Database update:</th>
+                <td>June 14, 2019</td>
+            </tr>
+            <tr>
+                <th>GitHub page:</th>
+                <td><a href="https://github.com/nicolas-carolo/HoundSploit">GitHub page of the project</a></td>
+            </tr>
+        </table>
     </div>
 {% endblock %}
 {% block update_popup %}

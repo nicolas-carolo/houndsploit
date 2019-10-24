@@ -37,9 +37,7 @@
                 </tr>
             {% endif %}
         </table>
-        <div name="download_button_container">
-            <a href="{{ file_path }}" download="{{ file_name }}"><button>Download</button></a>
-        </div>
+        <a href="{{ file_path }}" download="{{ file_name }}"><button>Download</button></a>
     </div>
     <div class="code-container">
         <pre class="prettyprint linenums:1">{{ vulnerability_code }}</pre>
