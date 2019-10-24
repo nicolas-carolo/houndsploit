@@ -1,18 +1,42 @@
 {% extends 'base.html' %}
-{% block important_scripts %}
+{% block scripts_and_css %}
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify/loader/run_prettify.js"></script>
+    <link href="/static/css/code_viewer.css" rel="stylesheet">
 {% endblock %}
 {% block code_viewer %}
     <div class="vulnerability_info">
-        <p class="vulnerability_info_bold">Description: </p><p class="vulnerability_info">{{ vulnerability_description }}</p><br>
-        <p class="vulnerability_info_bold">Author: </p><p class="vulnerability_info">{{ vulnerability_author }}</p><br>
-        <p class="vulnerability_info_bold">File: </p><p class="vulnerability_info">{{ vulnerability_file }}</p><br>
-        <p class="vulnerability_info_bold">Date: </p><p class="vulnerability_info">{{ vulnerability_date }}</p><br>
-        <p class="vulnerability_info_bold">Type: </p><p class="vulnerability_info">{{ vulnerability_type }}</p><br>
-        <p class="vulnerability_info_bold">Platform: </p><p class="vulnerability_info">{{ vulnerability_platform }}</p><br>
-        {% if vulnerability_port %}
-           <p class="vulnerability_info_bold">Port: </p><p class="vulnerability_info">{{ vulnerability_port }}</p><br>
-        {% endif %}
+        <table id="vulnerability-info-table" name="vulnerability-info-table" class="vulnerability_info">
+            <tr>
+                <th>Description:</th>
+                <td>{{ vulnerability_description }}</td>
+            </tr>
+            <tr>
+                <th>Author:</th>
+                <td>{{ vulnerability_author }}</td>
+            </tr>
+            <tr>
+                <th>File:</th>
+                <td>{{ vulnerability_file }}</td>
+            </tr>
+            <tr>
+                <th>Date:</th>
+                <td>{{ vulnerability_date }}</td>
+            </tr>
+            <tr>
+                <th>Type:</th>
+                <td>{{ vulnerability_type }}</td>
+            </tr>
+            <tr>
+                <th>Platform:</th>
+                <td>{{ vulnerability_platform }}</td>
+            </tr>
+            {% if vulnerability_port %}
+                <tr>
+                    <th>Port:</th>
+                    <td>{{ vulnerability_port }}</td>
+                </tr>
+            {% endif %}
+        </table>
         <div name="download_button_container">
             <a href="{{ file_path }}" download="{{ file_name }}"><button>Download</button></a>
         </div>

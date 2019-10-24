@@ -1,0 +1,59 @@
+div.vulnerability_info {
+    width: 40%;
+    margin: 0 auto;
+    border: 1px solid #DDDDDD;
+    background-color: #EEEEEE;
+    padding: 15px;
+    border-radius: 20px;
+    align-content: center;
+    box-shadow: 5px 5px 5px #EEEEEE;
+}
+
+table.vulnerability_info {
+    margin: auto;
+    width: 80%;
+    font-size: 1.1em;
+}
+
+th {
+    text-align: left;
+    font-weight: bold;
+    color: darkred;
+}
+
+td {
+    text-align: right;
+}
+
+pre {
+    font-size: 14px;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+pre.prettyprint {
+    border: none !important;
+    white-space: pre-wrap !important;
+}
+
+li.L0, li.L1, li.L2, li.L3,
+li.L5, li.L6, li.L7, li.L8 {
+    list-style-type: decimal !important;
+}
+
+button {
+    text-align: center;
+    font-size: 1.2em;
+    background-color: orange;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #AAAAAA;
+    text-shadow:none;
+    padding: 5px 15px 5px;
+    margin: 15px auto 5px;
+}
+
+button:hover {
+    background-color: darkorange;
+}
