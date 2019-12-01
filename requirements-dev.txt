@@ -1,0 +1,8 @@
+requests
+twine
+pytest
+coverage
+pytest-cov
+flask
+sqlalchemy
+requests

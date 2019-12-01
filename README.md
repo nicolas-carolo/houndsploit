@@ -1,93 +1,63 @@
-# HoundSploit
-
-**HoundSploit** is an advanced search engine for Exploit-DB developed in
-Python using Django Web Framework, born with the aim of showing the user
-the most accurate search results.
+# houndsploit.  An advanced graphic search engine for Exploit-DB
 
 
-## Features
+Author: Nicolas Carolo <nicolascarolo.dev@gmail>
 
-* Effective version number filtering
-* Advanced filtering
-* Search suggestions with customization
-* Syntax highlighting of the source code of exploits and shellcodes
-* Downloading of the source code of exploits and shellcodes
-* Highlighting of searched words in search results
-* Automatic check for updates
+Copyright: © 2019, Nicolas Carolo.
+
+Date: 2019-11-27
+
+Version: 2.0.0
 
 
-### Effective version number filtering examples
-#### Example I
+## PURPOSE
 
-```
-nicolas@carolo:~$ searchsploit WordPress 2.0.2
-WordPress 2.0.2- 'cache' Remote Shell Injection
-WordPress Plugin Crawl Rate Tracker 2.0.2 - SQL Inject
-WordPress Plugin Sodahead Polls 2.0.2 - Multiple Cross
+
+## INSTALLATION
+
+We can install houndsploit simply by doing:
+```sh
+git clone https://github.com/nicolas-carolo/houndsploit
+cd houndsploit
+pip install -r requirements.txt
+python setup.py install
 ```
 
-**HoundSploit**: `WordPress 2.0.2`
-
-10 exploits and 0 shellcodes found for "WordPress 2.0.2"
-
-* WORDPRESS 1.5.1.1 < 2.2.2 - Multiple Vulnerabilities
-* WORDPRESS < 4.0.1 - Denial of Service
-* ...
 
 
-#### Example II
+## USAGE
 
-```
-nicolas@carolo:~$ searchsploit Linux Kernel 4.2.3
-Exploits: No Result
-Shellcodes: No Result
-Papers: No Result
-```
+## NOTES
 
-**HoundSploit**: `Linux Kernel 4.2.3`
+## COPYRIGHT
 
-14 exploits and 0 shellcodes found for "linux kernel 4.2.3"
+Copyright © 2019, Nicolas Carolo.
+All rights reserved.
 
-* LINUX KERNEL 3.11 < 4.8 0 - 'SO_SNDBUFFORCE' / 'SO_RCVBUFFORCE' Local
-Privilege Escalation
-* LINUX KERNEL < 4.10.13 - 'keyctl_set_reqkey_keyring' Local Denial of 
-Service
-* ...
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
 
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions, and the following disclaimer.
 
-### Advanced filtering
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions, and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
 
-Using advanced search you can use the following filters for filtering search
-results:
-* Search operator: `AND` or `OR`
-* Author
-* Type
-* Platform
-* Port
-* Date interval
+3. Neither the name of the author of this software nor the names of
+   contributors to this software may be used to endorse or promote
+   products derived from this software without specific prior written
+   consent.
 
-
-### Search suggestion
-
-You can choose to show a particular suggestion for a given searched string.
-For each case you can also decide to use automatic replacement or not.
-It is possible to add new suggestions and delete the existing suggestions.
-
-
-## Installation procedure
-
-1. [Download](https://github.com/nicolas-carolo/HoundSploit/archive/master.zip) HoundSploit and decompress the zip archive
-2. [Install](https://github.com/nicolas-carolo/HoundSploit/blob/master/documentation/minimum-requirements.md) software dependencies
-3. [Configure](https://github.com/nicolas-carolo/HoundSploit/blob/master/documentation/mysql-db.md) MySQL Database
-
-
-
-## Documentation
-[Here](https://github.com/nicolas-carolo/HoundSploit/tree/master/documentation)
-you can read the software documentation.
-
-
-## Updates
-The database of exploits and shellcodes will be weekly updated.
-
-
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT
+OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

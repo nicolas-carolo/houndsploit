@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block scripts_and_css %}
+    <link href="/static/css/about.css" rel="stylesheet">
+{% endblock %}
+{% block icon %}
+    <img src="/static/media/hound.png" alt="HoundSploit">
+{% endblock %}
+{% block h1_style %}style="margin-top: 10px"{% endblock %}
+{% block about %}
+    <div class ="info_container">
+        <table>
+            <tr>
+                <th>Version:</th>
+                <td>2.0.0 (alpha)</td>
+            </tr>
+            <tr>
+                <th>Release date:</th>
+                <td>October 6, 2019</td>
+            </tr>
+            <tr>
+                <th>Developer:</th>
+                <td>Nicolas Carolo</td>
+            </tr>
+            <tr>
+                <th>Last Database update:</th>
+                <td>June 14, 2019</td>
+            </tr>
+            <tr>
+                <th>GitHub page:</th>
+                <td><a href="https://github.com/nicolas-carolo/HoundSploit">GitHub page of the project</a></td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}
+{% block update_popup %}
+    {% if update_available %}
+        <div class="upgrade_info">
+            <p class="upgrade_info">A new software version is available for download!</p><br>
+            <div name="upgrade_button_container">
+                <a href="https://github.com/nicolas-carolo/HoundSploit/archive/master.zip"><button name="download_upgrade_btn">Download upgrade</button></a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

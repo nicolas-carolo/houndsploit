@@ -1,12 +1,51 @@
-.idea/
-searcher/migrations/
-.DS_Store
-searcher/__pycache__
-searcher/.DS_Store
-HoundSploit/__pycache__
-HoundSploit/.DS_Store
-functional_tests/geckodriver.log
-searcher/engine/__pycache__
+*.py[cod]
+__pycache__
+
+# Virtual Environment
+env/
 venv/
-__pycache__/
-searcher/db_manager/__pycache__
+
+# C extensions
+*.so
+
+# Vim
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+
+# Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+
+# GitHub token file
+.pypt/gh-token
+
+# 
+.DS_Store
+
+# vim session files
+*.vim
