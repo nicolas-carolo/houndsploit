@@ -13,17 +13,16 @@ INSERT MODULE DESCRIPTION HERE.
 
 __all__ = ()
 
-import sys
-import os
 from HoundSploit.cl_parser import parse_args
 from HoundSploit.app import start_app
-from HoundSploit.searcher.engine.updates import install_exploitdb_update
+from HoundSploit.searcher.engine.csv2sqlite import create_db
+import os
 
 
 
 def main():
     """Main routine of houndsploit."""
-    init_path = os.path.split(sys.executable)[0]
-    if not os.path.isfile(init_path + "/HoundSploit/hound_db.sqlite3"):
-        install_exploitdb_update()
+    init_path = os.path.expanduser("~") + "/HoundSploit"
+    if not os.path.isfile(init_path + "/hound_db.sqlite3"):
+        create_db()
     start_app()

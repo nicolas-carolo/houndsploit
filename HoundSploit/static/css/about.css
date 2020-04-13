@@ -24,3 +24,20 @@ th {
 td {
     text-align: right;
 }
+
+input[type=button] {
+    text-align: center;
+    font-size: 1.2em;
+    background-color: orange;
+    color: #FFFFFF;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #EEEEEE;
+    text-shadow:none;
+    padding: 5px 15px 5px;
+    margin: 10px auto auto;
+}
+
+input[type=button]:hover {
+    background-color: darkorange;
+}

@@ -9,11 +9,12 @@ from HoundSploit.searcher.engine.keywords_highlighter import highlight_keywords_
     highlight_keywords_in_port
 from HoundSploit.searcher.engine.suggestions import substitute_with_suggestions, propose_suggestions, get_suggestions_list,\
     new_suggestion, remove_suggestion
+from HoundSploit.searcher.engine.updates import get_latest_software_update_date, get_latest_db_update_date, install_updates
 
 
-init_path = os.path.split(sys.executable)[0]
-template_dir = os.path.abspath(init_path + '/HoundSploit/templates')
-static_folder = os.path.abspath(init_path + '/HoundSploit/static')
+init_path = os.path.expanduser("~") + "/HoundSploit"
+template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
+static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
 app = Flask(__name__, template_folder=template_dir, static_folder=static_folder)
 
 
@@ -117,8 +118,7 @@ def view_exploit_details():
     """
     exploit_id = request.args.get('exploit-id', None)
     exploit = get_exploit_by_id(exploit_id)
-    pwd = os.path.dirname(__file__)
-    file_path = os.path.split(sys.executable)[0] + "/HoundSploit/vulnerabilities/" + exploit.file
+    file_path = init_path + "/exploitdb/" + exploit.file
     try:
         with open(file_path, 'r') as f:
             content = f.readlines()
@@ -142,8 +142,7 @@ def view_shellcode_details():
     """
     shellcode_id = request.args.get('shellcode-id', None)
     shellcode = get_shellcode_by_id(shellcode_id)
-    pwd = os.path.dirname(__file__)
-    file_path = os.path.split(sys.executable)[0] + "/HoundSploit/vulnerabilities/" + shellcode.file
+    file_path = init_path + "/exploitdb/" + shellcode.file
     try:
         with open(file_path, 'r') as f:
             content = f.readlines()
@@ -165,7 +164,17 @@ def about():
     Show software information
     :return: about templates
     """
-    return render_template('about.html')
+    return render_template('about.html', latest_software_update=get_latest_software_update_date(), latest_db_update=get_latest_db_update_date())
+
+
+@app.route('/update')
+def get_updates():
+    """
+    Check and download new updates for the software and the database
+    :return: about templates
+    """
+    install_updates()
+    return render_template('about.html', latest_software_update=get_latest_software_update_date(), latest_db_update=get_latest_db_update_date())
 
 
 @app.route('/suggestions')

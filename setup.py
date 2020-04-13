@@ -37,13 +37,3 @@ setup(name='houndsploit',
            ]
       },
       )
-
-base_path = os.path.dirname(os.path.realpath(__file__))
-init_path = os.path.split(sys.executable)[0]
-if not os.path.isdir(init_path + '/HoundSploit'):
-    os.system('mkdir ' + init_path + '/HoundSploit')
-os.system('cp -r ' + base_path + '/HoundSploit/templates ' + init_path + '/HoundSploit')
-os.system('cp -r ' + base_path + '/HoundSploit/static ' + init_path + '/HoundSploit')
-if not os.path.isdir(init_path + '/HoundSploit/csv'):
-    os.system('mkdir ' + init_path + '/HoundSploit/csv')
-os.system('cp -r ' + base_path + '/HoundSploit/searcher/suggestions.csv ' + init_path + '/HoundSploit/csv')
