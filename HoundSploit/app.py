@@ -10,6 +10,8 @@ from HoundSploit.searcher.engine.keywords_highlighter import highlight_keywords_
 from HoundSploit.searcher.engine.suggestions import substitute_with_suggestions, propose_suggestions, get_suggestions_list,\
     new_suggestion, remove_suggestion
 from HoundSploit.searcher.engine.updates import get_latest_db_update_date, install_updates
+from HoundSploit.searcher.engine.utils import check_file_existence
+from HoundSploit.searcher.engine.csv2sqlite import create_db
 
 
 init_path = os.path.expanduser("~") + "/HoundSploit"
@@ -174,6 +176,8 @@ def get_updates():
     :return: about templates
     """
     install_updates()
+    if check_file_existence(os.path.expanduser("~") + "/HoundSploit/houndsploit_db.lock"):
+        create_db()
     return render_template('about.html', latest_db_update=get_latest_db_update_date())
 
 
