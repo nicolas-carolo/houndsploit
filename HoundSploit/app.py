@@ -164,7 +164,7 @@ def about():
     Show software information
     :return: about templates
     """
-    return render_template('about.html', latest_software_update=get_latest_software_update_date(), latest_db_update=get_latest_db_update_date())
+    return render_template('about.html', latest_db_update=get_latest_db_update_date())
 
 
 @app.route('/update')
@@ -174,7 +174,7 @@ def get_updates():
     :return: about templates
     """
     install_updates()
-    return render_template('about.html', latest_software_update=get_latest_software_update_date(), latest_db_update=get_latest_db_update_date())
+    return render_template('about.html', latest_db_update=get_latest_db_update_date())
 
 
 @app.route('/suggestions')

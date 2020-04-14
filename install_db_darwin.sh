@@ -27,6 +27,7 @@ else
         if [ -f "$HOUNDSPLOIT_PATH/hound_db.sqlite3" ] ; then
             rm $HOUNDSPLOIT_PATH/hound_db.sqlite3
         fi
+        touch $HOUNDSPLOIT_PATH/houndsploit_db.lock
         echo "Latest version of the database downloaded"
     fi
 fi
@@ -40,6 +41,7 @@ git_output=$(git pull)
 if [ "$git_output" == "Already up to date." ]  ; then
     echo "HoundSploit already up-to-date"
 else
+    touch $HOUNDSPLOIT_PATH/houndsploit_sw.lock
     echo "Latest version of HoundSploit downloaded"
     echo "Run the following commands (be sure to use the Python 3 interpreter)"
     echo -e "\t$ pip install -r $HOUNDSPLOIT_PATH/houndsploit/requirements.txt"

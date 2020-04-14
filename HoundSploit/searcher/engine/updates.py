@@ -28,14 +28,3 @@ def get_latest_db_update_date():
     date_latest_db_update = subprocess.check_output("git -C " + exploitdb_path + " log -1 --format='%at'", shell=True)
     date_latest_db_update = int(date_latest_db_update.decode("utf-8"))
     return time.strftime('%Y-%m-%d', time.localtime(date_latest_db_update))
-
-
-def get_latest_software_update_date():
-    """
-    Get the date of the latest commit of the exploitdb database.
-    :return: the date of the latest commit of the exploitdb database.
-    """
-    houndsploit_path = os.path.expanduser("~") + "/HoundSploit/houndsploit"
-    date_latest_houndsploit_update = subprocess.check_output("git -C " + houndsploit_path + " log -1 --format='%at'", shell=True)
-    date_latest_houndsploit_update = int(date_latest_houndsploit_update.decode("utf-8"))
-    return time.strftime('%Y-%m-%d', time.localtime(date_latest_houndsploit_update))
