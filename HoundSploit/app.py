@@ -176,7 +176,9 @@ def get_updates():
     :return: about templates
     """
     install_updates()
-    if check_file_existence(os.path.expanduser("~") + "/HoundSploit/houndsploit_db.lock"):
+    if check_file_existence(init_path + "/houndsploit_db.lock"):
+        if check_file_existence(init_path + "/hound_db.sqlite3"):
+            os.remove(init_path + "/hound_db.sqlite3")
         create_db()
     return render_template('about.html', latest_db_update=get_latest_db_update_date())
 

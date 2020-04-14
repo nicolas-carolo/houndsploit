@@ -32,3 +32,10 @@ def create_db():
 
     con.commit()
     con.close()
+
+    try:
+        f = open(os.path.expanduser("~") + "/HoundSploit/houndsploit_db.lock")
+        f.close()
+        os.remove(os.path.expanduser("~") + "/HoundSploit/houndsploit_db.lock") 
+    except IOError:
+        pass
