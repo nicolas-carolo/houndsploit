@@ -6,6 +6,9 @@
 {% endblock %}
 {% block results_table %}
     <div>
+        {% if date_alert %}
+            <script>alert("{{ date_alert }}")</script>
+        {% endif %}
         <h4>{{ exploits_list|length }} <a href="#exploits_list">exploits</a> and {{ shellcodes_list|length }} <a href="#shellcodes_list">shellcodes</a> found for "{{ searched_item }}"</h4>
         {% if suggested_search_text %}
             <h4>I also suggest you search for "<a href="javascript:makeSuggestedSearch('{{ suggested_search_text }}')">{{ suggested_search_text }}</a>"</h4>

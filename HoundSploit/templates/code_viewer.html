@@ -4,6 +4,9 @@
     <link href="/static/css/code_viewer.css" rel="stylesheet">
 {% endblock %}
 {% block code_viewer %}
+    {% if download_alert %}
+        <script>alert("{{ download_alert }}")</script>
+    {% endif %}
     <div class="vulnerability_info">
         <table id="vulnerability-info-table" name="vulnerability-info-table" class="vulnerability_info">
             <tr>
@@ -37,7 +40,12 @@
                 </tr>
             {% endif %}
         </table>
-        <a href="{{ file_path }}" download="{{ file_name }}"><button>Download</button></a>
+        {% if exploit_id %}
+            <a href="/download-exploit?exploit-id={{ exploit_id }}""><button>Download</button></a>
+        {% endif %}
+        {% if shellcode_id %}
+            <a href="/download-shellcode?shellcode-id={{ shellcode_id }}""><button>Download</button></a>
+        {% endif %}
     </div>
     <div class="code-container">
         <pre class="prettyprint linenums:1">{{ vulnerability_code }}</pre>
