@@ -9,7 +9,7 @@ from HoundSploit.searcher.engine.keywords_highlighter import highlight_keywords_
     highlight_keywords_in_port
 from HoundSploit.searcher.engine.suggestions import substitute_with_suggestions, propose_suggestions, get_suggestions_list,\
     new_suggestion, remove_suggestion
-from HoundSploit.searcher.engine.updates import get_latest_software_update_date, get_latest_db_update_date, install_updates
+from HoundSploit.searcher.engine.updates import get_latest_db_update_date, install_updates
 
 
 init_path = os.path.expanduser("~") + "/HoundSploit"
