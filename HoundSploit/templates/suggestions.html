@@ -8,11 +8,11 @@
             <table>
                 <tr>
                     <th><label>Searched words:</label></th>
-                    <td><input type="text" id="searched" name="searched"><br></td>
+                    <td><input type="text" id="searched" name="searched" required><br></td>
                 </tr>
                 <tr>
                     <th><label>Suggestion:</label></th>
-                    <td><input type="text" id="suggestion" name="suggestion"><br></td>
+                    <td><input type="text" id="suggestion" name="suggestion" required><br></td>
                 </tr>
                 <tr>
                     <th><label>Automatic replacement:</label></th>
@@ -46,7 +46,11 @@
                     <td>{{ res.searched }}</td>
                     <td>{{ res.suggestion }}</td>
                     <td>{{ res.autoreplacement }}</td>
-                    <td><input type="button" id="delete-suggestion-button" name="delete-suggestion-button" onclick="window.location.href = '/delete-suggestion?searched={{ res.searched }}'" value="Delete"></td>
+                    {% if res.searched in default_suggestions %}
+                        <td></td>
+                    {% else %}
+                        <td><input type="button" id="delete-suggestion-button" name="delete-suggestion-button" onclick="window.location.href = '/delete-suggestion?searched={{ res.searched }}'" value="Delete"></td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </table>

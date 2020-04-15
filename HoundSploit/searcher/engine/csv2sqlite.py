@@ -1,6 +1,7 @@
 import csv
 import sqlite3
 import os
+from HoundSploit.searcher.engine.utils import check_file_existence
 
 
 def create_db():
@@ -29,6 +30,13 @@ def create_db():
         dr = csv.DictReader(fin)
         to_db = [(i['searched'], i['suggestion'], i['autoreplacement']) for i in dr]
     cur.executemany("INSERT INTO searcher_suggestion (searched, suggestion, autoreplacement) VALUES (?, ?, ?);", to_db)
+
+    custom_suggestions_path = init_path + "/custom_suggestions.csv"
+    if check_file_existence(custom_suggestions_path):
+        with open(custom_suggestions_path, 'r') as fin:
+            dr = csv.DictReader(fin)
+            to_db = [(i['searched'], i['suggestion'], i['autoreplacement']) for i in dr]
+        cur.executemany("INSERT INTO searcher_suggestion (searched, suggestion, autoreplacement) VALUES (?, ?, ?);", to_db)
 
     con.commit()
     con.close()

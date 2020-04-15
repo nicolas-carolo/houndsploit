@@ -8,7 +8,7 @@ from HoundSploit.searcher.engine.search_engine import search_vulnerabilities_in_
 from HoundSploit.searcher.engine.keywords_highlighter import highlight_keywords_in_description, highlight_keywords_in_file, \
     highlight_keywords_in_port
 from HoundSploit.searcher.engine.suggestions import substitute_with_suggestions, propose_suggestions, get_suggestions_list,\
-    new_suggestion, remove_suggestion
+    new_suggestion, remove_suggestion, DEFAULT_SUGGESTIONS
 from HoundSploit.searcher.engine.updates import get_latest_db_update_date, install_updates
 from HoundSploit.searcher.engine.utils import check_file_existence, get_vulnerability_extension
 from HoundSploit.searcher.engine.csv2sqlite import create_db
@@ -240,7 +240,7 @@ def suggestions_manager():
     Open suggestions manager
     :return: suggestion manager template
     """
-    return render_template('suggestions.html', suggestions=get_suggestions_list())
+    return render_template('suggestions.html', suggestions=get_suggestions_list(), default_suggestions=DEFAULT_SUGGESTIONS)
 
 
 @app.route('/add-suggestion', methods=['GET', 'POST'])
@@ -254,7 +254,7 @@ def add_suggestion():
         suggestion = request.form['suggestion']
         autoreplacement = request.form['autoreplacement']
         new_suggestion(searched, suggestion, autoreplacement)
-    return render_template('suggestions.html', suggestions=get_suggestions_list())
+    return render_template('suggestions.html', suggestions=get_suggestions_list(), default_suggestions=DEFAULT_SUGGESTIONS)
 
 
 @app.route('/delete-suggestion')
@@ -265,10 +265,10 @@ def delete_suggestion():
     """
     searched = request.args.get('searched', None)
     if remove_suggestion(searched):
-        return render_template('suggestions.html', suggestions=get_suggestions_list())
+        return render_template('suggestions.html', suggestions=get_suggestions_list(), default_suggestions=DEFAULT_SUGGESTIONS)
     else:
         error = 'ERROR: The suggestion you want to delete does not exist!'
-        return render_template('suggestions.html', suggestions=get_suggestions_list(), suggestion_error=error)
+        return render_template('suggestions.html', suggestions=get_suggestions_list(), suggestion_error=error, default_suggestions=DEFAULT_SUGGESTIONS)
 
 
 
