@@ -9,10 +9,10 @@
 {% block h1_style %}style="margin-top: 10px"{% endblock %}
 {% block about %}
     {% if db_update_alert %}
-        <script>alert("Database has been updated")</script>
+        <script>alert("Database has been updated!")</script>
     {% endif %}
     {% if sw_update_alert %}
-        <script>alert("HoundSploit has been updated")</script>
+        <script>alert("HoundSploit has been updated! Restart the server to apply changes")</script>
     {% endif %}
     <div class ="info_container">
         <table>
