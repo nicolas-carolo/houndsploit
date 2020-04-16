@@ -107,7 +107,7 @@ It is possible to add new suggestions and delete the existing suggestions.
 ## INSTALLATION
 
 ### Linux
-We can install hsploit simply by doing:
+We can install _HoundSploit_ simply by doing:
 ```sh
 $ git clone https://github.com/nicolas-carolo/houndsploit
 $ cd houndsploit
@@ -117,7 +117,7 @@ $ python setup.py install
 ```
 
 ### macOS
-We can install hsploit simply by doing:
+We can install _HoundSploit_ simply by doing:
 ```sh
 $ git clone https://github.com/nicolas-carolo/houndsploit
 $ cd houndsploit
