@@ -36,12 +36,17 @@ setup(name='houndsploit',
                'houndsploit = HoundSploit.main:main',
            ]
       },
-     )
+    )
 
 try:
-    f = open(os.path.expanduser("~") + "/HoundSploit/houndsploit_sw.lock")
-    f.close()
-    os.remove(os.path.expanduser("~") + "/HoundSploit/houndsploit_sw.lock") 
+    if os.environ['SUDO_USER']:
+        f = open(os.path.expanduser('~' + os.environ["SUDO_USER"]) + "/HoundSploit/houndsploit_sw.lock")
+        f.close()
+        os.remove(os.path.expanduser('~' + os.environ["SUDO_USER"]) + "/HoundSploit/houndsploit_sw.lock")
+    else:
+        f = open(os.path.expanduser("~") + "/HoundSploit/houndsploit_sw.lock")
+        f.close()
+        os.remove(os.path.expanduser("~") + "/HoundSploit/houndsploit_sw.lock") 
 except IOError:
     pass
 
