@@ -231,7 +231,16 @@ def get_updates():
         if check_file_existence(init_path + "/hound_db.sqlite3"):
             os.remove(init_path + "/hound_db.sqlite3")
         create_db()
-    return render_template('about.html', latest_db_update=get_latest_db_update_date())
+        db_update_alert = True
+    else:
+        db_update_alert = False
+    if check_file_existence(init_path + "/houndsploit_sw.lock"):
+        sw_update_alert = True
+    else:
+        sw_update_alert = False
+
+    return render_template('about.html', latest_db_update=get_latest_db_update_date(), db_update_alert=db_update_alert,
+                            sw_update_alert=sw_update_alert)
 
 
 @app.route('/suggestions')
