@@ -239,8 +239,13 @@ def get_updates():
     else:
         sw_update_alert = False
 
+    if sw_update_alert == False and db_update_alert == False:
+        no_updates_alert = True
+    else:
+        no_updates_alert = False
+
     return render_template('about.html', latest_db_update=get_latest_db_update_date(), db_update_alert=db_update_alert,
-                            sw_update_alert=sw_update_alert)
+                            sw_update_alert=sw_update_alert, no_updates_alert=no_updates_alert)
 
 
 @app.route('/suggestions')
