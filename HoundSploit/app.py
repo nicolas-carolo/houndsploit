@@ -151,7 +151,7 @@ def download_exploit_details():
             content = f.readlines()
             vulnerability_code = ''.join(content)
         copyfile(file_path, os.path.expanduser("~") + "/exploit_" + exploit_id + get_vulnerability_extension(exploit.file))
-        download_alert = "exploit_" + exploit_id + get_vulnerability_extension(exploit.file) + " has been downloaded in you home directory"
+        download_alert = "exploit_" + exploit_id + get_vulnerability_extension(exploit.file) + " has been downloaded in your home directory"
         return render_template('code_viewer.html', vulnerability_code=vulnerability_code,
                                vulnerability_description=exploit.description, vulnerability_file=exploit.file,
                                vulnerability_author=exploit.author, vulnerability_date=exploit.date,
@@ -200,7 +200,7 @@ def download_shellcode():
             content = f.readlines()
             vulnerability_code = ''.join(content)
         copyfile(file_path, os.path.expanduser("~") + "/shellcode_" + shellcode_id + get_vulnerability_extension(shellcode.file))
-        download_alert = "shellcode_" + shellcode_id + get_vulnerability_extension(shellcode.file) + " has been downloaded in you home directory"
+        download_alert = "shellcode_" + shellcode_id + get_vulnerability_extension(shellcode.file) + " has been downloaded in your home directory"
         return render_template('code_viewer.html', vulnerability_code=vulnerability_code,
                                vulnerability_description=shellcode.description, vulnerability_file=shellcode.file,
                                vulnerability_author=shellcode.author, vulnerability_date=shellcode.date,
