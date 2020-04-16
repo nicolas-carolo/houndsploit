@@ -1,37 +1,142 @@
-# houndsploit.  An advanced graphic search engine for Exploit-DB
+# houndsploit.  An advanced graphical search engine for Exploit-DB
 
 
 Author: Nicolas Carolo <nicolascarolo.dev@gmail>
 
-Copyright: © 2019, Nicolas Carolo.
+Copyright: © 2020, Nicolas Carolo.
 
-Date: 2019-11-27
+Date: 2019-04-16
 
-Version: 2.0.0
+Version: 2.0.0 (beta)
 
 
 ## PURPOSE
 
+_HoundSploit_ is an advanced search engine for Exploit-DB developed in
+Python using Flask as micro web framework, born with the aim of showing the user
+the most accurate search results.
+
+### Features
+
+* Effective version number filtering
+* Advanced filtering
+* Search suggestions with customization
+* Syntax highlighting of the source code of exploits and shellcodes
+* Downloading of the source code of exploits and shellcodes
+* Highlighting of searched words in search results
+* Check for updates (both for software and database)
+
+#### News in HoundSploit 2
+* Flask instead of Django
+* SQLAlchemy instead of Django ORM
+* The kernel of the search engine is the same used in [_hsploit_](https://github.com/nicolas-carolo/hsploit), which is the CLI version of HoundSploit
+
+
+#### Effective version number filtering examples
+##### Example I
+
+```
+nicolas@carolo:~$ searchsploit WordPress 2.0.2
+WordPress 2.0.2- 'cache' Remote Shell Injection
+WordPress Plugin Crawl Rate Tracker 2.0.2 - SQL Inject
+WordPress Plugin Sodahead Polls 2.0.2 - Multiple Cross
+```
+
+**HoundSploit**: `WordPress 2.0.2`
+
+10 exploits and 0 shellcodes found for "WordPress 2.0.2"
+
+* WORDPRESS 1.5.1.1 < 2.2.2 - Multiple Vulnerabilities
+* WORDPRESS < 4.0.1 - Denial of Service
+* ...
+
+
+##### Example II
+
+```
+nicolas@carolo:~$ searchsploit Linux Kernel 4.2.3
+Exploits: No Result
+Shellcodes: No Result
+Papers: No Result
+```
+
+**HoundSploit**: `Linux Kernel 4.2.3`
+
+14 exploits and 0 shellcodes found for "linux kernel 4.2.3"
+
+* LINUX KERNEL 3.11 < 4.8 0 - 'SO_SNDBUFFORCE' / 'SO_RCVBUFFORCE' Local
+Privilege Escalation
+* LINUX KERNEL < 4.10.13 - 'keyctl_set_reqkey_keyring' Local Denial of 
+Service
+* ...
+
+
+#### Advanced filtering
+
+Using advanced search you can use the following filters for filtering search
+results:
+* Search operator: `AND` or `OR`
+* Author
+* Type
+* Platform
+* Port
+* Date interval
+
+
+#### Search suggestion
+
+You can choose to show a particular suggestion for a given searched string.
+For each case you can also decide to use automatic replacement or not.
+It is possible to add new suggestions and delete the existing suggestions.
+
+
+## MINIMUM REQUIREMENTS
+
+### Supported OS
+
+* Linux
+* macOS
+
+### Interpreter and tools
+
+* Python 3
+* SQLite 3
+* git
+
 
 ## INSTALLATION
 
-We can install houndsploit simply by doing:
+### Linux
+We can install hsploit simply by doing:
 ```sh
-git clone https://github.com/nicolas-carolo/houndsploit
-cd houndsploit
-pip install -r requirements.txt
-python setup.py install
+$ git clone https://github.com/nicolas-carolo/houndsploit
+$ cd houndsploit
+$ sh install_db_linux.sh
+$ pip install -r requirements.txt
+$ python setup.py install
+```
+
+### macOS
+We can install hsploit simply by doing:
+```sh
+$ git clone https://github.com/nicolas-carolo/houndsploit
+$ cd houndsploit
+$ sh install_db_darwin.sh
+$ pip install -r requirements.txt
+$ python setup.py install
 ```
 
 
-
 ## USAGE
-
-## NOTES
+1. Run _HoundSploit_ server:
+   ```sh
+   $ houndsploit
+   ```
+2. Go to `http://localhost:5000`
 
 ## COPYRIGHT
 
-Copyright © 2019, Nicolas Carolo.
+Copyright © 2020, Nicolas Carolo.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
