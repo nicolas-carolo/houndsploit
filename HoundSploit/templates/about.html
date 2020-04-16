@@ -14,6 +14,9 @@
     {% if sw_update_alert %}
         <script>alert("HoundSploit has been updated! Restart the server to apply changes")</script>
     {% endif %}
+    {% if not sw_update_alert and not db_update_alert %}
+        <script>alert("No updates available!")</script>
+    {% endif %}
     <div class ="info_container">
         <table>
             <tr>
