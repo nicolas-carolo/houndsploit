@@ -1,0 +1,43 @@
+div.info_container {
+    width: 40%;
+    margin: 0 auto;
+    border: 1px solid #DDDDDD;
+    background-color: #EEEEEE;
+    padding: 15px;
+    border-radius: 20px;
+    align-content: center;
+    box-shadow: 5px 5px 5px #EEEEEE;
+}
+
+table {
+    margin: auto;
+    width: 80%;
+    font-size: 1.2em;
+}
+
+th {
+    text-align: left;
+    font-weight: bold;
+    color: darkred;
+}
+
+td {
+    text-align: right;
+}
+
+input[type=button] {
+    text-align: center;
+    font-size: 1.2em;
+    background-color: orange;
+    color: #FFFFFF;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #EEEEEE;
+    text-shadow:none;
+    padding: 5px 15px 5px;
+    margin: 10px auto auto;
+}
+
+input[type=button]:hover {
+    background-color: darkorange;
+}

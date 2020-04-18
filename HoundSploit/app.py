@@ -16,8 +16,10 @@ from shutil import copyfile
 
 
 init_path = os.path.expanduser("~") + "/HoundSploit"
-template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
-static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
+# template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
+# static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
+template_dir = os.path.abspath('/Users/nicolas/Projects/Python/houndsploit/HoundSploit/templates')
+static_folder = os.path.abspath('/Users/nicolas/Projects/Python/houndsploit/HoundSploit/static')
 app = Flask(__name__, template_folder=template_dir, static_folder=static_folder)
 
 
