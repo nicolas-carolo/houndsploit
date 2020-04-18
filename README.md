@@ -1,7 +1,7 @@
 # houndsploit.  An advanced graphical search engine for Exploit-DB
 
 
-Author: Nicolas Carolo <nicolascarolo.dev@gmail>
+Author: Nicolas Carolo <nicolascarolo.dev@gmail.com>
 
 Copyright: © 2020, Nicolas Carolo.
 
