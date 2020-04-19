@@ -3,7 +3,7 @@ table {
     border-spacing: 0;
     width: 99%;
     border: 1px solid #DDDDDD;
-    margin: auto auto 50px;
+    margin: auto auto 30px;
 }
 
 th {
@@ -42,4 +42,9 @@ h4 {
 span.keyword {
     color: red;
     font-weight: bold;
+}
+
+h4.link_to_top {
+    color: orange;
+    margin-bottom: 60px;
 }

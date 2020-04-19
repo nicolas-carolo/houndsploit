@@ -2,11 +2,10 @@ div.info_container {
     width: 40%;
     margin: 0 auto;
     border: 1px solid #DDDDDD;
-    background-color: #EEEEEE;
+    background-color: #484848;
     padding: 15px;
     border-radius: 20px;
-    align-content: center;
-    box-shadow: 5px 5px 5px #EEEEEE;
+    box-shadow: 2px 2px 2px black;
 }
 
 table {
@@ -18,11 +17,12 @@ table {
 th {
     text-align: left;
     font-weight: bold;
-    color: darkred;
+    color: orange;
 }
 
 td {
     text-align: right;
+    color: white;
 }
 
 input[type=button] {
@@ -30,9 +30,9 @@ input[type=button] {
     font-size: 1.2em;
     background-color: orange;
     color: #FFFFFF;
-    border: 1px solid #eee;
+    border: 1px solid #eeeeee;
     border-radius: 20px;
-    box-shadow: 5px 5px 5px #EEEEEE;
+    box-shadow: 1px 1px 1px black;
     text-shadow:none;
     padding: 5px 15px 5px;
     margin: 10px auto auto;
@@ -40,4 +40,8 @@ input[type=button] {
 
 input[type=button]:hover {
     background-color: darkorange;
+}
+
+.info_container a {
+    color: orange;
 }

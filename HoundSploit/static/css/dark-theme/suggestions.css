@@ -2,44 +2,47 @@ div.suggestions_input_container {
     width: 40%;
     margin: 0 auto;
     border: 1px solid #DDDDDD;
-    background-color: #EEEEEE;
+    background-color: #484848;
     padding: 15px;
     border-radius: 20px;
-    box-shadow: 5px 5px 5px #EEEEEE;
+    box-shadow: 2px 2px 2px black;
 }
 
 table.suggestions-table {
     border-collapse: collapse;
     border-spacing: 0;
     width: 99%;
-    border: 1px solid #DDDDDD;
+    border: 1px solid #484848;
     margin: auto auto 50px;
 }
 
 #suggestions-table th {
     text-align: center;
-    background-color: #FF9933;
+    background-color: #464646;
     padding: 16px;
-    color: black;
+    font-size: 20px;
+    color: darkorange;
     font-size: 1.2em;
 }
 
 #suggestions-table td {
     text-align: center;
     padding: 12px;
+    font-size: 16px;
+    color: white;
     font-size: 1.1em;
 }
 
 #suggestions-table tr:nth-child(even) {
-    background-color: #FFE39E;
+    background-color: #202020;
 }
 
 #suggestions-table tr:nth-of-type(odd) {
-    background: #FFD779;
+    background-color: #303030;
 }
 
 #suggestions-table tr:hover {
-    background-color: #FFB266;
+    background-color: black;
 }
 
 #suggestions-table h4 {
@@ -58,7 +61,7 @@ table.suggestions-table {
 #suggestions_input_container th {
     text-align: left;
     font-weight: bold;
-    color: darkred;
+    color: orange;
 }
 
 #suggestions_input_container td {
@@ -74,9 +77,9 @@ input[type=submit] {
     font-size: 1.2em;
     background-color: orange;
     color: #FFFFFF;
-    border: 1px solid #eee;
     border-radius: 20px;
-    box-shadow: 5px 5px 5px #EEEEEE;
+    border: 1px solid #eeeeee;
+    box-shadow: 1px 1px 1px black;
     text-shadow:none;
     padding: 5px 15px 5px;
 }
@@ -95,7 +98,8 @@ input[type=button] {
     background-color: orange;
     color: #FFFFFF;
     border-radius: 20px;
-    box-shadow: 2px 2px 2px #EEEEEE;
+    border: 1px solid #eeeeee;
+    box-shadow: 1px 1px 1px black;
     text-shadow:none;
     padding: 5px 15px 5px;
 }
@@ -105,18 +109,18 @@ input[type=button]:hover {
 }
 
 option {
-    background-color: white;
-    color: black;
+    background-color: #646464;
+    color: #ffffff;
     width: 98%;
     text-align: right;
 }
 
 select {
-    background-color: white;
-    color: black;
+    background-color: #646464;
+    color: #ffffff;
     border-radius: 10px;
-    border-color: #EEEEEE;
-    border-bottom-color: #EEEEEE;
+    box-shadow: 2px 2px 2px black;
+    border: 1px solid #eeeeee;
     padding: 2px;
     font-size: 1.2em;
     width: 98%;
@@ -126,11 +130,11 @@ select {
 
 input[type=text] {
     font-size: 1.2em;
-    background-color: white;
-    border: 1px solid lightgray;
-    color: #000000;
+    background-color: #646464;
+    border: 1px solid #eeeeee;
+    color: #ffffff;
     border-radius: 20px;
-    box-shadow: 5px 5px 5px #EEEEEE;
+    box-shadow: 2px 2px 2px black;
     margin: 10px 0px 10px;
     padding: 5px 15px 5px;
     width: 88%;
