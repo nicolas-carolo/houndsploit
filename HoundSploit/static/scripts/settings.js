@@ -17,6 +17,16 @@ function getTheme(template) {
    }
 }
 
+function getThemeOptions() {
+    if (getCookie("theme") == "dark" ) {
+        document.write('<option value="dark" selected>Dark</option>');
+        document.write('<option value="light">Light</option>');
+    } else {
+        document.write('<option value="dark">Dark</option>');
+        document.write('<option value="light" selected>Light</option>');
+    }
+ }
+
 function getCookie(cookie_name) {
     var cookie_string = RegExp(""+cookie_name+"[^;]+").exec(document.cookie);
     return decodeURIComponent(!!cookie_string ? cookie_string.toString().replace(/^[^=]+./,"") : "");

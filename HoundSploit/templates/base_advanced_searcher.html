@@ -14,8 +14,13 @@
         <div class="filters-container">
             <label for search-operator>Search operator:</label>
             <select id="search-operator" name="search-operator">
-                <option value="AND" selected="selected">AND</option>
-                <option value="OR">OR</option>
+                {% if operator_filter == "OR" %}
+                    <option value="AND">AND</option>
+                    <option value="OR" selected>OR</option>
+                {% else %}
+                    <option value="AND" selected>AND</option>
+                    <option value="OR">OR</option>
+                {% endif %}
             </select>
             <label for author>Author:</label>
             {% if searched_text %}

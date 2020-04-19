@@ -10,17 +10,19 @@ div.filters-container {
 
 input[type=number] {
     background-color: white;
+    border: 1px solid #828282;
+    border-radius: 10px;
     color: black;
+    padding: 2px 2px 2px 7px;
 }
 
 input[type=date] {
     background-color: white;
     color: black;
     border-radius: 10px;
-    border-color: #EEEEEE;
-    border-bottom-color: #EEEEEE;
-    padding: 2px;
+    border: 1px solid #828282;
     margin-top: 25px;
+    padding: 5px 5px 2px;
 }
 
 option {
@@ -32,11 +34,14 @@ select {
     background-color: white;
     color: black;
     border-radius: 10px;
-    border-color: #EEEEEE;
-    border-bottom-color: #EEEEEE;
+    border: 1px solid #828282;
     padding: 2px;
 }
 
 #author {
     font-size: 1em;
+}
+
+div.filters-container input[type=text] {
+    border: 1px solid #828282;
 }

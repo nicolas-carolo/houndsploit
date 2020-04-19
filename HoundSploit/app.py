@@ -16,10 +16,8 @@ from shutil import copyfile
 
 
 init_path = os.path.expanduser("~") + "/HoundSploit"
-# template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
-# static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
-template_dir = os.path.abspath('/Users/nicolas/Projects/Python/houndsploit/HoundSploit/templates')
-static_folder = os.path.abspath('/Users/nicolas/Projects/Python/houndsploit/HoundSploit/static')
+template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
+static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
 app = Flask(__name__, template_folder=template_dir, static_folder=static_folder)
 
 
@@ -107,8 +105,9 @@ def get_results_table_advanced():
         return render_template('advanced_results_table.html', searched_item=searched_text,
                                exploits_list=exploits_list, shellcodes_list=shellcodes_list,
                                searched_text=searched_text, vulnerability_types_list=vulnerability_types_list,
-                               vulnerability_platforms_list=vulnerability_platforms_list, author_filter=author_filter,
-                               type_filter=type_filter, platform_filter=platform_filter, port_filter=port_filter,
+                               vulnerability_platforms_list=vulnerability_platforms_list, operator_filter=operator_filter,
+                               author_filter=author_filter, type_filter=type_filter,
+                               platform_filter=platform_filter, port_filter=port_filter,
                                date_from_filter=date_from_filter, date_to_filter=date_to_filter,
                                suggested_search_text=suggested_search_text, date_alert=date_alert)
     else:
@@ -236,6 +235,7 @@ def get_updates():
         db_update_alert = True
     else:
         db_update_alert = False
+
     if check_file_existence(init_path + "/houndsploit_sw.lock"):
         sw_update_alert = True
     else:

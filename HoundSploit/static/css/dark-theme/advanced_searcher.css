@@ -12,6 +12,8 @@ input[type=number] {
     background-color: #484848;
     color: white;
     border: 1px solid #eeeeee;
+    border-radius: 10px;
+    padding: 2px 2px 2px 7px;
 }
 
 input[type=date] {
@@ -19,8 +21,8 @@ input[type=date] {
     color: white;
     border-radius: 10px;
     border: 1px solid #eeeeee;
-    padding: 2px;
     margin-top: 25px;
+    padding: 5px 5px 2px;
 }
 
 option {
