@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block scripts_and_css %}
-    <link href="/static/css/dark-theme/suggestions.css" rel="stylesheet">
+    <script>getTheme("suggestions.css")</script>
 {% endblock %}
 {% block input_form %}
     <form action="/add-suggestion" method="POST">

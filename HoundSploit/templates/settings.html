@@ -1,11 +1,58 @@
 {% extends 'base.html' %}
+{% block scripts_and_css %}
+    <script>getTheme("settings.css")</script>
+{% endblock %}
 {% block icon %}
-    <img src="/static/media/hound.png" alt="HoundSploit">
+    <img src="/static/media/icon.png" alt="HoundSploit">
 {% endblock %}
 {% block h1_style %}style="margin-top: 10px"{% endblock %}
-{% block about %}
-    <div class ="settings_container">
-        <a href="/suggestions">Suggestions</a><br>
-        <a href="/about">About</a>
+{% block settings %}
+    {% if db_update_alert %}
+        <script>alert("Database has been updated!")</script>
+    {% endif %}
+    {% if sw_update_alert %}
+        <script>alert("HoundSploit has been updated! Restart the server to apply changes.")</script>
+    {% endif %}
+    {% if no_updates_alert %}
+        <script>alert("No updates available!")</script>
+    {% endif %}
+    <div class ="info_container">
+        <table>
+            <tr>
+                <th><label>Theme:</label></th>
+                <td>
+                    <select id="theme-selector" name="theme-selector">
+                        <option value="dark">Dark</option>
+                        <option value="light">Light</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <input type="button" id="update-settings-button" name="update-settings-button" value="Save preferences" onclick="savePreferences()">
+    </div>
+    <div class ="info_container">
+        <table>
+            <tr>
+                <th>Version:</th>
+                <td>2.0.0 (beta)</td>
+            </tr>
+            <tr>
+                <th>Release date:</th>
+                <td>2020-04-16</td>
+            </tr>
+            <tr>
+                <th>Developer:</th>
+                <td>Nicolas Carolo</td>
+            </tr>
+            <tr>
+                <th>Last Database update:</th>
+                <td>{{latest_db_update}}</td>
+            </tr>
+            <tr>
+                <th>GitHub page:</th>
+                <td><a href="https://github.com/nicolas-carolo/HoundSploit">GitHub page of the project</a></td>
+            </tr>
+        </table>
+        <input type="button" id="update-button" name="update-button" value="Check for updates" onclick="checkForUpdates()">
     </div>
 {% endblock %}

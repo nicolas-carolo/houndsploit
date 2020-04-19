@@ -3,8 +3,9 @@
     <head>
         <meta charset="UTF-8">
         <title>HoundSploit</title>
-        <link href="/static/css/dark-theme/base.css" rel="stylesheet">
         <link rel="icon" type="image/png" href="/static/media/icon.png">
+        <script src="/static/scripts/settings.js"></script>
+        <script>getTheme("base.css")</script>
         <script src="/static/scripts/search-engine.js"></script>
         {% block scripts_and_css %}
         {% endblock %}
@@ -15,7 +16,7 @@
             <a class="home_item" href="/">HoundSploit</a>
             <a href="/advanced-search">Advanced search</a>
             <a href="/suggestions">Suggestions</a>
-            <a href="/about">About</a>
+            <a href="/settings">Settings</a>
         </div>
         {% block icon %}
         {% endblock %}
@@ -27,10 +28,10 @@
         {% endblock %}
         {% block code_viewer %}
         {% endblock %}
-        {% block about %}
+        {% block settings %}
         {% endblock %}
         <footer>
-            <p class="footer">HoundSploit &nbsp;&nbsp; Developed by Nicolas Carolo &nbsp;&nbsp; <a href="https://github.com/nicolas-carolo/HoundSploit">GitHub page of the project</a></p>
+            <p class="footer">HoundSploit &copy; 2020 Nicolas Carolo</p>
         </footer>
     </body>
 </html>

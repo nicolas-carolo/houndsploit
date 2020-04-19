@@ -213,20 +213,20 @@ def download_shellcode():
         return render_template('error_page.html', error=error_msg)
 
 
-@app.route('/about')
-def about():
+@app.route('/settings')
+def settings():
     """
-    Show software information
-    :return: about templates
+    Show settings page
+    :return: settings templates
     """
-    return render_template('about.html', latest_db_update=get_latest_db_update_date())
+    return render_template('settings.html', latest_db_update=get_latest_db_update_date())
 
 
 @app.route('/update')
 def get_updates():
     """
     Check and download new updates for the software and the database
-    :return: about templates
+    :return: settings templates
     """
     install_updates()
     if check_file_existence(init_path + "/houndsploit_db.lock"):
@@ -246,7 +246,7 @@ def get_updates():
     else:
         no_updates_alert = False
 
-    return render_template('about.html', latest_db_update=get_latest_db_update_date(), db_update_alert=db_update_alert,
+    return render_template('settings.html', latest_db_update=get_latest_db_update_date(), db_update_alert=db_update_alert,
                             sw_update_alert=sw_update_alert, no_updates_alert=no_updates_alert)
 
 

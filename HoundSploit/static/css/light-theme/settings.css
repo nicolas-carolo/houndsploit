@@ -1,6 +1,6 @@
 div.info_container {
     width: 40%;
-    margin: 0 auto;
+    margin: 15px auto 15px;
     border: 1px solid #DDDDDD;
     background-color: #EEEEEE;
     padding: 15px;
@@ -25,6 +25,26 @@ td {
     text-align: right;
 }
 
+option {
+    background-color: white;
+    color: black;
+    width: 98%;
+    text-align: right;
+}
+
+select {
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px #646464;
+    border: 1px solid #eeeeee;
+    padding: 2px;
+    font-size: 1em;
+    width: 98%;
+    margin: 10px 0px 10px auto;
+    text-align: right;
+}
+
 input[type=button] {
     text-align: center;
     font-size: 1.2em;
@@ -32,7 +52,7 @@ input[type=button] {
     color: #FFFFFF;
     border: 1px solid #eee;
     border-radius: 20px;
-    box-shadow: 5px 5px 5px #EEEEEE;
+    box-shadow: 1px 1px 1px #646464;
     text-shadow:none;
     padding: 5px 15px 5px;
     margin: 10px auto auto;
