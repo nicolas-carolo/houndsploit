@@ -1,4 +1,4 @@
-# houndsploit.  An advanced graphical search engine for Exploit-DB
+# HoundSploit
 
 ![HoundSploit Logo](/HoundSploit/static/media/icon.png)
 
