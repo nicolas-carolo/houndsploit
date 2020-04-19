@@ -1,0 +1,67 @@
+div.info_container {
+    width: 40%;
+    margin: 15px auto 15px;
+    border: 1px solid #DDDDDD;
+    background-color: #484848;
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 2px 2px 2px black;
+}
+
+table {
+    margin: auto;
+    width: 80%;
+    font-size: 1.2em;
+}
+
+th {
+    text-align: left;
+    font-weight: bold;
+    color: orange;
+}
+
+td {
+    text-align: right;
+    color: white;
+}
+
+option {
+    background-color: #646464;
+    color: #ffffff;
+    width: 98%;
+    text-align: right;
+}
+
+select {
+    background-color: #646464;
+    color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px black;
+    border: 1px solid #eeeeee;
+    padding: 2px;
+    font-size: 1em;
+    width: 98%;
+    margin: 10px 0px 10px auto;
+    text-align: right;
+}
+
+input[type=button] {
+    text-align: center;
+    font-size: 1.2em;
+    background-color: orange;
+    color: #FFFFFF;
+    border: 1px solid #eeeeee;
+    border-radius: 20px;
+    box-shadow: 1px 1px 1px black;
+    text-shadow:none;
+    padding: 5px 15px 5px;
+    margin: 10px auto auto;
+}
+
+input[type=button]:hover {
+    background-color: darkorange;
+}
+
+.info_container a {
+    color: orange;
+}

@@ -21,13 +21,13 @@ table.suggestions-table {
     background-color: #FF9933;
     padding: 16px;
     color: black;
-    font-size: 1.2em;
+    font-size: 1em;
 }
 
 #suggestions-table td {
     text-align: center;
     padding: 12px;
-    font-size: 1.1em;
+    font-size: 1em;
 }
 
 #suggestions-table tr:nth-child(even) {
@@ -52,7 +52,7 @@ table.suggestions-table {
 #suggestions_input_container table {
     margin: auto;
     width: 80%;
-    font-size: 1.2em;
+    font-size: 1em;
 }
 
 #suggestions_input_container th {
@@ -74,9 +74,9 @@ input[type=submit] {
     font-size: 1.2em;
     background-color: orange;
     color: #FFFFFF;
-    border: 1px solid #eee;
     border-radius: 20px;
-    box-shadow: 5px 5px 5px #EEEEEE;
+    border: 1px solid #eeeeee;
+    box-shadow: 1px 1px 1px black;
     text-shadow:none;
     padding: 5px 15px 5px;
 }
@@ -95,7 +95,8 @@ input[type=button] {
     background-color: orange;
     color: #FFFFFF;
     border-radius: 20px;
-    box-shadow: 2px 2px 2px #EEEEEE;
+    border: 1px solid #eeeeee;
+    box-shadow: 1px 1px 1px black;
     text-shadow:none;
     padding: 5px 15px 5px;
 }
@@ -115,22 +116,22 @@ select {
     background-color: white;
     color: black;
     border-radius: 10px;
-    border-color: #EEEEEE;
-    border-bottom-color: #EEEEEE;
+    box-shadow: 1px 1px 1px black;
+    border: 1px solid #eeeeee;
     padding: 2px;
-    font-size: 1.2em;
+    font-size: 1em;
     width: 98%;
     margin: 10px 0px 10px auto;
     text-align: right;
 }
 
 input[type=text] {
-    font-size: 1.2em;
+    font-size: 1em;
     background-color: white;
-    border: 1px solid lightgray;
-    color: #000000;
+    border: 1px solid #eeeeee;
+    color: black;
     border-radius: 20px;
-    box-shadow: 5px 5px 5px #EEEEEE;
+    box-shadow: 1px 1px 1px black;
     margin: 10px 0px 10px;
     padding: 5px 15px 5px;
     width: 88%;

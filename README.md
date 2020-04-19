@@ -1,13 +1,14 @@
-# houndsploit.  An advanced graphical search engine for Exploit-DB
+# HoundSploit
 
+![HoundSploit Logo](/HoundSploit/static/media/icon.png)
 
 Author: Nicolas Carolo <nicolascarolo.dev@gmail.com>
 
 Copyright: © 2020, Nicolas Carolo.
 
-Date: 2020-04-16
+Date: 2020-04-19
 
-Version: 2.0.0 (beta)
+Version: 2.1.0
 
 
 ## PURPOSE
@@ -30,6 +31,7 @@ the most accurate search results.
 * Flask instead of Django
 * SQLAlchemy instead of Django ORM
 * The kernel of the search engine is the same used in [_hsploit_](https://github.com/nicolas-carolo/hsploit), which is the CLI version of HoundSploit
+* Dark and Light themes
 
 
 #### Effective version number filtering examples
@@ -46,9 +48,7 @@ WordPress Plugin Sodahead Polls 2.0.2 - Multiple Cross
 
 10 exploits and 0 shellcodes found for "WordPress 2.0.2"
 
-* WORDPRESS 1.5.1.1 < 2.2.2 - Multiple Vulnerabilities
-* WORDPRESS < 4.0.1 - Denial of Service
-* ...
+![Search example 1](/img/example-1.png)
 
 
 ##### Example II
@@ -64,11 +64,7 @@ Papers: No Result
 
 14 exploits and 0 shellcodes found for "linux kernel 4.2.3"
 
-* LINUX KERNEL 3.11 < 4.8 0 - 'SO_SNDBUFFORCE' / 'SO_RCVBUFFORCE' Local
-Privilege Escalation
-* LINUX KERNEL < 4.10.13 - 'keyctl_set_reqkey_keyring' Local Denial of 
-Service
-* ...
+![Search example 2](/img/example-2.png)
 
 
 #### Advanced filtering
@@ -82,12 +78,23 @@ results:
 * Port
 * Date interval
 
+![Advanced filtering](/img/advanced-filtering.png)
+
 
 #### Search suggestion
 
 You can choose to show a particular suggestion for a given searched string.
 For each case you can also decide to use automatic replacement or not.
 It is possible to add new suggestions and delete the existing suggestions.
+
+![Suggestions](/img/suggestions.png)
+
+#### Customization
+You can choose to use the Light or the Dark theme
+
+![Light Theme](/img/light-theme.png)
+
+![Dark Theme](/img/dark-theme.png)
 
 
 ## MINIMUM REQUIREMENTS

@@ -105,8 +105,9 @@ def get_results_table_advanced():
         return render_template('advanced_results_table.html', searched_item=searched_text,
                                exploits_list=exploits_list, shellcodes_list=shellcodes_list,
                                searched_text=searched_text, vulnerability_types_list=vulnerability_types_list,
-                               vulnerability_platforms_list=vulnerability_platforms_list, author_filter=author_filter,
-                               type_filter=type_filter, platform_filter=platform_filter, port_filter=port_filter,
+                               vulnerability_platforms_list=vulnerability_platforms_list, operator_filter=operator_filter,
+                               author_filter=author_filter, type_filter=type_filter,
+                               platform_filter=platform_filter, port_filter=port_filter,
                                date_from_filter=date_from_filter, date_to_filter=date_to_filter,
                                suggested_search_text=suggested_search_text, date_alert=date_alert)
     else:
@@ -211,20 +212,20 @@ def download_shellcode():
         return render_template('error_page.html', error=error_msg)
 
 
-@app.route('/about')
-def about():
+@app.route('/settings')
+def settings():
     """
-    Show software information
-    :return: about templates
+    Show settings page
+    :return: settings templates
     """
-    return render_template('about.html', latest_db_update=get_latest_db_update_date())
+    return render_template('settings.html', latest_db_update=get_latest_db_update_date())
 
 
 @app.route('/update')
 def get_updates():
     """
     Check and download new updates for the software and the database
-    :return: about templates
+    :return: settings templates
     """
     install_updates()
     if check_file_existence(init_path + "/houndsploit_db.lock"):
@@ -234,6 +235,7 @@ def get_updates():
         db_update_alert = True
     else:
         db_update_alert = False
+
     if check_file_existence(init_path + "/houndsploit_sw.lock"):
         sw_update_alert = True
     else:
@@ -244,7 +246,7 @@ def get_updates():
     else:
         no_updates_alert = False
 
-    return render_template('about.html', latest_db_update=get_latest_db_update_date(), db_update_alert=db_update_alert,
+    return render_template('settings.html', latest_db_update=get_latest_db_update_date(), db_update_alert=db_update_alert,
                             sw_update_alert=sw_update_alert, no_updates_alert=no_updates_alert)
 
 

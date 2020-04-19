@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block scripts_and_css %}
-    <link href="/static/css/advanced_searcher.css" rel="stylesheet">
-    <link href="/static/css/base_searcher.css" rel="stylesheet">
+    <script>getTheme("advanced_searcher.css")</script>
+    <script>getTheme("base_searcher.css")</script>
 {% endblock %}
 {% block input_form %}
     <form action="/advanced-search" method="POST" id="searcher-form" name="searcher-form">
@@ -14,8 +14,13 @@
         <div class="filters-container">
             <label for search-operator>Search operator:</label>
             <select id="search-operator" name="search-operator">
-                <option value="AND" selected="selected">AND</option>
-                <option value="OR">OR</option>
+                {% if operator_filter == "OR" %}
+                    <option value="AND">AND</option>
+                    <option value="OR" selected>OR</option>
+                {% else %}
+                    <option value="AND" selected>AND</option>
+                    <option value="OR">OR</option>
+                {% endif %}
             </select>
             <label for author>Author:</label>
             {% if searched_text %}

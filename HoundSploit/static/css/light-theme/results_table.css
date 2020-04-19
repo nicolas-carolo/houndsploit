@@ -1,0 +1,50 @@
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 99%;
+    border: 1px solid #DDDDDD;
+    margin: auto auto 30px;
+}
+
+th {
+    text-align: center;
+    background-color: #FF9933;
+    padding: 16px;
+    font-size: 20px;
+    color: black;
+}
+
+td {
+    text-align: center;
+    padding: 12px;
+    font-size: 16px;
+}
+
+tr:nth-child(even) {
+    background-color: #FFE39E;
+}
+
+tr:nth-of-type(odd) {
+    background: #FFD779;
+}
+
+tr:hover {
+    background-color: #FFB266;
+}
+
+h4 {
+    text-align: center;
+    font-size: 14px;
+    color: dimgrey;
+    margin-bottom: 30px;
+}
+
+span.keyword {
+    color: red;
+    font-weight: bold;
+}
+
+h4.link_to_top {
+    color: orange;
+    margin-bottom: 60px;
+}

@@ -1,0 +1,47 @@
+div.filters-container {
+    width: 40%;
+    margin: 0 auto;
+    border: 1px solid #DDDDDD;
+    background-color: #484848;
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 2px 2px 2px black;
+}
+
+input[type=number] {
+    background-color: #484848;
+    color: white;
+    border: 1px solid #eeeeee;
+    border-radius: 10px;
+    padding: 2px 2px 2px 7px;
+}
+
+input[type=date] {
+    background-color: #484848;
+    color: white;
+    border-radius: 10px;
+    border: 1px solid #eeeeee;
+    margin-top: 25px;
+    padding: 5px 5px 2px;
+}
+
+option {
+    background-color: #646464;
+    color: white;
+}
+
+select {
+    background-color: #646464;
+    color: white;
+    border-radius: 10px;
+    border: 1px solid #eeeeee;
+    padding: 2px;
+}
+
+#author {
+    font-size: 1em;
+}
+
+label {
+    color: white;
+}
