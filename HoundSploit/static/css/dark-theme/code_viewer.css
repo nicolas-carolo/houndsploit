@@ -1,12 +1,12 @@
 div.vulnerability_info {
     width: 40%;
-    margin: 0 auto;
+    margin: 0 auto 50px;
     border: 1px solid #DDDDDD;
-    background-color: #EEEEEE;
+    background-color: #484848;
     padding: 15px;
     border-radius: 20px;
     align-content: center;
-    box-shadow: 5px 5px 5px #EEEEEE;
+    box-shadow: 2px 2px 2px black;
 }
 
 table.vulnerability_info {
@@ -18,11 +18,12 @@ table.vulnerability_info {
 th {
     text-align: left;
     font-weight: bold;
-    color: darkred;
+    color: orange;
 }
 
 td {
     text-align: right;
+    color: white;
 }
 
 pre {
@@ -47,9 +48,9 @@ button {
     font-size: 1.2em;
     background-color: orange;
     color: #FFFFFF;
-    border: none;
+    border: 1px solid #eeeeee;
     border-radius: 20px;
-    box-shadow: 5px 5px 5px #AAAAAA;
+    box-shadow: 1px 1px 1px black;
     text-shadow:none;
     padding: 5px 15px 5px;
     margin: 15px auto 5px;
