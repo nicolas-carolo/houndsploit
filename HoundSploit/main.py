@@ -27,7 +27,8 @@ def main():
     if check_file_existence(init_path + "/houndsploit_sw.lock"):
         print("Before executing HoundSploit run:")
         print("\t$ pip install -r " + init_path + "/houndsploit/requirements.txt")
-        print("\t$ python " + init_path + "/houndsploit/setup.py install")
+        print("\t$ cd " + init_path + "/houndsploit")
+        print("\t$ python setup.py install")
         print("\t$ houndsploit")
         exit(1)
     if not os.path.isfile(init_path + "/hound_db.sqlite3"):

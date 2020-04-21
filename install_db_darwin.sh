@@ -45,6 +45,7 @@ else
     echo "Latest version of HoundSploit downloaded"
     echo "Run the following commands (be sure to use the Python 3 interpreter)"
     echo -e "\t$ pip install -r $HOUNDSPLOIT_PATH/houndsploit/requirements.txt"
-    echo -e "\t$ python $HOUNDSPLOIT_PATH/houndsploit/setup.py install"
+    echo -e "\t$ cd $HOUNDSPLOIT_PATH/houndsploit"
+    echo -e "\t$ python setup.py install"
     echo -e "\t$ houndsploit"
 fi
