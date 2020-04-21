@@ -137,6 +137,13 @@ $ pip install -r requirements.txt
 $ python setup.py install
 ```
 
+### troubleshooting
+If you encounter problems during the installation phase, please run:
+```sh
+$ rm -fr ~/HoundSploit
+```
+and then repeat the installation phase.
+
 ## USAGE
 
 For running the HoundSploit server:
