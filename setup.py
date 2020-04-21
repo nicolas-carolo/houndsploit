@@ -40,7 +40,7 @@ setup(name='houndsploit',
     )
 
 try:
-    if getpass.getname == 'root':
+    if getpass.getuser == 'root':
         f = open(os.path.expanduser("~") + "/HoundSploit/houndsploit_sw.lock")
         f.close()
         os.remove(os.path.expanduser("~") + "/HoundSploit/houndsploit_sw.lock")
