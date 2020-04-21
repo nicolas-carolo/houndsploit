@@ -1,7 +1,7 @@
 #!/bin/bash
 HOUNDSPLOIT_PATH="$HOME/HoundSploit"
 
-if [ $(id -u) = 0 ] && ! [ -d "$HOUNDSPLOIT_PATH/enable_root.cfg" ] ; then
+if [ $(id -u) = 0 ] && ! [ -f "$HOUNDSPLOIT_PATH/enable_root.cfg" ] ; then
 	echo "ERROR: This script must NOT be run as 'root'"
 	exit 1
 fi
