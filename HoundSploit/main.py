@@ -29,6 +29,7 @@ def main():
         print("\t$ pip install -r " + init_path + "/houndsploit/requirements.txt")
         print("\t$ cd " + init_path + "/houndsploit")
         print("\t$ python setup.py install")
+        print("\t$ rm " + init_path + "/houndsploit_sw.lock")
         print("\t$ houndsploit")
         exit(1)
     if not os.path.isfile(init_path + "/hound_db.sqlite3"):

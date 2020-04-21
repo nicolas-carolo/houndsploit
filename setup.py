@@ -4,7 +4,6 @@ import io
 from setuptools import setup, find_packages
 import os
 import sys
-import getpass
 
 
 setup(name='houndsploit',
@@ -39,20 +38,4 @@ setup(name='houndsploit',
       },
     )
 
-try:
-    if getpass.getuser() == 'root':
-        f = open(os.path.expanduser("~") + "/HoundSploit/houndsploit_sw.lock")
-        f.close()
-        os.remove(os.path.expanduser("~") + "/HoundSploit/houndsploit_sw.lock")
-    else:
-        if os.environ['SUDO_USER']:
-            f = open(os.path.expanduser('~' + os.environ["SUDO_USER"]) + "/HoundSploit/houndsploit_sw.lock")
-            f.close()
-            os.remove(os.path.expanduser('~' + os.environ["SUDO_USER"]) + "/HoundSploit/houndsploit_sw.lock")
-        else:
-            f = open(os.path.expanduser("~") + "/HoundSploit/houndsploit_sw.lock")
-            f.close()
-            os.remove(os.path.expanduser("~") + "/HoundSploit/houndsploit_sw.lock") 
-except IOError:
-    pass
 
