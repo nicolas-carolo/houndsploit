@@ -113,7 +113,7 @@ You can choose to use the Light or the Dark theme
 
 ## INSTALLATION
 
-### Linux (non-root user) **recommended**
+### Linux (non-root user) [recommended]
 We can install _HoundSploit_ simply by doing:
 ```sh
 $ git clone https://github.com/nicolas-carolo/houndsploit
