@@ -140,7 +140,7 @@ We can install _HoundSploit_ simply by doing:
 ```sh
 $ git clone https://github.com/nicolas-carolo/houndsploit
 $ cd houndsploit
-$ sh install_db_darwin.sh
+$ ./install_db_darwin.sh
 $ pip install -r requirements.txt
 $ python setup.py install
 ```
