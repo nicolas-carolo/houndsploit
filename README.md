@@ -142,8 +142,15 @@ $ git clone https://github.com/nicolas-carolo/houndsploit
 $ cd houndsploit
 $ ./install_db_darwin.sh
 $ pip install -r requirements.txt
-$ python setup.py install
+$ sudo python setup.py install
 ```
+
+### Troubleshooting
+If you encounter problems during the installation phase, please run:
+```sh
+$ rm -fr ~/HoundSploit
+```
+and then repeat the installation phase.
 
 
 ## USAGE
