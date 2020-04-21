@@ -113,12 +113,24 @@ You can choose to use the Light or the Dark theme
 
 ## INSTALLATION
 
-### Linux
+### Linux (non-root user) **recommended**
 We can install _HoundSploit_ simply by doing:
 ```sh
 $ git clone https://github.com/nicolas-carolo/houndsploit
 $ cd houndsploit
-$ sh install_db_linux.sh
+$ ./install_db_linux.sh
+$ pip install -r requirements.txt
+$ sudo python setup.py install
+```
+
+### Linux (root user)
+We can install _HoundSploit_ simply by doing:
+```sh
+$ git clone https://github.com/nicolas-carolo/houndsploit
+$ cd houndsploit
+$ mkdir /root/HoundSploit
+$ touch /root/HoundSploit/enable_root.cfg
+$ ./install_db_linux.sh
 $ pip install -r requirements.txt
 $ python setup.py install
 ```
