@@ -5,9 +5,9 @@ Author: Nicolas Carolo <nicolascarolo.dev@gmail.com>
 
 Copyright: © 2020, Nicolas Carolo.
 
-Date: 2020-04-19
+Date: 2020-04-21
 
-Version: 2.1.0 (Beta)
+Version: 2.1.1 (Beta)
 
 
 ## PURPOSE
@@ -105,12 +105,24 @@ It is possible to add new suggestions and delete the existing suggestions.
 
 ## INSTALLATION
 
-### Linux
+### Linux (not-root user) **recommended**
 We can install hsploit simply by doing:
 ```sh
 $ git clone https://github.com/nicolas-carolo/houndsploit
 $ cd houndsploit
-$ sh install_db_linux.sh
+$ ./install_db_linux.sh
+$ pip install -r requirements.txt
+$ python setup.py install
+```
+
+### Linux (root user)
+We can install hsploit simply by doing:
+```sh
+$ git clone https://github.com/nicolas-carolo/houndsploit
+$ mkdir /root/HoundSploit
+$ touch /root/HoundSploit/enable_root.cfg
+$ cd houndsploit
+$ ./install_db_linux.sh
 $ pip install -r requirements.txt
 $ python setup.py install
 ```
