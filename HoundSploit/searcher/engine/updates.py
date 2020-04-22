@@ -12,9 +12,9 @@ def install_updates():
     """
     installer_path = os.path.expanduser("~") + "/HoundSploit/houndsploit/"
     if platform.system() == "Darwin":
-        os.system('sh ' + installer_path + "install_db_darwin.sh")
+        os.system(installer_path + "install_db_darwin.sh")
     elif platform.system() == "Linux":
-        os.system('sh ' + installer_path + "install_db_linux.sh")
+        os.system(installer_path + "install_db_linux.sh")
     else:
         printf("ERROR: System not supported")
 
