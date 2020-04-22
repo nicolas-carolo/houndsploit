@@ -1,11 +1,21 @@
 div.info_container {
     width: 40%;
-    margin: 15px auto 15px;
+    margin: 15px auto 60px;
     border: 1px solid #DDDDDD;
     background-color: #EEEEEE;
     padding: 15px;
     border-radius: 20px;
     align-content: center;
+    box-shadow: 5px 5px 5px #EEEEEE;
+}
+
+div.settings_container {
+    width: 40%;
+    margin: 15px auto 15px;
+    border: 1px solid #DDDDDD;
+    background-color: #EEEEEE;
+    padding: 15px;
+    border-radius: 20px;
     box-shadow: 5px 5px 5px #EEEEEE;
 }
 
