@@ -4,7 +4,7 @@ function checkForUpdates() {
 
 function savePreferences() {
     var theme = document.getElementById("theme-selector").value;
-    document.cookie = "theme=" + theme;
+    document.cookie = "theme=" + theme + "; expires=Tue, 31 Dec 2030 23:59:59 UTC";
     alert("Your preferences have been updated");
     location.reload();
 }
