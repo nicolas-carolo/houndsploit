@@ -120,7 +120,7 @@ $ git clone https://github.com/nicolas-carolo/houndsploit
 $ cd houndsploit
 $ ./install_db_linux.sh
 $ pip install -r requirements.txt
-$ sudo python setup.py install
+$ python setup.py install
 ```
 
 ### Linux (root user)
@@ -142,7 +142,7 @@ $ git clone https://github.com/nicolas-carolo/houndsploit
 $ cd houndsploit
 $ ./install_db_darwin.sh
 $ pip install -r requirements.txt
-$ sudo python setup.py install
+$ python setup.py install
 ```
 
 ### Troubleshooting
