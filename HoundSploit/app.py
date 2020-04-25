@@ -269,9 +269,12 @@ def add_suggestion():
         searched = request.form['searched']
         suggestion = request.form['suggestion']
         autoreplacement = request.form['autoreplacement']
-        new_suggestion(searched, suggestion, autoreplacement)
-    return render_template('suggestions.html', suggestions=get_suggestions_list(), default_suggestions=DEFAULT_SUGGESTIONS)
-
+        if not str(searched).lower() in DEFAULT_SUGGESTIONS:
+            new_suggestion(searched, suggestion, autoreplacement)
+            return render_template('suggestions.html', suggestions=get_suggestions_list(), default_suggestions=DEFAULT_SUGGESTIONS)
+        else:
+            error = 'ERROR: Default suggestions cannot be modified!'
+            return render_template('suggestions.html', suggestions=get_suggestions_list(), suggestion_error=error, default_suggestions=DEFAULT_SUGGESTIONS)
 
 @app.route('/delete-suggestion')
 def delete_suggestion():

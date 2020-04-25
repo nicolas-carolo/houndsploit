@@ -26,7 +26,7 @@
             </table>
             <input id="add-suggestion" name="add-suggestion" type="submit" value="Add">
             {% if suggestion_error %}
-                <br><p style="color: red; text-align: center">{{ suggestion_error }}</p>
+                <script>alert("{{ suggestion_error }}")</script>
             {% endif %}
         </div>
     </form>

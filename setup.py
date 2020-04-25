@@ -7,7 +7,7 @@ import sys
 
 
 setup(name='houndsploit',
-      version='2.1.2',
+      version='2.1.3',
       description='An advanced graphic search engine for Exploit-DB',
       keywords='houndsploit',
       author='Nicolas Carolo',
