@@ -283,6 +283,9 @@ def delete_suggestion():
     :return: the 'suggestions.html' template. In case of error it shows an error message.
     """
     searched = request.args.get('searched', None)
+    if str(searched).lower() in DEFAULT_SUGGESTIONS:
+        error = 'ERROR: Default suggestions cannot be deleted!'
+        return render_template('suggestions.html', suggestions=get_suggestions_list(), suggestion_error=error, default_suggestions=DEFAULT_SUGGESTIONS)
     if remove_suggestion(searched):
         return render_template('suggestions.html', suggestions=get_suggestions_list(), default_suggestions=DEFAULT_SUGGESTIONS)
     else:
