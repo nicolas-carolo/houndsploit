@@ -5,7 +5,7 @@
 {% endblock %}
 {% block results_table %}
     <div>
-        <h4>{{ exploits_list|length }} <a href="#exploits_list">exploits</a> and {{ shellcodes_list|length }} <a href="#shellcodes_list">shellcodes</a> found for "{{ searched_item }}"</h4>
+        <h4>{{ n_exploits }} <a href="#exploits_list">exploits</a> and {{ shellcodes_list|length }} <a href="#shellcodes_list">shellcodes</a> found for "{{ searched_item }}"</h4>
         {% if suggested_search_text %}
             <h4>I also suggest you search for "<a href="javascript:makeSuggestedSearch('{{ suggested_search_text }}')">{{ suggested_search_text }}</a>"</h4>
         {% endif %}
@@ -33,6 +33,13 @@
                     </tr>
                 {% endfor %}
             </table>
+            <input type="button" id="first-exploit-page-btn" name="first-exploit-page-btn" class="nav-page" value="First">
+            <input type="button" id="previous-exploit-page-btn" name="previous-exploit-page-btn" class="nav-page" value="Previous" onclick="previousExploitsPage()">
+            <label for="exploit-page-number" id="exploit-page-label" name="exploit-page-label">Page</label>
+            <input type="number" id="exploit-page-number" name="exploit-page-number" class="nav-page" value="{{ current_exploits_page }}">
+            <input type="button" id="go-exploit-page-btn" name="go-exploit-page-btn" class="nav-page" value="Go">
+            <input type="button" id="next-exploit-page-btn" name="next-exploit-page-btn" class="nav-page" value="Next" onclick="nextExploitsPage()">
+            <input type="button" id="last-exploit-page-btn" name="last-exploit-page-btn" class="nav-page" value="Previous">
         {% endif %}
         {% if shellcodes_list|length > 0 %}
             <a name="shellcodes_list"><h2 class="vulnerability_type">Shellcodes</h2></a>

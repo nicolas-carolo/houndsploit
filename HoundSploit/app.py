@@ -16,9 +16,13 @@ from shutil import copyfile
 
 
 init_path = os.path.expanduser("~") + "/HoundSploit"
-template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
-static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
+# template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
+# static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
+template_dir = os.path.abspath('/home/nicolas/Projects/Python/houndsploit/HoundSploit/templates')
+static_folder = os.path.abspath('/home/nicolas/Projects/Python/houndsploit/HoundSploit/static')
 app = Flask(__name__, template_folder=template_dir, static_folder=static_folder)
+
+N_RESULTS_FOR_PAGE = 15
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -28,6 +32,16 @@ def get_results_table():
     :return: results_table.html template with search results.
     """
     if request.method == 'POST':
+        current_exploits_page = request.form['hid-e-page']
+        try:
+            current_exploits_page = int(current_exploits_page)
+        except ValueError:
+            current_exploits_page = 1
+        if current_exploits_page < 1:
+            index_first_result = 0
+        else:
+            index_first_result = (int(current_exploits_page) - 1) * N_RESULTS_FOR_PAGE
+        index_last_result = index_first_result + N_RESULTS_FOR_PAGE
         searched_text = request.form['searched-text']
         searched_text = substitute_with_suggestions(searched_text)
         suggested_search_text = propose_suggestions(searched_text)
@@ -35,6 +49,8 @@ def get_results_table():
             return render_template('home.html')
         key_words_list = (str(searched_text).upper()).split()
         exploits_list = search_vulnerabilities_in_db(searched_text, 'searcher_exploit')
+        n_exploits = len(exploits_list)
+        exploits_list = exploits_list[index_first_result:index_last_result]
         for result in exploits_list:
             if result.port is None:
                 result.port = ''
@@ -47,9 +63,10 @@ def get_results_table():
         shellcodes_list = highlight_keywords_in_description(key_words_list, shellcodes_list)
         return render_template('results_table.html', searched_item=searched_text,
                                exploits_list=exploits_list, shellcodes_list=shellcodes_list,
-                               searched_text=searched_text, suggested_search_text=suggested_search_text)
+                               searched_text=searched_text, suggested_search_text=suggested_search_text,
+                               n_exploits=n_exploits, current_exploits_page=current_exploits_page)
     else:
-        return render_template('home.html')
+        return render_template('home.html', current_exploits_page=1)
 
 
 @app.route('/advanced-search', methods=['GET', 'POST'])
