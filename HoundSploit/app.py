@@ -10,7 +10,7 @@ from HoundSploit.searcher.engine.keywords_highlighter import highlight_keywords_
 from HoundSploit.searcher.engine.suggestions import substitute_with_suggestions, propose_suggestions, get_suggestions_list,\
     new_suggestion, remove_suggestion, DEFAULT_SUGGESTIONS
 from HoundSploit.searcher.engine.updates import get_latest_db_update_date, install_updates
-from HoundSploit.searcher.engine.utils import check_file_existence, get_vulnerability_extension
+from HoundSploit.searcher.engine.utils import check_file_existence, get_vulnerability_extension, get_n_needed_pages
 from HoundSploit.searcher.engine.csv2sqlite import create_db
 from shutil import copyfile
 
@@ -22,7 +22,7 @@ template_dir = os.path.abspath('/home/nicolas/Projects/Python/houndsploit/HoundS
 static_folder = os.path.abspath('/home/nicolas/Projects/Python/houndsploit/HoundSploit/static')
 app = Flask(__name__, template_folder=template_dir, static_folder=static_folder)
 
-N_RESULTS_FOR_PAGE = 15
+N_RESULTS_FOR_PAGE = 10
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -33,23 +33,32 @@ def get_results_table():
     """
     if request.method == 'POST':
         current_exploits_page = request.form['hid-e-page']
+        current_view = request.form['current-view']
         try:
             current_exploits_page = int(current_exploits_page)
         except ValueError:
             current_exploits_page = 1
-        if current_exploits_page < 1:
-            index_first_result = 0
-        else:
-            index_first_result = (int(current_exploits_page) - 1) * N_RESULTS_FOR_PAGE
-        index_last_result = index_first_result + N_RESULTS_FOR_PAGE
+
         searched_text = request.form['searched-text']
         searched_text = substitute_with_suggestions(searched_text)
         suggested_search_text = propose_suggestions(searched_text)
         if str(searched_text).isspace() or searched_text == "":
-            return render_template('home.html')
+            return render_template('home.html', current_exploits_page=1)
         key_words_list = (str(searched_text).upper()).split()
         exploits_list = search_vulnerabilities_in_db(searched_text, 'searcher_exploit')
         n_exploits = len(exploits_list)
+
+        latest_exploits_page = get_n_needed_pages(n_exploits)
+        if current_exploits_page < 1:
+            current_exploits_page = 1
+            index_first_result = 0
+        elif current_exploits_page > latest_exploits_page:
+            current_exploits_page = latest_exploits_page
+            index_first_result = (int(current_exploits_page) - 1) * N_RESULTS_FOR_PAGE
+        else:
+            index_first_result = (int(current_exploits_page) - 1) * N_RESULTS_FOR_PAGE
+        index_last_result = index_first_result + N_RESULTS_FOR_PAGE
+
         exploits_list = exploits_list[index_first_result:index_last_result]
         for result in exploits_list:
             if result.port is None:
@@ -64,7 +73,8 @@ def get_results_table():
         return render_template('results_table.html', searched_item=searched_text,
                                exploits_list=exploits_list, shellcodes_list=shellcodes_list,
                                searched_text=searched_text, suggested_search_text=suggested_search_text,
-                               n_exploits=n_exploits, current_exploits_page=current_exploits_page)
+                               n_exploits=n_exploits, current_exploits_page=current_exploits_page,
+                               latest_exploits_page=latest_exploits_page, current_view=current_view)
     else:
         return render_template('home.html', current_exploits_page=1)
 

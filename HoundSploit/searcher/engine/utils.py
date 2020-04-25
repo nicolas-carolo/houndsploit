@@ -1,6 +1,9 @@
 import re
 
 
+N_RESULTS_FOR_PAGE = 10
+
+
 def check_file_existence(filename):
     try:
         f = open(filename)
@@ -17,4 +20,13 @@ def get_vulnerability_extension(vulnerability_file):
     """
     regex = re.search(r'\.(?P<extension>\w+)', vulnerability_file)
     extension = '.' + regex.group('extension')
-    return extension        
+    return extension   
+
+
+def get_n_needed_pages(n_results):
+    """
+    Get the number of pages needed for show search results.
+    :param n_results: the number of results to show.
+    :return: the number of pages needed.
+    """
+    return int(n_results / N_RESULTS_FOR_PAGE) + 1
