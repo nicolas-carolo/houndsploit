@@ -37,6 +37,13 @@
                     </tr>
                 {% endfor %}
             </table>
+            <input type="button" id="first-exploit-page-btn" name="first-exploit-page-btn" class="nav-page" value="First" onclick="goFirstExploitsPage()">
+            <input type="button" id="previous-exploit-page-btn" name="previous-exploit-page-btn" class="nav-page" value="Previous" onclick="previousExploitsPage()">
+            <label for="exploit-page-number" id="exploit-page-label" name="exploit-page-label">Page</label>
+            <input type="number" id="exploit-page-number" name="exploit-page-number" class="nav-page" value="{{ current_exploits_page }}" min="1" max="{{ latest_exploits_page }}">
+            <input type="button" id="go-exploit-page-btn" name="go-exploit-page-btn" class="nav-page" value="Go" onclick="goExploitsPage()">
+            <input type="button" id="next-exploit-page-btn" name="next-exploit-page-btn" class="nav-page" value="Next" onclick="nextExploitsPage('{{ latest_exploits_page }}')">
+            <input type="button" id="last-exploit-page-btn" name="last-exploit-page-btn" class="nav-page" value="Last" onclick="goLastExploitsPage('{{ latest_exploits_page }}')">
         {% endif %}
         {% if shellcodes_list|length > 0 %}
             <a name="shellcodes_list"><h2 class="vulnerability_type">Shellcodes</h2></a>
@@ -60,6 +67,13 @@
                     </tr>
                 {% endfor %}
             </table>
+            <input type="button" id="first-shellcode-page-btn" name="first-shellcode-page-btn" class="nav-page" value="First" onclick="goFirstShellcodesPage()">
+            <input type="button" id="previous-shellcode-page-btn" name="previous-shellcode-page-btn" class="nav-page" value="Previous" onclick="previousShellcodesPage()">
+            <label for="shellcode-page-number" id="shellcode-page-label" name="shellcode-page-label">Page</label>
+            <input type="number" id="shellcode-page-number" name="shellcode-page-number" class="nav-page" value="{{ current_shellcodes_page }}" min="1" max="{{ latest_shellcodes_page }}">
+            <input type="button" id="go-shellcode-page-btn" name="go-shellcode-page-btn" class="nav-page" value="Go" onclick="goShellcodesPage()">
+            <input type="button" id="next-shellcode-page-btn" name="next-shellcode-page-btn" class="nav-page" value="Next" onclick="nextShellcodesPage('{{ latest_shellcodes_page }}')">
+            <input type="button" id="last-shellcode-page-btn" name="last-shellcode-page-btn" class="nav-page" value="Last" onclick="goLastShellcodesPage('{{ latest_shellcodes_page }}')">
         {% endif %}
         <a href="#top"><h4 class="link_to_top">Go to the top!</h4></a>
     </div>

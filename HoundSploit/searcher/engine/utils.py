@@ -29,4 +29,7 @@ def get_n_needed_pages(n_results):
     :param n_results: the number of results to show.
     :return: the number of pages needed.
     """
-    return int(n_results / N_RESULTS_FOR_PAGE) + 1
+    if n_results % N_RESULTS_FOR_PAGE == 0:
+        return int(n_results / N_RESULTS_FOR_PAGE)
+    else:
+        return int(n_results / N_RESULTS_FOR_PAGE) + 1

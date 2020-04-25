@@ -3,7 +3,7 @@
     <script>getTheme("base_searcher.css")</script>
 {% endblock %}
 {% block input_form %}
-    <div id="div-searcher" name="div-searcher">
+    <div id="div-searcher" name="div-searcher" onsubmit="resetPages()">
         <form action="/" method="POST" id="searcher-form" name="searcher-form">
             {% if searched_text %}
                 <input type="text" id="searched-text" name="searched-text" value="{{ searched_text }}">
@@ -11,6 +11,7 @@
                 <input type="text" id="searched-text" name="searched-text">
             {% endif %}
             <input type="hidden" id="hid-e-page" name="hid-e-page" value="{{ current_exploits_page }}">
+            <input type="hidden" id="hid-s-page" name="hid-s-page" value="{{ current_shellcodes_page }}">
             <input type="hidden" id="current-view" name="current-view" value="">
             <input type="submit" id="search-button" name="search-button" value="Search">
         </form>
