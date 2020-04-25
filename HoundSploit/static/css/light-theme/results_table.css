@@ -10,14 +10,14 @@ th {
     text-align: center;
     background-color: #FF9933;
     padding: 16px;
-    font-size: 20px;
+    font-size: 18px;
     color: black;
 }
 
 td {
     text-align: center;
     padding: 12px;
-    font-size: 16px;
+    font-size: 13px;
 }
 
 tr:nth-child(even) {
@@ -47,4 +47,46 @@ span.keyword {
 h4.link_to_top {
     color: orange;
     margin-bottom: 60px;
+}
+
+div.nav-page {
+    width: 50%;
+    margin: 0 auto;
+    border: 1px solid #DDDDDD;
+    background-color: #EEEEEE;
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #EEEEEE;
+}
+
+input[type=button].nav-page {
+    text-align: center;
+    font-size: 1em;
+    background-color: orange;
+    color: #FFFFFF;
+    border-radius: 20px;
+    border: 1px solid #eeeeee;
+    box-shadow: 1px 1px 1px black;
+    text-shadow:none;
+    padding: 5px 15px 5px;
+    margin: auto 5px auto;
+    width: 15%;
+}
+
+input[type=button].nav-page:hover {
+    background-color: darkorange;
+}
+
+label.nav-page {
+    color: black;
+}
+
+input[type=number] {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 2px 2px 2px 7px;
+    font-size: 1em;
+    width: 10%;
 }

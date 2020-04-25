@@ -53,3 +53,46 @@ h4.link_to_top {
     color: orange;
     margin-bottom: 60px;
 }
+
+div.nav-page {
+    width: 50%;
+    margin: 0 auto;
+    border: 1px solid #DDDDDD;
+    background-color: #484848;
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 2px 2px 2px black;
+    margin: auto auto 40px;
+}
+
+input[type=button].nav-page {
+    text-align: center;
+    font-size: 1em;
+    background-color: orange;
+    color: #FFFFFF;
+    border-radius: 20px;
+    border: 1px solid #eeeeee;
+    box-shadow: 1px 1px 1px black;
+    text-shadow:none;
+    padding: 5px 15px 5px;
+    margin: auto 5px auto;
+    width: 15%;
+}
+
+input[type=button].nav-page:hover {
+    background-color: darkorange;
+}
+
+label.nav-page {
+    color: white;
+}
+
+input[type=number] {
+    background-color: #484848;
+    color: white;
+    border: 1px solid #eeeeee;
+    border-radius: 10px;
+    padding: 2px 2px 2px 7px;
+    font-size: 1em;
+    width: 10%;
+}

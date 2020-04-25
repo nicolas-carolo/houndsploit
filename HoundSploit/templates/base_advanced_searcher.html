@@ -2,6 +2,13 @@
 {% block scripts_and_css %}
     <script>getTheme("advanced_searcher.css")</script>
     <script>getTheme("base_searcher.css")</script>
+    {% if current_view == "exploits" %}
+        <script>location.href = "/advanced-search#exploits_list"</script>
+    {% elif current_view == "shellcodes" %}
+        <script>location.href = "/advanced-search#shellcodes_list"</script>
+    {% else %}
+        <script>location.href = "/advanced-search#top"</script>
+    {% endif %}
 {% endblock %}
 {% block input_form %}
     <form action="/advanced-search" method="POST" id="searcher-form" name="searcher-form">
