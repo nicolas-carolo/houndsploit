@@ -33,6 +33,10 @@ the most accurate search results.
 * The kernel of the search engine is the same used in [_hsploit_](https://github.com/nicolas-carolo/hsploit), which is the CLI version of HoundSploit
 * Dark and Light themes
 
+#### News in the version 2.2.0
+* Layout improvements
+* Search results pagination
+
 
 #### Effective version number filtering examples
 ##### Example I
