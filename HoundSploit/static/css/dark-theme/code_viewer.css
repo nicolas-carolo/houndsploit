@@ -1,5 +1,5 @@
 div.vulnerability_info {
-    width: 40%;
+    width: 45%;
     margin: 0 auto 50px;
     border: 1px solid #DDDDDD;
     background-color: #484848;
@@ -7,6 +7,7 @@ div.vulnerability_info {
     border-radius: 20px;
     align-content: center;
     box-shadow: 2px 2px 2px black;
+    margin: auto auto 50px;
 }
 
 table.vulnerability_info {
@@ -19,11 +20,16 @@ th {
     text-align: left;
     font-weight: bold;
     color: orange;
+    font-size: 13px;
+    text-align: left;
+    width: auto;
 }
 
 td {
-    text-align: right;
-    color: white;
+    text-align: left;
+    color: white;    
+    font-size: 13px;
+    width: auto;
 }
 
 pre {

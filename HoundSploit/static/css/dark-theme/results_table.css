@@ -10,15 +10,17 @@ th {
     text-align: center;
     background-color: #464646;
     padding: 16px;
-    font-size: 20px;
+    font-size: 18px;
     color: darkorange;
+    text-align: left;
 }
 
 td {
     text-align: center;
     padding: 12px;
-    font-size: 16px;
+    font-size: 13px;
     color: white;
+    text-align: left;
 }
 
 tr:nth-child(even) {
