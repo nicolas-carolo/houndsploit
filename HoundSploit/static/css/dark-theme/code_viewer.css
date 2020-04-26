@@ -20,16 +20,22 @@ th {
     text-align: left;
     font-weight: bold;
     color: orange;
-    font-size: 13px;
+    font-size: 16px;
     text-align: left;
     width: auto;
+    padding-top: 3px;
+    padding-right: 5px;
+    padding-bottom: 3px;
 }
 
 td {
     text-align: left;
     color: white;    
-    font-size: 13px;
+    font-size: 16px;
     width: auto;
+    padding-top: 3px;
+    padding-left: 5px;
+    padding-bottom: 3px;
 }
 
 pre {

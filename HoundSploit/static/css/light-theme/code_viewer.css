@@ -19,16 +19,23 @@ th {
     text-align: left;
     font-weight: bold;
     color: darkred;
-    font-size: 13px;
+    font-size: 16px;
     text-align: left;
     width: auto;
+    padding-top: 3px;
+    padding-right: 5px;
+    padding-bottom: 3px;
 }
 
 td {
     text-align: right;
-    font-size: 13px;
+    font-size: 16px;
     text-align: left;
     width: auto;
+    padding: 3px;
+    padding-top: 3px;
+    padding-left: 5px;
+    padding-bottom: 3px;
 }
 
 pre {
