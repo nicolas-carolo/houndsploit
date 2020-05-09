@@ -6,9 +6,9 @@ Author: Nicolas Carolo <nicolascarolo.dev@gmail.com>
 
 Copyright: © 2020, Nicolas Carolo.
 
-Date: 2020-04-26
+Date: 2020-05-09
 
-Version: 2.2.0
+Version: 2.2.1
 
 
 ## PURPOSE
@@ -21,6 +21,7 @@ the most accurate search results.
 
 * Effective version number filtering
 * Advanced filtering
+* Fast search
 * Search suggestions with customization
 * Syntax highlighting of the source code of exploits and shellcodes
 * Downloading of the source code of exploits and shellcodes
@@ -33,40 +34,21 @@ the most accurate search results.
 * The kernel of the search engine is the same used in [_hsploit_](https://github.com/nicolas-carolo/hsploit), which is the CLI version of HoundSploit
 * Dark and Light themes
 
-#### News in the version 2.2.0
-* Layout improvements
-* Search results pagination
-
-
 #### Effective version number filtering examples
 ##### Example I
 
-```
-nicolas@carolo:~$ searchsploit WordPress 2.0.2
-WordPress 2.0.2- 'cache' Remote Shell Injection
-WordPress Plugin Crawl Rate Tracker 2.0.2 - SQL Inject
-WordPress Plugin Sodahead Polls 2.0.2 - Multiple Cross
-```
+11 exploits and 0 shellcodes found for "WordPress Core 2.0.2"
 
-**HoundSploit**: `WordPress 2.0.2`
-
-10 exploits and 0 shellcodes found for "WordPress 2.0.2"
+[TODO: update image]
 
 ![Search example 1](/img/example-1.png)
 
 
 ##### Example II
 
-```
-nicolas@carolo:~$ searchsploit Linux Kernel 4.2.3
-Exploits: No Result
-Shellcodes: No Result
-Papers: No Result
-```
+15 exploits and 0 shellcodes found for "linux kernel 4.2.3"
 
-**HoundSploit**: `Linux Kernel 4.2.3`
-
-14 exploits and 0 shellcodes found for "linux kernel 4.2.3"
+[TODO: update image]
 
 ![Search example 2](/img/example-2.png)
 
