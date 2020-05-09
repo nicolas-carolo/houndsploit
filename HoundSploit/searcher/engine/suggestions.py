@@ -6,7 +6,7 @@ import os
 
 
 init_path = exploitdb_path = os.path.expanduser("~") + "/HoundSploit"
-DEFAULT_SUGGESTIONS = ["joomla", "linux", "phpbb", "macos", "mac os x", "html 5", "wordpress core"]
+DEFAULT_SUGGESTIONS = ["joomla", "linux", "phpbb", "macos", "mac os x", "html 5", "wordpress"]
 
 
 def substitute_with_suggestions(searched_text):

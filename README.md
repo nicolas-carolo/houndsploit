@@ -39,16 +39,12 @@ the most accurate search results.
 
 11 exploits and 0 shellcodes found for "WordPress Core 2.0.2"
 
-[TODO: update image]
-
 ![Search example 1](/img/example-1.png)
 
 
 ##### Example II
 
-15 exploits and 0 shellcodes found for "linux kernel 4.2.3"
-
-[TODO: update image]
+15 exploits and 0 shellcodes found for "Linux Kernel 4.2.3"
 
 ![Search example 2](/img/example-2.png)
 
