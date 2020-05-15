@@ -6,9 +6,9 @@ Author: Nicolas Carolo <nicolascarolo.dev@gmail.com>
 
 Copyright: © 2020, Nicolas Carolo.
 
-Date: 2020-05-09
+Date: 2020-05-16
 
-Version: 2.2.1
+Version: 2.3.0
 
 
 ## PURPOSE
@@ -129,8 +129,14 @@ $ python setup.py install
 ```
 
 ### Windows
+Before proceding with the installation, be sure that you have installed Python from the [official site](https://www.python.org/downloads/) and not from the Windows Store
+Run a _PowerShell_ session as _Administrator_
 ```powershell
-powershell.exe -ExecutionPolicy Bypass -File .\install_db_windows.ps1
+PS> git clone https://github.com/nicolas-carolo/houndsploit
+PS> cd houndsploit
+PS> powershell.exe -ExecutionPolicy Bypass -File .\install_db_windows.ps1
+PS> pip install -r requirements.txt
+PS> python setup.py install
 ```
 
 ### Troubleshooting
