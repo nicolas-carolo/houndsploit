@@ -17,11 +17,11 @@ from shutil import copyfile
 
 
 if platform.system == "Windows":
-    init_path = os.path.expanduser("~") + "\HoundSploit"
+    init_path = os.path.expanduser("~") + "\.HoundSploit"
     template_dir = os.path.abspath(init_path + '\houndsploit\HoundSploit\\templates')
     static_folder = os.path.abspath(init_path + '\houndsploit\HoundSploit\static')
 else:
-    init_path = os.path.expanduser("~") + "\HoundSploit"
+    init_path = os.path.expanduser("~") + "\.HoundSploit"
     template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
     static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
 app = Flask(__name__, template_folder=template_dir, static_folder=static_folder)

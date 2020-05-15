@@ -7,10 +7,10 @@ from HoundSploit.searcher.engine.utils import check_file_existence
 
 def create_db():
     if platform.system == "Windows":
-        init_path = os.path.expanduser("~") + "\HoundSploit"
+        init_path = os.path.expanduser("~") + "\.HoundSploit"
         db_path = init_path + "\hound_db.sqlite3"
     else:
-        init_path = os.path.expanduser("~") + "/HoundSploit"
+        init_path = os.path.expanduser("~") + "/.HoundSploit"
         db_path = init_path + "/hound_db.sqlite3"
     con = sqlite3.connect(db_path)
     cur = con.cursor()

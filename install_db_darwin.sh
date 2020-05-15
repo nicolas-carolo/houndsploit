@@ -1,5 +1,5 @@
 #!/bin/bash
-HOUNDSPLOIT_PATH="/Users/$USER/HoundSploit"
+HOUNDSPLOIT_PATH="$HOME/.HoundSploit"
 
 if [ $(id -u) = 0 ]; then
 	echo "ERROR: This script must NOT be run as 'root'"

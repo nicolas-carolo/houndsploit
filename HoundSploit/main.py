@@ -23,7 +23,7 @@ import os
 
 def main():
     """Main routine of houndsploit."""
-    init_path = os.path.expanduser("~") + "/HoundSploit"
+    init_path = os.path.expanduser("~") + "/.HoundSploit"
     if check_file_existence(init_path + "/houndsploit_sw.lock"):
         print("Before executing HoundSploit run:")
         print("\t$ pip install -r " + init_path + "/houndsploit/requirements.txt")

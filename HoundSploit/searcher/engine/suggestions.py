@@ -5,7 +5,7 @@ from HoundSploit.searcher.engine.utils import check_file_existence
 import os
 
 
-init_path = exploitdb_path = os.path.expanduser("~") + "/HoundSploit"
+init_path = exploitdb_path = os.path.expanduser("~") + "/.HoundSploit"
 DEFAULT_SUGGESTIONS = ["joomla", "linux", "phpbb", "macos", "mac os x", "html 5", "wordpress"]
 
 
