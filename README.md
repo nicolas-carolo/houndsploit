@@ -85,6 +85,7 @@ You can choose to use the Light or the Dark theme
 
 * Linux
 * macOS
+* Windows (Preview)
 
 ### Interpreter and tools
 
@@ -125,6 +126,11 @@ $ cd houndsploit
 $ ./install_db_darwin.sh
 $ pip install -r requirements.txt
 $ python setup.py install
+```
+
+### Windows
+```powershell
+powershell.exe -ExecutionPolicy Bypass -File .\install_db_windows.ps1
 ```
 
 ### Troubleshooting

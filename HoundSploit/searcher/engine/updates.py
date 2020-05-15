@@ -19,8 +19,7 @@ def install_updates():
     elif platform.system() == "Linux":
         os.system(installer_path + "install_db_linux.sh")
     elif platform.system() == "Windows":
-        # os.system(installer_path + "install_db_linux.sh")
-        os.system("install_db_Windows")
+        os.system("powershell.exe -ExecutionPolicy Bypass -File " + installer_path + "install_db_windows.ps1")
     else:
         printf("ERROR: System not supported")
 
