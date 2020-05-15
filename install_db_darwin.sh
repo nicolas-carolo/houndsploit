@@ -53,6 +53,9 @@ else
 fi
 
 if [ -d $HOUNDSPLOIT_OLD_PATH  ] ; then
+    if [ -f "$HOUNDSPLOIT_PATH/custom_suggestions.csv" ] ; then
+        cp $HOUNDSPLOIT_OLD_PATH/custom_suggestions.csv $HOUNDSPLOIT_PATH/custom_suggestions.csv
+    fi
     if [ -d $HOUNDSPLOIT_OLD_PATH/houndsploit  ] && ! [ -d $HOUNDSPLOIT_OLD_PATH/hsploit  ] ; then
         rm -fr $HOUNDSPLOIT_OLD_PATH
         echo "Old HoundSploit's and hsploit's files have been removed"
