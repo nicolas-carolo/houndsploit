@@ -1,6 +1,7 @@
 import os
 import sys
 import datetime
+import platform
 
 from flask import Flask, render_template, request
 from HoundSploit.searcher.engine.search_engine import search_vulnerabilities_in_db, get_exploit_by_id, get_shellcode_by_id,\
@@ -15,9 +16,14 @@ from HoundSploit.searcher.engine.csv2sqlite import create_db
 from shutil import copyfile
 
 
-init_path = os.path.expanduser("~") + "/HoundSploit"
-template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
-static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
+if platform.system == "Windows":
+    init_path = os.path.expanduser("~") + "\HoundSploit"
+    template_dir = os.path.abspath(init_path + '\houndsploit\HoundSploit\\templates')
+    static_folder = os.path.abspath(init_path + '\houndsploit\HoundSploit\static')
+else:
+    init_path = os.path.expanduser("~") + "\HoundSploit"
+    template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
+    static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
 app = Flask(__name__, template_folder=template_dir, static_folder=static_folder)
 
 N_RESULTS_FOR_PAGE = 10

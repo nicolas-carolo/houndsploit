@@ -1,3 +1,4 @@
 flask
 sqlalchemy
 requests
+sqlite3
