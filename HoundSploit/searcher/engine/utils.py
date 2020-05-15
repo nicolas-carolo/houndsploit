@@ -12,6 +12,7 @@ def check_file_existence(filename):
     except IOError:
         return False
 
+
 def get_vulnerability_extension(vulnerability_file):
     """
     Get the extension of the vulnerability passed as parameter.
