@@ -149,7 +149,7 @@ Now you can remove the repository of _HoundSploit_ you have downloaded, because 
 ### Troubleshooting
 If you encounter problems during the installation phase, please run:
 ```sh
-$ rm -fr ~/HoundSploit
+$ rm -fr ~/.HoundSploit
 ```
 and then repeat the installation phase.
 
