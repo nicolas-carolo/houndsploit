@@ -34,7 +34,7 @@ if ($gitOutput -eq "Already up to date.") {
 } else {
     New-Item $HOUNDSPLOIT_PATH\houndsploit_sw.lock
     Write-Host "Latest version of HoundSploit downloaded"
-    Write-Host "Run the following commands (be sure to use the Python 3 interpreter)"
+    Write-Host "Run the following commands as Administrator (be sure to use the Python 3 interpreter)"
     Write-Host "\tPS> pip install -r $HOUNDSPLOIT_PATH\houndsploit\requirements.txt"
     Write-Host "\tPS> cd $HOUNDSPLOIT_PATH\houndsploit"
     Write-Host "\tPS> rm $HOUNDSPLOIT_PATH\houndsploit_sw.lock"

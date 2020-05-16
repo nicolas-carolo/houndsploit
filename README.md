@@ -105,6 +105,7 @@ $ ./install_db_linux.sh
 $ pip install -r requirements.txt
 $ python setup.py install
 ```
+Now you can remove the repository of _HoundSploit_ you have downloaded, because this repository has been cloned in `~/.HoundSploit/houndsploit` for supporting automatic updates.
 If you have already installed the version 2.1.0 of _hsploit_ or you never installed _hsploit_, you can check if there is the directory `~/HoundSploit` and then you can delete it.
 
 ### Linux (root user)
@@ -118,6 +119,7 @@ $ ./install_db_linux.sh
 $ pip install -r requirements.txt
 $ python setup.py install
 ```
+Now you can remove the repository of _HoundSploit_ you have downloaded, because this repository has been cloned in `~/.HoundSploit/houndsploit` for supporting automatic updates.
 If you have already installed the version 2.1.0 of _hsploit_ or you never installed _hsploit_, you can check if there is the directory `~/HoundSploit` and then you can delete it.
 
 ### macOS
@@ -129,6 +131,7 @@ $ ./install_db_darwin.sh
 $ pip install -r requirements.txt
 $ python setup.py install
 ```
+Now you can remove the repository of _HoundSploit_ you have downloaded, because this repository has been cloned in `~/.HoundSploit/houndsploit` for supporting automatic updates.
 If you have already installed the version 2.1.0 of _hsploit_ or you never installed _hsploit_, you can check if there is the directory `~/HoundSploit` and then you can delete it.
 
 ### Windows (Preview)
@@ -141,6 +144,7 @@ PS> powershell.exe -ExecutionPolicy Bypass -File .\install_db_windows.ps1
 PS> pip install -r requirements.txt
 PS> python setup.py install
 ```
+Now you can remove the repository of _HoundSploit_ you have downloaded, because this repository has been cloned in `~\.HoundSploit\houndsploit` for supporting automatic updates.
 
 ### Troubleshooting
 If you encounter problems during the installation phase, please run:
