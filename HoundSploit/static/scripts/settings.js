@@ -10,10 +10,10 @@ function savePreferences() {
 }
 
 function getTheme(template) {
-   if (getCookie("theme") == "dark" ) {
-       document.write('<link href="/static/css/dark-theme/' + template + '" rel="stylesheet">');
-   } else {
+   if (getCookie("theme") == "light" ) {
        document.write('<link href="/static/css/light-theme/' + template + '" rel="stylesheet">');
+   } else {
+       document.write('<link href="/static/css/dark-theme/' + template + '" rel="stylesheet">');
    }
 }
 
