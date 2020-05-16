@@ -97,7 +97,7 @@ You can choose to use the Light or the Dark theme
 ## INSTALLATION
 
 ### Linux (non-root user) [recommended]
-We can install _HoundSploit_ simply by doing:
+In order to install _HoundSploit_ we have to run the following commands:
 ```sh
 $ git clone https://github.com/nicolas-carolo/houndsploit
 $ cd houndsploit
@@ -105,9 +105,10 @@ $ ./install_db_linux.sh
 $ pip install -r requirements.txt
 $ python setup.py install
 ```
+If you have already installed the version 2.1.0 of _hsploit_ or you never installed _hsploit_, you can check if there is the directory `~/HoundSploit` and then you can delete it.
 
 ### Linux (root user)
-We can install _HoundSploit_ simply by doing:
+In order to install _HoundSploit_ we have to run the following commands:
 ```sh
 $ git clone https://github.com/nicolas-carolo/houndsploit
 $ cd houndsploit
@@ -117,9 +118,10 @@ $ ./install_db_linux.sh
 $ pip install -r requirements.txt
 $ python setup.py install
 ```
+If you have already installed the version 2.1.0 of _hsploit_ or you never installed _hsploit_, you can check if there is the directory `~/HoundSploit` and then you can delete it.
 
 ### macOS
-We can install _HoundSploit_ simply by doing:
+In order to install _HoundSploit_ we have to run the following commands:
 ```sh
 $ git clone https://github.com/nicolas-carolo/houndsploit
 $ cd houndsploit
@@ -127,8 +129,9 @@ $ ./install_db_darwin.sh
 $ pip install -r requirements.txt
 $ python setup.py install
 ```
+If you have already installed the version 2.1.0 of _hsploit_ or you never installed _hsploit_, you can check if there is the directory `~/HoundSploit` and then you can delete it.
 
-### Windows
+### Windows (Preview)
 Before proceding with the installation, be sure that you have installed Python from the [official site](https://www.python.org/downloads/) and not from the Windows Store
 Run a _PowerShell_ session as _Administrator_
 ```powershell
