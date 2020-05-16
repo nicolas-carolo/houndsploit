@@ -112,8 +112,8 @@ In order to install _HoundSploit_ we have to run the following commands:
 ```sh
 $ git clone https://github.com/nicolas-carolo/houndsploit
 $ cd houndsploit
-$ mkdir /root/HoundSploit
-$ touch /root/HoundSploit/enable_root.cfg
+$ mkdir /root/.HoundSploit
+$ touch /root/.HoundSploit/enable_root.cfg
 $ ./install_db_linux.sh
 $ pip install -r requirements.txt
 $ python setup.py install
