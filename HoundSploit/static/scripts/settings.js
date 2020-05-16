@@ -18,12 +18,12 @@ function getTheme(template) {
 }
 
 function getThemeOptions() {
-    if (getCookie("theme") == "dark" ) {
-        document.write('<option value="dark" selected>Dark</option>');
-        document.write('<option value="light">Light</option>');
-    } else {
+    if (getCookie("theme") == "light" ) {
         document.write('<option value="dark">Dark</option>');
         document.write('<option value="light" selected>Light</option>');
+    } else {
+        document.write('<option value="dark" selected>Dark</option>');
+        document.write('<option value="light">Light</option>');
     }
  }
 
