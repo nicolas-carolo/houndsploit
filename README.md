@@ -127,7 +127,7 @@ $ git clone https://github.com/nicolas-carolo/houndsploit
 $ cd houndsploit
 $ ./install_db_darwin.sh
 $ pip install -r requirements.txt
-$ python setup.py install
+$ python setup.py installs
 ```
 If you have already installed the version 2.1.0 of _hsploit_ or you never installed _hsploit_, you can check if there is the directory `~/HoundSploit` and then you can delete it.
 
