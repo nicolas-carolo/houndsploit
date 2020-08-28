@@ -44,11 +44,13 @@ div.sort-container select {
     border-radius: 10px;
     border: 1px solid #eeeeee;
     padding: 2px;
+    font-size: 12px;
 }
 
 div.sort-container option {
     background-color: #646464;
     color: white;
+    font-size: 12px;
 }
 
 div.sort-container label {

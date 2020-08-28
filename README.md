@@ -21,6 +21,7 @@ the most accurate search results.
 
 * Effective version number filtering
 * Advanced filtering
+* Sort by date and description
 * Fast search
 * Search suggestions with customization
 * Syntax highlighting of the source code of exploits and shellcodes
