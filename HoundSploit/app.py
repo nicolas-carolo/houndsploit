@@ -58,7 +58,7 @@ def get_results_table():
         searched_text = substitute_with_suggestions(searched_text)
         suggested_search_text = propose_suggestions(searched_text)
         if str(searched_text).isspace() or searched_text == "":
-            return render_template('home.html', current_exploits_page=1, current_shellcodes_page=1)
+            return render_template('home.html', current_exploits_page=1, current_shellcodes_page=1, sorting_type="Most recent")
         key_words_list = (str(searched_text).upper()).split()
         
         exploits_list = search_vulnerabilities_in_db(searched_text, 'searcher_exploit')
@@ -136,6 +136,8 @@ def get_results_table_advanced():
         except ValueError:
             current_shellcodes_page = 1
 
+        sorting_type = request.form['sorting-type']
+
         searched_text = request.form['searched-text']
         operator_filter = request.form['search-operator']
         author_filter = request.form['author']
@@ -149,7 +151,7 @@ def get_results_table_advanced():
         if str(searched_text).isspace() or searched_text == "":
             return render_template('advanced_searcher.html', vulnerability_types_list=vulnerability_types_list,
                                    vulnerability_platforms_list=vulnerability_platforms_list, current_exploits_page=1,
-                                   current_shellcodes_page=1)
+                                   current_shellcodes_page=1, sorting_type="Most recent")
         key_words_list = (str(searched_text).upper()).split()
 
         date_alert = None
@@ -167,6 +169,7 @@ def get_results_table_advanced():
         exploits_list = search_vulnerabilities_advanced(searched_text, 'searcher_exploit', operator_filter, type_filter,
                                                         platform_filter, author_filter, port_filter, date_from_filter,
                                                         date_to_filter)
+        exploits_list = sort_results(exploits_list, sorting_type)
         n_exploits = len(exploits_list)
 
         latest_exploits_page = get_n_needed_pages(n_exploits)
@@ -189,6 +192,7 @@ def get_results_table_advanced():
         shellcodes_list = search_vulnerabilities_advanced(searched_text, 'searcher_shellcode', operator_filter,
                                                           type_filter, platform_filter, author_filter, port_filter,
                                                           date_from_filter, date_to_filter)
+        shellcodes_list = sort_results(shellcodes_list, sorting_type)
         n_shellcodes = len(shellcodes_list)
 
         latest_shellcodes_page = get_n_needed_pages(n_shellcodes)
@@ -220,11 +224,11 @@ def get_results_table_advanced():
                                n_exploits=n_exploits, current_exploits_page=current_exploits_page,
                                latest_exploits_page=latest_exploits_page, current_view=current_view,
                                n_shellcodes=n_shellcodes, current_shellcodes_page=current_shellcodes_page,
-                               latest_shellcodes_page=latest_shellcodes_page)
+                               latest_shellcodes_page=latest_shellcodes_page, sorting_type=sorting_type)
     else:
         return render_template('advanced_searcher.html', vulnerability_types_list=vulnerability_types_list,
                                vulnerability_platforms_list=vulnerability_platforms_list, current_exploits_page=1,
-                               current_shellcodes_page=1)
+                               current_shellcodes_page=1, sorting_type="Most recent")
 
 
 @app.route('/exploit-details')

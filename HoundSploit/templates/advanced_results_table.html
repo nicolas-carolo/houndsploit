@@ -20,6 +20,33 @@
         {% if suggested_search_text %}
             <h4>I also suggest you search for "<a href="javascript:makeSuggestedSearch('{{ suggested_search_text }}')">{{ suggested_search_text }}</a>"</h4>
         {% endif %}
+        {% if exploits_list|length > 0 or shellcodes_list|length > 0  %}
+            <div class="sort-container">
+                <label for sort-by>Sort by:</label>
+                <select id="sort-by-selector" name="sort-by-selector" onChange=sortResultsBy()>
+                    {% if sorting_type == "Most recent" %}
+                        <option value="Most recent" selected>Most recent</option>
+                    {% else %}
+                        <option value="Most recent">Most recent</option>
+                    {% endif %}
+                    {% if sorting_type == "Oldest" %}
+                        <option value="Oldest" selected>Oldest</option>
+                    {% else %}
+                        <option value="Oldest">Oldest</option>
+                    {% endif %}
+                    {% if sorting_type == "Description A-Z" %}
+                        <option value="Description A-Z" selected>Description A-Z</option>
+                    {% else %}
+                        <option value="Description A-Z">Description A-Z</option>
+                    {% endif %}
+                    {% if sorting_type == "Description Z-A" %}
+                        <option value="Description Z-A" selected>Description Z-A</option>
+                    {% else %}
+                        <option value="Description Z-A">Description Z-A</option>
+                    {% endif %}
+                </select>
+            </div>
+        {% endif %}
         {% if exploits_list|length > 0 %}
             <a name="exploits_list"><h2 class="vulnerability_type">Exploits</h2></a>
             <table>
