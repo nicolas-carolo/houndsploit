@@ -26,3 +26,31 @@ input[type=submit] {
 input[type=submit]:hover {
     background-color: darkorange;
 }
+
+div.sort-container {
+    width: 15%;
+    margin: 0 auto;
+    border: 1px solid #DDDDDD;
+    background-color: #484848;
+    padding: 10px 15px 10px;
+    border-radius: 20px;
+    box-shadow: 2px 5px 2px black;
+}
+
+div.sort-container select {
+    width: 60%;
+    background-color: #646464;
+    color: white;
+    border-radius: 10px;
+    border: 1px solid #eeeeee;
+    padding: 2px;
+}
+
+div.sort-container option {
+    background-color: #646464;
+    color: white;
+}
+
+div.sort-container label {
+    color: white;
+}

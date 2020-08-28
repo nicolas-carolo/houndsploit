@@ -22,7 +22,8 @@ if platform.system == "Windows":
     template_dir = os.path.abspath(init_path + '\houndsploit\HoundSploit\\templates')
     static_folder = os.path.abspath(init_path + '\houndsploit\HoundSploit\static')
 else:
-    init_path = os.path.expanduser("~") + "/.HoundSploit"
+    # TODO init_path = os.path.expanduser("~") + "/.HoundSploit"
+    init_path = "/home/nicolas/Projects/Python"
     template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
     static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
 app = Flask(__name__, template_folder=template_dir, static_folder=static_folder)
@@ -51,6 +52,8 @@ def get_results_table():
         except ValueError:
             current_shellcodes_page = 1
 
+        sorting_type = request.form['sorting-type']
+
         searched_text = request.form['searched-text']
         searched_text = substitute_with_suggestions(searched_text)
         suggested_search_text = propose_suggestions(searched_text)
@@ -59,7 +62,7 @@ def get_results_table():
         key_words_list = (str(searched_text).upper()).split()
         
         exploits_list = search_vulnerabilities_in_db(searched_text, 'searcher_exploit')
-        exploits_list = sort_results(exploits_list, "Description A-Z")
+        exploits_list = sort_results(exploits_list, sorting_type)
         n_exploits = len(exploits_list)
 
         latest_exploits_page = get_n_needed_pages(n_exploits)
@@ -79,7 +82,7 @@ def get_results_table():
 
 
         shellcodes_list = search_vulnerabilities_in_db(searched_text, 'searcher_shellcode')
-        shellcodes_list = sort_results(shellcodes_list, "Description A-Z")
+        shellcodes_list = sort_results(shellcodes_list, sorting_type)
         n_shellcodes = len(shellcodes_list)
 
         latest_shellcodes_page = get_n_needed_pages(n_shellcodes)
@@ -106,9 +109,9 @@ def get_results_table():
                                n_exploits=n_exploits, current_exploits_page=current_exploits_page,
                                latest_exploits_page=latest_exploits_page, current_view=current_view,
                                n_shellcodes=n_shellcodes, current_shellcodes_page=current_shellcodes_page,
-                               latest_shellcodes_page=latest_shellcodes_page)
+                               latest_shellcodes_page=latest_shellcodes_page, sorting_type=sorting_type)
     else:
-        return render_template('home.html', current_exploits_page=1, current_shellcodes_page=1)
+        return render_template('home.html', current_exploits_page=1, current_shellcodes_page=1, sorting_type="Most recent")
 
 
 @app.route('/advanced-search', methods=['GET', 'POST'])

@@ -84,3 +84,9 @@ function resetPages() {
     document.getElementById("shellcode-page-number").value = 1;
     document.getElementById("hid-s-page").value = document.getElementById("shellcode-page-number").value;
 }
+
+function sortResultsBy() {
+    document.getElementById("sorting-type").value = document.getElementById("sort-by-selector").value;
+    resetPages();
+    document.getElementById("searcher-form").submit();
+}
