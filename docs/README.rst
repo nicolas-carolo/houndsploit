@@ -5,7 +5,7 @@ houndsploit.  An advanced graphic search engine for Exploit-DB
 :Author: Nicolas Carolo <nicolascarolo.dev@gmail>
 :Copyright: © 2019, Nicolas Carolo.
 :Date: 2019-11-27
-:Version: 2.3.1
+:Version: 2.4.0
 
 .. index: README
 .. image:: https://travis-ci.org/nicolas-carolo/houndsploit.svg?branch=master

@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-# houndsploit v2.3.1
+# houndsploit v2.4.0
 # An advanced graphic search engine for Exploit-DB
 # Copyright © 2019, Nicolas Carolo.
 # See /LICENSE for licensing information.
