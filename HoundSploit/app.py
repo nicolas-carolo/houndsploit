@@ -13,6 +13,7 @@ from HoundSploit.searcher.engine.suggestions import substitute_with_suggestions,
 from HoundSploit.searcher.engine.updates import get_latest_db_update_date, install_updates
 from HoundSploit.searcher.engine.utils import check_file_existence, get_vulnerability_extension, get_n_needed_pages
 from HoundSploit.searcher.engine.csv2sqlite import create_db
+from HoundSploit.searcher.engine.sorter import sort_results
 from shutil import copyfile
 
 
@@ -58,6 +59,7 @@ def get_results_table():
         key_words_list = (str(searched_text).upper()).split()
         
         exploits_list = search_vulnerabilities_in_db(searched_text, 'searcher_exploit')
+        exploits_list = sort_results(exploits_list, "Description A-Z")
         n_exploits = len(exploits_list)
 
         latest_exploits_page = get_n_needed_pages(n_exploits)
@@ -77,6 +79,7 @@ def get_results_table():
 
 
         shellcodes_list = search_vulnerabilities_in_db(searched_text, 'searcher_shellcode')
+        shellcodes_list = sort_results(shellcodes_list, "Description A-Z")
         n_shellcodes = len(shellcodes_list)
 
         latest_shellcodes_page = get_n_needed_pages(n_shellcodes)
