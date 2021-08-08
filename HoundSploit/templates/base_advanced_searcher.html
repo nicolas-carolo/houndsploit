@@ -16,62 +16,92 @@
         <input type="hidden" id="sorting-type" name="sorting-type" value="{{ sorting_type }}">
         <input type="submit" id="search-button" name="search-button" value="Search">
         <div class="filters-container">
-            <label for search-operator>Search operator:</label>
-            <select id="search-operator" name="search-operator">
-                {% if operator_filter == "OR" %}
-                    <option value="AND">AND</option>
-                    <option value="OR" selected>OR</option>
-                {% else %}
-                    <option value="AND" selected>AND</option>
-                    <option value="OR">OR</option>
-                {% endif %}
-            </select>
-            <label for author>Author:</label>
-            {% if searched_text %}
-                <input type="text" id="author" name="author" value="{{ author_filter }}"><br>
-            {% else %}
-                <input type="text" id="author" name="author"><br>
-            {% endif %}
-            <label for type>Type:</label>
-            <select id="type" name="type">
-                <option value="all" selected="selected">all</option>
-                {% for type in vulnerability_types_list %}
-                    {% if type == type_filter %}
-                        <option value="{{ type }}" selected="selected">{{ type }}</option>
-                    {% else %}
-                        <option value="{{ type }}">{{ type }}</option>
-                    {% endif %}
-                {% endfor %}
-            </select>
-            <label for platform>Platform:</label>
-            <select id="platform" name="platform">
-                <option value="all" selected="selected">all</option>
-                {% for platform in vulnerability_platforms_list %}
-                    {% if platform == platform_filter %}
-                        <option value="{{ platform }}" selected="selected">{{ platform }}</option>
-                    {% else %}
-                        <option value="{{ platform }}">{{ platform }}</option>
-                    {% endif %}
-                {% endfor %}
-            </select>
-            <label for port>Port:</label>
-            {% if port_filter %}
-                <input type="number" id="port" name="port" min="0" max="65535" value="{{ port_filter }}"><br>
-            {% else %}
-                <input type="number" id="port" name="port" min="0" max="65535"><br>
-            {% endif %}
-            <label for date-from>From:</label>
-            {% if date_from_filter %}
-                <input type="date" id="date-from" name="date-from" value="{{ date_from_filter }}">
-            {% else %}
-                <input type="date" id="date-from" name="date-from">
-            {% endif %}
-            <label for date-to>To:</label>
-            {% if date_to_filter %}
-                <input type="date" id="date-to" name="date-to" value="{{ date_to_filter }}">
-            {% else %}
-                <input type="date" id="date-to" name="date-to">
-            {% endif %}
+            <table class="filters-table">
+                <tr>
+                    <td class="filter-title"><label for search-operator>Search operator:</label></td>
+                    <td class="filter-value">
+                        <select id="search-operator" name="search-operator">
+                            {% if operator_filter == "OR" %}
+                                <option value="AND">AND</option>
+                                <option value="OR" selected>OR</option>
+                            {% else %}
+                                <option value="AND" selected>AND</option>
+                                <option value="OR">OR</option>
+                            {% endif %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="filter-title"><label for author>Author:</label></td>
+                    <td class="filter-value">
+                        {% if searched_text %}
+                            <input type="text" id="author" name="author" value="{{ author_filter }}"><br>
+                        {% else %}
+                            <input type="text" id="author" name="author"><br>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="filter-title"><label for type>Type:</label></td>
+                    <td class="filter-value">
+                        <select id="type" name="type">
+                            <option value="all" selected="selected">all</option>
+                            {% for type in vulnerability_types_list %}
+                                {% if type == type_filter %}
+                                    <option value="{{ type }}" selected="selected">{{ type }}</option>
+                                {% else %}
+                                    <option value="{{ type }}">{{ type }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="filter-title"><label for platform>Platform:</label></td>
+                    <td class="filter-value">
+                        <select id="platform" name="platform">
+                            <option value="all" selected="selected">all</option>
+                            {% for platform in vulnerability_platforms_list %}
+                                {% if platform == platform_filter %}
+                                    <option value="{{ platform }}" selected="selected">{{ platform }}</option>
+                                {% else %}
+                                    <option value="{{ platform }}">{{ platform }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="filter-title"><label for port>Port:</label></td>
+                    <td class="filter-value">
+                        {% if port_filter %}
+                            <input type="number" id="port" name="port" min="0" max="65535" value="{{ port_filter }}"><br>
+                        {% else %}
+                            <input type="number" id="port" name="port" min="0" max="65535"><br>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="filter-title"><label for date-from>From:</label></td>
+                    <td class="filter-value">
+                        {% if date_from_filter %}
+                            <input type="date" id="date-from" name="date-from" value="{{ date_from_filter }}">
+                        {% else %}
+                            <input type="date" id="date-from" name="date-from">
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="filter-title"><label for date-to>To:</label></td>
+                    <td class="filter-value">
+                        {% if date_to_filter %}
+                            <input type="date" id="date-to" name="date-to" value="{{ date_to_filter }}">
+                        {% else %}
+                            <input type="date" id="date-to" name="date-to">
+                        {% endif %}
+                    </td>
+                </tr>
+            </table>
         </div>
     </form>
 {% endblock %}
