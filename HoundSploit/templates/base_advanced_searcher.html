@@ -18,7 +18,7 @@
         <div class="filters-container">
             <table class="filters-table">
                 <tr>
-                    <td class="filter-title"><label for search-operator>Search operator:</label></td>
+                    <td class="filter-title"><label for search-operator class="filter-title">Search operator:</label></td>
                     <td class="filter-value">
                         <select id="search-operator" name="search-operator">
                             {% if operator_filter == "OR" %}
@@ -32,7 +32,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="filter-title"><label for author>Author:</label></td>
+                    <td class="filter-title"><label for author class="filter-title">Author:</label></td>
                     <td class="filter-value">
                         {% if searched_text %}
                             <input type="text" id="author" name="author" value="{{ author_filter }}"><br>
@@ -42,7 +42,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="filter-title"><label for type>Type:</label></td>
+                    <td class="filter-title"><label for type class="filter-title">Type:</label></td>
                     <td class="filter-value">
                         <select id="type" name="type">
                             <option value="all" selected="selected">all</option>
@@ -57,7 +57,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="filter-title"><label for platform>Platform:</label></td>
+                    <td class="filter-title"><label for platform class="filter-title">Platform:</label></td>
                     <td class="filter-value">
                         <select id="platform" name="platform">
                             <option value="all" selected="selected">all</option>
@@ -72,7 +72,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="filter-title"><label for port>Port:</label></td>
+                    <td class="filter-title"><label for port class="filter-title">Port:</label></td>
                     <td class="filter-value">
                         {% if port_filter %}
                             <input type="number" id="port" name="port" min="0" max="65535" value="{{ port_filter }}"><br>
@@ -82,7 +82,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="filter-title"><label for date-from>From:</label></td>
+                    <td class="filter-title"><label for date-from class="filter-title">From:</label></td>
                     <td class="filter-value">
                         {% if date_from_filter %}
                             <input type="date" id="date-from" name="date-from" value="{{ date_from_filter }}">
@@ -92,7 +92,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="filter-title"><label for date-to>To:</label></td>
+                    <td class="filter-title"><label for date-to class="filter-title">To:</label></td>
                     <td class="filter-value">
                         {% if date_to_filter %}
                             <input type="date" id="date-to" name="date-to" value="{{ date_to_filter }}">

@@ -46,7 +46,7 @@
         {% if exploits_list|length > 0 %}
             <a name="exploits_list"><h2 class="vulnerability_type">Exploits</h2></a>
             <table class="results-table">
-                <tr>
+                <tr class="results-table">
                     <th class="file">File</th>
                     <th class="description">Description</th>
                     <th class="date">Date</th>
@@ -56,7 +56,7 @@
                     <th class="port">Port</th>
                 </tr>
                 {% for exploit in exploits_list %}
-                    <tr>
+                    <tr class="results-table">
                         <td class="file"><a href="/exploit-details?exploit-id={{ exploit.id }}">{% autoescape off %}{{ exploit.file }}{% endautoescape %}</a></td>
                         <td class="description">{% autoescape off %}{{ exploit.description }}{% endautoescape %}</td>
                         <td class="date">{{ exploit.date }}</td>
@@ -80,7 +80,7 @@
         {% if shellcodes_list|length > 0 %}
             <a name="shellcodes_list"><h2 class="vulnerability_type">Shellcodes</h2></a>
             <table>
-                <tr>
+                <tr class="results-table">
                     <th class="file">File</th>
                     <th class="description">Description</th>
                     <th class="date">Date</th>
@@ -89,7 +89,7 @@
                     <th class="platform">Platform</th>
                 </tr>
                 {% for shellcode in shellcodes_list %}
-                    <tr>
+                    <tr class="results-table">
                         <td class="file"><a href="/shellcode-details?shellcode-id={{ shellcode.id }}">{% autoescape off %}{{ shellcode.file }}{% endautoescape %}</a></td>
                         <td class="description">{% autoescape off %}{{ shellcode.description }}{% endautoescape %}</td>
                         <td class="date">{{ shellcode.date }}</td>

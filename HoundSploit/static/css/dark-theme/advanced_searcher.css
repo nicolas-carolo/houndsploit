@@ -1,5 +1,5 @@
 div.filters-container {
-    width: 40%;
+    width: 30%;
     margin: 10px auto 20px;
     border: 1px solid #DDDDDD;
     background-color: #484848;
@@ -17,13 +17,13 @@ table.filters-table {
 
 td.filter-title {
     text-align: left;
-    padding: 2px 20px 2px 40px;
+    padding: 2px 10px 2px 20px;
     /*border: 2px solid yellow;*/
 }
 
 td.filter-value {
     text-align: right;
-    padding: 2px 40px 2px 20px;
+    padding: 2px 20px 2px 10px;
     /*border: 2px solid yellow;*/
 }
 
@@ -34,7 +34,7 @@ input[type=number] {
     border-radius: 10px;
     padding: 2px 2px 2px 2px;
     text-align: right;
-    width: 56%;
+    width: 57%;
 }
 
 input[type=date] {
@@ -58,7 +58,7 @@ select {
     border-radius: 10px;
     border: 1px solid #eeeeee;
     padding: 2px;
-    width: 58%;
+    width: 59%;
     text-align: right;
 }
 
@@ -66,10 +66,14 @@ select {
     font-size: 0.8em;
     margin: 0px;
     padding: 2px 10px 2px;
-    width: 50%;
+    width: 49%;
     text-align: right;
 }
 
 label {
     color: white;
+}
+
+label.filter-title {
+    color: orange;
 }

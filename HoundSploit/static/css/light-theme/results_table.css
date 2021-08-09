@@ -34,15 +34,15 @@ th.description, td.description {
     width: 50%;
 }
 
-tr:nth-child(even) {
+tr.results-table:nth-child(even) {
     background-color: #FFE39E;
 }
 
-tr:nth-of-type(odd) {
+tr.results-table:nth-of-type(odd) {
     background: #FFD779;
 }
 
-tr:hover {
+tr.results-table:hover {
     background-color: #FFB266;
 }
 
@@ -95,12 +95,13 @@ label.nav-page {
     color: black;
 }
 
-input[type=number] {
+input[type=number].nav-page {
     background-color: white;
     color: black;
     border: 1px solid black;
     border-radius: 10px;
-    padding: 2px 2px 2px 7px;
+    padding: 2px;
     font-size: 1em;
     width: 10%;
+    text-align: center;
 }

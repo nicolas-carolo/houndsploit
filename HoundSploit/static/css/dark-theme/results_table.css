@@ -35,15 +35,15 @@ th.description, td.description {
     width: 50%;
 }
 
-tr:nth-child(even) {
+tr.results-table:nth-child(even) {
     background-color: #202020;
 }
 
-tr:nth-of-type(odd) {
+tr.results-table:nth-of-type(odd) {
     background-color: #303030;
 }
 
-tr:hover {
+tr.results-table:hover {
     background-color: black;
 }
 
@@ -101,12 +101,13 @@ label.nav-page {
     color: white;
 }
 
-input[type=number] {
+input[type=number].nav-page {
     background-color: #484848;
     color: white;
     border: 1px solid #eeeeee;
     border-radius: 10px;
-    padding: 2px 2px 2px 7px;
+    padding: 2px;
     font-size: 1em;
     width: 10%;
+    text-align: center;
 }
