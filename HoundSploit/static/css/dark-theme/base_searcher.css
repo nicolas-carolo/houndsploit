@@ -1,8 +1,8 @@
 input[type=text] {
     text-align: center;
     font-size: 1.2em;
-    width: 30%;
-    margin-bottom: 15px;
+    width: 70%;
+    margin: auto 7px auto auto;
     background-color: #646464;
     border: 1px solid #eeeeee;
     color: #ffffff;
@@ -55,4 +55,15 @@ div.sort-container option {
 
 div.sort-container label {
     color: white;
+}
+
+div.div-searcher {
+    background-color: #484848;
+    text-align: center;
+    width: 40%;
+    margin: 30px auto 25px;
+    padding: 15px 15px 15px;
+    border: 1px solid #DDDDDD;
+    border-radius: 20px;
+    box-shadow: 2px 5px 2px black;
 }

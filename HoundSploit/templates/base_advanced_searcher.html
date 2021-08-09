@@ -5,16 +5,18 @@
 {% endblock %}
 {% block input_form %}
     <form action="/advanced-search" method="POST" id="searcher-form" name="searcher-form" onsubmit="resetPages()">
-        {% if searched_text %}
-            <input type="text" id="searched-text" name="searched-text" value="{{ searched_text }}">
-        {% else %}
-            <input type="text" id="searched-text" name="searched-text">
-        {% endif %}
-        <input type="hidden" id="hid-e-page" name="hid-e-page" value="{{ current_exploits_page }}">
-        <input type="hidden" id="hid-s-page" name="hid-s-page" value="{{ current_shellcodes_page }}">
-        <input type="hidden" id="current-view" name="current-view" value="">
-        <input type="hidden" id="sorting-type" name="sorting-type" value="{{ sorting_type }}">
-        <input type="submit" id="search-button" name="search-button" value="Search">
+        <div class="div-searcher" id="div-searcher" name="div-searcher"">
+            {% if searched_text %}
+                <input type="text" id="searched-text" name="searched-text" value="{{ searched_text }}">
+            {% else %}
+                <input type="text" id="searched-text" name="searched-text">
+            {% endif %}
+            <input type="hidden" id="hid-e-page" name="hid-e-page" value="{{ current_exploits_page }}">
+            <input type="hidden" id="hid-s-page" name="hid-s-page" value="{{ current_shellcodes_page }}">
+            <input type="hidden" id="current-view" name="current-view" value="">
+            <input type="hidden" id="sorting-type" name="sorting-type" value="{{ sorting_type }}">
+            <input type="submit" id="search-button" name="search-button" value="Search">
+        </div>
         <div class="filters-container">
             <table class="filters-table">
                 <tr>

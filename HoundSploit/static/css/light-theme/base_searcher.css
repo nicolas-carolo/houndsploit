@@ -1,13 +1,13 @@
 input[type=text] {
     text-align: center;
     font-size: 1.2em;
-    width: 30%;
-    margin-bottom: 15px;
+    width: 67%;
+    margin: auto 7px auto auto;
     background-color: white;
     border: 1px solid lightgray;
     color: #000000;
     border-radius: 20px;
-    box-shadow: 5px 5px 5px #EEEEEE;
+    box-shadow: 2px 2px 2px #C1C1C1;
     padding: 5px 15px 5px;
 }
 
@@ -18,7 +18,7 @@ input[type=submit] {
     color: #FFFFFF;
     border: 1px solid #eee;
     border-radius: 20px;
-    box-shadow: 5px 5px 5px #EEEEEE;
+    box-shadow: 2px 2px 2px #C1C1C1;
     text-shadow:none;
     padding: 5px 15px 5px;
 }
@@ -55,4 +55,15 @@ div.sort-container option {
 
 div.sort-container label {
     color: black;
+}
+
+div.div-searcher {
+    background-color: #EEEEEE;
+    text-align: center;
+    width: 40%;
+    margin: 30px auto 25px;
+    padding: 15px 15px 15px;
+    border: 1px solid #DDDDDD;
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px #EEEEEE;
 }

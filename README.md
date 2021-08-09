@@ -4,7 +4,7 @@
 
 Author: Nicolas Carolo <nicolascarolo.dev@gmail.com>
 
-Copyright: © 2020, Nicolas Carolo.
+Copyright: © 2021, Nicolas Carolo.
 
 Date: 2021-08-09
 
@@ -29,7 +29,7 @@ the most accurate search results.
 * Highlighting of searched words in search results
 * Check for updates (both for software and database)
 
-#### News in HoundSploit 2
+#### New features in HoundSploit 2
 * Flask instead of Django
 * SQLAlchemy instead of Django ORM
 * The kernel of the search engine is the same used in [_hsploit_](https://github.com/nicolas-carolo/hsploit), which is the CLI version of HoundSploit
@@ -45,7 +45,7 @@ the most accurate search results.
 
 ##### Example II
 
-15 exploits and 0 shellcodes found for "Linux Kernel 4.2.3"
+16 exploits and 0 shellcodes found for "Linux Kernel 4.2.3"
 
 ![Search example 2](/img/example-2.png)
 
@@ -129,8 +129,8 @@ In order to install _HoundSploit_ we have to run the following commands:
 $ git clone https://github.com/nicolas-carolo/houndsploit
 $ cd houndsploit
 $ ./install_db_darwin.sh
-$ pip install -r requirements.txt
-$ python setup.py install
+$ pip3 install -r requirements.txt
+$ python3 setup.py install
 ```
 Now you can remove the repository of _HoundSploit_ you have downloaded, because this repository has been cloned in `~/.HoundSploit/houndsploit` for supporting automatic updates.
 If you have already installed the version 2.1.0 of _hsploit_ or you never installed _hsploit_, you can check if there is the directory `~/HoundSploit` and then you can delete it.
@@ -164,7 +164,7 @@ and then repeat the installation phase.
 
 ## COPYRIGHT
 
-Copyright © 2020, Nicolas Carolo.
+Copyright © 2021, Nicolas Carolo.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
