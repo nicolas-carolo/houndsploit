@@ -14,6 +14,7 @@ from HoundSploit.searcher.engine.updates import get_latest_db_update_date, insta
 from HoundSploit.searcher.engine.utils import check_file_existence, get_vulnerability_extension, get_n_needed_pages
 from HoundSploit.searcher.engine.csv2sqlite import create_db
 from HoundSploit.searcher.engine.sorter import sort_results
+from HoundSploit.searcher.engine.bookmarks import new_bookmark, is_bookmarked, remove_bookmark
 from shutil import copyfile
 
 
@@ -23,8 +24,10 @@ if platform.system == "Windows":
     static_folder = os.path.abspath(init_path + '\houndsploit\HoundSploit\static')
 else:
     init_path = os.path.expanduser("~") + "/.HoundSploit"
-    template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
-    static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
+    # template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
+    # static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
+    template_dir = '/Users/nicolas/Projects/Python/houndsploit/HoundSploit/templates'
+    static_folder = '/Users/nicolas/Projects/Python/houndsploit/HoundSploit/static'
 app = Flask(__name__, template_folder=template_dir, static_folder=static_folder)
 
 N_RESULTS_FOR_PAGE = 10
@@ -236,6 +239,7 @@ def view_exploit_details():
     Open details about the selected exploit, included the source code.
     :return: a template showing the details about the selected exploit and the source code.
     """
+    vulnerability_class = "exploit"
     exploit_id = request.args.get('exploit-id', None)
     exploit = get_exploit_by_id(exploit_id)
     file_path = init_path + "/exploitdb/" + exploit.file
@@ -247,7 +251,8 @@ def view_exploit_details():
                                vulnerability_description=exploit.description, vulnerability_file=exploit.file,
                                vulnerability_author=exploit.author, vulnerability_date=exploit.date,
                                vulnerability_type=exploit.type, vulnerability_platform=exploit.platform,
-                               vulnerability_port=exploit.port, file_path=file_path, exploit_id=exploit_id)
+                               vulnerability_port=exploit.port, file_path=file_path, exploit_id=exploit_id,
+                               bookmarked=is_bookmarked(exploit_id, vulnerability_class))
     except FileNotFoundError:
         error_msg = 'Sorry! This file does not exist :('
         return render_template('error_page.html', error=error_msg)
@@ -259,6 +264,7 @@ def download_exploit_details():
     Download the selected exploit.
     :return: a template showing the details about the selected exploit and the source code.
     """
+    vulnerability_class = "exploit"
     exploit_id = request.args.get('exploit-id', None)
     exploit = get_exploit_by_id(exploit_id)
     file_path = init_path + "/exploitdb/" + exploit.file
@@ -273,7 +279,7 @@ def download_exploit_details():
                                vulnerability_author=exploit.author, vulnerability_date=exploit.date,
                                vulnerability_type=exploit.type, vulnerability_platform=exploit.platform,
                                vulnerability_port=exploit.port, file_path=file_path, download_alert=download_alert,
-                               exploit_id=exploit_id)
+                               exploit_id=exploit_id, bookmarked=is_bookmarked(exploit_id, vulnerability_class))
     except FileNotFoundError:
         error_msg = 'Sorry! This file does not exist :('
         return render_template('error_page.html', error=error_msg)
@@ -285,6 +291,7 @@ def view_shellcode_details():
     Open details about the selected shellcode, included the source code.
     :return: a template showing the details about the selected shellcode and the source code.
     """
+    vulnerability_class = "shellcode"
     shellcode_id = request.args.get('shellcode-id', None)
     shellcode = get_shellcode_by_id(shellcode_id)
     file_path = init_path + "/exploitdb/" + shellcode.file
@@ -296,7 +303,8 @@ def view_shellcode_details():
                                vulnerability_description=shellcode.description, vulnerability_file=shellcode.file,
                                vulnerability_author=shellcode.author, vulnerability_date=shellcode.date,
                                vulnerability_type=shellcode.type, vulnerability_platform=shellcode.platform,
-                               file_path=file_path, shellcode_id=shellcode_id)
+                               file_path=file_path, shellcode_id=shellcode_id,
+                               bookmarked=is_bookmarked(shellcode_id, vulnerability_class))
     except FileNotFoundError:
         error_msg = 'Sorry! This file does not exist :('
         return render_template('error_page.html', error=error_msg)
@@ -308,6 +316,7 @@ def download_shellcode():
     Download the selected shellcode.
     :return: a template showing the details about the selected shellcode and the source code.
     """
+    vulnerability_class = "shellcode"
     shellcode_id = request.args.get('shellcode-id', None)
     shellcode = get_shellcode_by_id(shellcode_id)
     file_path = init_path + "/exploitdb/" + shellcode.file
@@ -321,7 +330,8 @@ def download_shellcode():
                                vulnerability_description=shellcode.description, vulnerability_file=shellcode.file,
                                vulnerability_author=shellcode.author, vulnerability_date=shellcode.date,
                                vulnerability_type=shellcode.type, vulnerability_platform=shellcode.platform,
-                               file_path=file_path, download_alert=download_alert, shellcode_id=shellcode_id)
+                               file_path=file_path, download_alert=download_alert, shellcode_id=shellcode_id,
+                               bookmarked=is_bookmarked(shellcode_id, vulnerability_class))
     except FileNotFoundError:
         error_msg = 'Sorry! This file does not exist :('
         return render_template('error_page.html', error=error_msg)
@@ -391,6 +401,7 @@ def add_suggestion():
             error = 'ERROR: Default suggestions cannot be modified!'
             return render_template('suggestions.html', suggestions=get_suggestions_list(), suggestion_error=error, default_suggestions=DEFAULT_SUGGESTIONS)
 
+
 @app.route('/delete-suggestion')
 def delete_suggestion():
     """
@@ -407,6 +418,118 @@ def delete_suggestion():
         error = 'ERROR: The suggestion you want to delete does not exist!'
         return render_template('suggestions.html', suggestions=get_suggestions_list(), suggestion_error=error, default_suggestions=DEFAULT_SUGGESTIONS)
 
+
+@app.route('/bookmarks')
+def bookmarks_manager():
+    """
+    Open bookmarks manager
+    :return: bookmarks manager template
+    """
+    return render_template('bookmarks.html', suggestions=get_suggestions_list(), default_suggestions=DEFAULT_SUGGESTIONS)
+
+
+@app.route('/bookmark-exploit')
+def bookmark_exploit():
+    """
+    Bookmark the selected exploit.
+    :return: a template showing the details about the selected exploit and the source code.
+    """
+    vulnerability_class = "exploit"
+    exploit_id = request.args.get('exploit-id', None)
+    exploit = get_exploit_by_id(exploit_id)
+    file_path = init_path + "/exploitdb/" + exploit.file
+    try:
+        with open(file_path, 'r') as f:
+            content = f.readlines()
+            vulnerability_code = ''.join(content)
+        new_bookmark(exploit_id, vulnerability_class)
+        return render_template('code_viewer.html', vulnerability_code=vulnerability_code,
+                               vulnerability_description=exploit.description, vulnerability_file=exploit.file,
+                               vulnerability_author=exploit.author, vulnerability_date=exploit.date,
+                               vulnerability_type=exploit.type, vulnerability_platform=exploit.platform,
+                               vulnerability_port=exploit.port, file_path=file_path, exploit_id=exploit_id,
+                               bookmarked=is_bookmarked(exploit_id, vulnerability_class))
+    except FileNotFoundError:
+        error_msg = 'Sorry! This file does not exist :('
+        return render_template('error_page.html', error=error_msg)
+
+
+@app.route('/remove-bookmark-exploit')
+def remove_bookmark_exploit():
+    """
+    Remove the bookmark for the selected exploit.
+    :return: a template showing the details about the selected exploit and the source code.
+    """
+    vulnerability_class = "exploit"
+    exploit_id = request.args.get('exploit-id', None)
+    exploit = get_exploit_by_id(exploit_id)
+    file_path = init_path + "/exploitdb/" + exploit.file
+    try:
+        with open(file_path, 'r') as f:
+            content = f.readlines()
+            vulnerability_code = ''.join(content)
+        remove_bookmark(exploit_id, vulnerability_class)
+        return render_template('code_viewer.html', vulnerability_code=vulnerability_code,
+                               vulnerability_description=exploit.description, vulnerability_file=exploit.file,
+                               vulnerability_author=exploit.author, vulnerability_date=exploit.date,
+                               vulnerability_type=exploit.type, vulnerability_platform=exploit.platform,
+                               vulnerability_port=exploit.port, file_path=file_path, exploit_id=exploit_id,
+                               bookmarked=is_bookmarked(exploit_id, vulnerability_class))
+    except FileNotFoundError:
+        error_msg = 'Sorry! This file does not exist :('
+        return render_template('error_page.html', error=error_msg)
+
+
+@app.route('/bookmark-shellcode')
+def bookmark_shellcode():
+    """
+    Bookmark the selected shellcode.
+    :return: a template showing the details about the selected shellcode and the source code.
+    """
+    vulnerability_class = "shellcode"
+    shellcode_id = request.args.get('shellcode-id', None)
+    shellcode = get_shellcode_by_id(shellcode_id)
+    file_path = init_path + "/exploitdb/" + shellcode.file
+    try:
+        with open(file_path, 'r') as f:
+            content = f.readlines()
+            vulnerability_code = ''.join(content)
+        new_bookmark(shellcode_id, vulnerability_class)
+        return render_template('code_viewer.html', vulnerability_code=vulnerability_code,
+                               vulnerability_description=shellcode.description, vulnerability_file=shellcode.file,
+                               vulnerability_author=shellcode.author, vulnerability_date=shellcode.date,
+                               vulnerability_type=shellcode.type, vulnerability_platform=shellcode.platform,
+                               file_path=file_path, shellcode_id=shellcode_id,
+                               bookmarked=is_bookmarked(shellcode_id, vulnerability_class))
+    except FileNotFoundError:
+        error_msg = 'Sorry! This file does not exist :('
+        return render_template('error_page.html', error=error_msg)
+
+
+@app.route('/remove-bookmark-shellcode')
+def remove_bookmark_shellcode():
+    """
+    Remove the bookmark for the selected shellcode.
+    :return: a template showing the details about the selected shellcode and the source code.
+    """
+    vulnerability_class = "shellcode"
+    shellcode_id = request.args.get('shellcode-id', None)
+    shellcode = get_shellcode_by_id(shellcode_id)
+    file_path = init_path + "/exploitdb/" + shellcode.file
+    try:
+        with open(file_path, 'r') as f:
+            content = f.readlines()
+            vulnerability_code = ''.join(content)
+        remove_bookmark(shellcode_id, vulnerability_class)
+        return render_template('code_viewer.html', vulnerability_code=vulnerability_code,
+                               vulnerability_description=shellcode.description, vulnerability_file=shellcode.file,
+                               vulnerability_author=shellcode.author, vulnerability_date=shellcode.date,
+                               vulnerability_type=shellcode.type, vulnerability_platform=shellcode.platform,
+                               file_path=file_path, shellcode_id=shellcode_id,
+                               bookmarked=is_bookmarked(shellcode_id, vulnerability_class))
+    except FileNotFoundError:
+        error_msg = 'Sorry! This file does not exist :('
+        return render_template('error_page.html', error=error_msg)
 
 
 def start_app():

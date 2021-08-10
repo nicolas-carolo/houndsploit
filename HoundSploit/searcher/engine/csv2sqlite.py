@@ -49,6 +49,8 @@ def create_db():
             to_db = [(i['searched'], i['suggestion'], i['autoreplacement']) for i in dr]
         cur.executemany("INSERT INTO searcher_suggestion (searched, suggestion, autoreplacement) VALUES (?, ?, ?);", to_db)
 
+    # TODO Create searcher_bookmarks
+
     con.commit()
     con.close()
 

@@ -41,12 +41,34 @@
                 </tr>
             {% endif %}
         </table>
-        {% if exploit_id %}
-            <a href="/download-exploit?exploit-id={{ exploit_id }}""><button>Download</button></a>
-        {% endif %}
-        {% if shellcode_id %}
-            <a href="/download-shellcode?shellcode-id={{ shellcode_id }}""><button>Download</button></a>
-        {% endif %}
+        <table class="buttons-table">
+            <tr class="buttons-table">
+                {% if exploit_id %}
+                    <td class="buttons-table">
+                        <a href="/download-exploit?exploit-id={{ exploit_id }}""><button>Download</button></a>
+                    </td>
+                    <td class="buttons-table">
+                        {% if bookmarked %}
+                            <a href="/remove-bookmark-exploit?exploit-id={{ exploit_id }}""><button>Delete Bookmark</button></a>
+                        {% else %}
+                            <a href="/bookmark-exploit?exploit-id={{ exploit_id }}""><button>Add Bookmark</button></a>
+                        {% endif %}
+                    </td>
+                {% endif %}
+                {% if shellcode_id %}
+                    <td class="buttons-table">
+                        <a href="/download-shellcode?shellcode-id={{ shellcode_id }}""><button>Download</button></a>
+                    </td>
+                    <td class="buttons-table">
+                        {% if bookmarked %}
+                            <a href="/remove-bookmark-shellcode?shellcode-id={{ shellcode_id }}""><button>Delete Bookmark</button></a>
+                        {% else %}
+                            <a href="/bookmark-shellcode?shellcode-id={{ shellcode_id }}""><button>Add Bookmark</button></a>
+                        {% endif %}
+                    </td>
+                {% endif %}
+            </tr>
+        </table>
     </div>
     <div class="code-container">
         <pre class="prettyprint linenums:1">{{ vulnerability_code }}</pre>

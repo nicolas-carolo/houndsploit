@@ -1,0 +1,142 @@
+div.suggestions_input_container {
+    width: 40%;
+    margin: 0 auto;
+    border: 1px solid #DDDDDD;
+    background-color: #484848;
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 2px 2px 2px black;
+}
+
+table.suggestions-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 99%;
+    border: 1px solid #484848;
+    margin: auto auto 50px;
+}
+
+#suggestions-table th {
+    text-align: center;
+    background-color: #464646;
+    padding: 16px;
+    font-size: 1em;
+    color: darkorange;
+    font-size: 1.2em;
+}
+
+#suggestions-table td {
+    text-align: center;
+    padding: 1em;
+    font-size: 16px;
+    color: white;
+    font-size: 1.1em;
+}
+
+#suggestions-table tr:nth-child(even) {
+    background-color: #202020;
+}
+
+#suggestions-table tr:nth-of-type(odd) {
+    background-color: #303030;
+}
+
+#suggestions-table tr:hover {
+    background-color: black;
+}
+
+#suggestions-table h4 {
+    text-align: center;
+    font-size: 14px;
+    color: dimgrey;
+    margin-bottom: 30px;
+}
+
+#suggestions_input_container table {
+    margin: auto;
+    width: 80%;
+    font-size: 1em;
+}
+
+#suggestions_input_container th {
+    text-align: left;
+    font-weight: bold;
+    color: orange;
+}
+
+#suggestions_input_container td {
+    text-align: right;
+}
+
+#suggestions_input_container tr {
+    padding: 10px auto 10px;
+}
+
+input[type=submit] {
+    text-align: center;
+    font-size: 1.2em;
+    background-color: orange;
+    color: #FFFFFF;
+    border-radius: 20px;
+    border: 1px solid #eeeeee;
+    box-shadow: 1px 1px 1px black;
+    text-shadow:none;
+    padding: 5px 15px 5px;
+}
+
+input[type=submit]:hover {
+    background-color: darkorange;
+}
+
+#add-suggestion {
+    margin-top: 20px;
+}
+
+input[type=button] {
+    text-align: center;
+    font-size: 1em;
+    background-color: orange;
+    color: #FFFFFF;
+    border-radius: 20px;
+    border: 1px solid #eeeeee;
+    box-shadow: 1px 1px 1px black;
+    text-shadow:none;
+    padding: 5px 15px 5px;
+}
+
+input[type=button]:hover {
+    background-color: darkorange;
+}
+
+option {
+    background-color: #646464;
+    color: #ffffff;
+    width: 98%;
+    text-align: right;
+}
+
+select {
+    background-color: #646464;
+    color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px black;
+    border: 1px solid #eeeeee;
+    padding: 2px;
+    font-size: 1em;
+    width: 98%;
+    margin: 10px 0px 10px auto;
+    text-align: right;
+}
+
+input[type=text] {
+    font-size: 1em;
+    background-color: #646464;
+    border: 1px solid #eeeeee;
+    color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 2px 2px 2px black;
+    margin: 10px 0px 10px;
+    padding: 5px 15px 5px;
+    width: 88%;
+    text-align: right;
+}
