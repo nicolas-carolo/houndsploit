@@ -425,7 +425,10 @@ def bookmarks_manager():
     Open bookmarks manager
     :return: bookmarks manager template
     """
-    return render_template('bookmarks.html', bookmark_list=get_bookmark_list())
+    bookmark_list = get_bookmark_list()
+    n_bookmark_items = len(bookmark_list)
+    return render_template('bookmarks.html', bookmark_list=bookmark_list, current_bookmarks_page=1,
+                            latest_bookmarks_page=n_bookmark_items)
 
 
 @app.route('/bookmark-exploit')

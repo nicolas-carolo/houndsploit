@@ -90,3 +90,19 @@ function sortResultsBy() {
     resetPages();
     document.getElementById("searcher-form").submit();
 }
+
+function goFirstBookmarksPage() {
+    document.getElementById("bookmark-page-number").value = 1;
+    goExploitsPage()
+}
+
+function goLastBookmarksPage(latest_bookmarks_page) {
+    document.getElementById("bookmark-page-number").value = latest_exploits_page;
+    goExploitsPage()
+}
+
+function goBookmarksPage() {
+    document.getElementById("bookmark-page-number").value = document.getElementById("bookmark-page-number").value;
+    document.getElementById("hid-b-page").value = document.getElementById("bookmark-page-number").value;
+    document.getElementById("searcher-form").submit();
+}

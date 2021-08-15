@@ -11,9 +11,7 @@
             {% else %}
                 <input type="text" id="searched-text" name="searched-text">
             {% endif %}
-            <input type="hidden" id="hid-e-page" name="hid-e-page" value="{{ current_exploits_page }}">
-            <input type="hidden" id="hid-s-page" name="hid-s-page" value="{{ current_shellcodes_page }}">
-            <input type="hidden" id="current-view" name="current-view" value="">
+            <input type="hidden" id="hid-b-page" name="hid-b-page" value="{{ current_bookmarks_page }}">
             <input type="submit" id="search-button" name="search-button" value="Search">
         </form>
     </div>
@@ -31,7 +29,11 @@
             </tr>
             {% for bookmark in bookmark_list %}
                 <tr class="results-table">
-                    <td class="file"><a href="/bookmark-details?bookmark-id={{ bookmark.id }}">{% autoescape off %}{{ bookmark.file }}{% endautoescape %}</a></td>
+                    {% if 'exploit' in bookmark.file %}
+                        <td class="file"><a href="/exploit-details?exploit-id={{ bookmark.id }}">{% autoescape off %}{{ bookmark.file }}{% endautoescape %}</a></td>
+                    {% else %}
+                        <td class="file"><a href="/shellcode-details?shellcode-id={{ bookmark.id }}">{% autoescape off %}{{ bookmark.file }}{% endautoescape %}</a></td>
+                    {% endif %}
                     <td class="description">{% autoescape off %}{{ bookmark.description }}{% endautoescape %}</td>
                     <td class="date">{{ bookmark.date }}</td>
                     <td class="author">{% autoescape off %}{{ bookmark.author }}{% endautoescape %}</td>
@@ -42,13 +44,13 @@
             {% endfor %}
             </table>
             <div class="nav-page">
-                <input type="button" id="first-exploit-page-btn" name="first-exploit-page-btn" class="nav-page" value="First" onclick="goFirstExploitsPage()">
+                <input type="button" id="first-exploit-page-btn" name="first-exploit-page-btn" class="nav-page" value="First" onclick="goFirstBookmarksPage()">
                 <input type="button" id="previous-exploit-page-btn" name="previous-exploit-page-btn" class="nav-page" value="Previous" onclick="previousExploitsPage()">
                 <label for="exploit-page-number" id="exploit-page-label" name="exploit-page-label" class="nav-page">Page:</label>
-                <input type="number" id="exploit-page-number" name="exploit-page-number" class="nav-page" value="{{ current_exploits_page }}" min="1" max="{{ latest_exploits_page }}">
-                <input type="button" id="go-exploit-page-btn" name="go-exploit-page-btn" class="nav-page" value="Go" onclick="goExploitsPage()">
-                <input type="button" id="next-exploit-page-btn" name="next-exploit-page-btn" class="nav-page" value="Next" onclick="nextExploitsPage('{{ latest_exploits_page }}')">
-                <input type="button" id="last-exploit-page-btn" name="last-exploit-page-btn" class="nav-page" value="Last" onclick="goLastExploitsPage('{{ latest_exploits_page }}')">
+                <input type="number" id="bookmark-page-number" name="bookmark-page-number" class="nav-page" value="{{ current_bookmarks_page }}" min="1" max="{{ latest_bookmarks_page }}">
+                <input type="button" id="go-exploit-page-btn" name="go-exploit-page-btn" class="nav-page" value="Go" onclick="goBookmarksPage()">
+                <input type="button" id="next-exploit-page-btn" name="next-exploit-page-btn" class="nav-page" value="Next" onclick="nextExploitsPage('{{ latest_bookmarks_page }}')">
+                <input type="button" id="last-exploit-page-btn" name="last-exploit-page-btn" class="nav-page" value="Last" onclick="goLastBookmarksPage('{{ latest_bookmarks_page }}')">
             </div>
     </div>
 {% endblock %}
