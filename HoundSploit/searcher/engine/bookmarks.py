@@ -1,4 +1,4 @@
-from HoundSploit.searcher.db_manager.models import Bookmark
+from HoundSploit.searcher.db_manager.models import Bookmark, Exploit, Shellcode
 from HoundSploit.searcher.db_manager.session_manager import start_session
 from HoundSploit.searcher.db_manager.result_set import queryset2list
 from HoundSploit.searcher.engine.utils import check_file_existence
@@ -62,8 +62,22 @@ def is_bookmarked(vulnerability_id, vulnerability_class):
     results_list = queryset2list(queryset)
     session.close()
     if len(results_list) == 0:
-        print("TEST: False")
         return False
     else:
-        print("TEST: True")
         return True
+
+
+def get_bookmark_list():
+    bookmark_list = []
+    session = start_session()
+    queryset = session.query(Bookmark)
+    result_list = queryset2list(queryset)
+    for bookmark in result_list:
+        if bookmark.vulnerability_class == 'exploit':
+            queryset = session.query(Exploit).filter(Exploit.id == bookmark.vulnerability_id)
+            bookmark_item = queryset2list(queryset)[0]
+        else:
+            queryset = session.query(Shellcode).filter(Shellcode.id == bookmark.vulnerability_id)
+            bookmark_item = queryset2list(queryset)[0]
+        bookmark_list.append(bookmark_item)
+    return bookmark_list

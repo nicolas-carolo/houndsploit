@@ -14,7 +14,7 @@ from HoundSploit.searcher.engine.updates import get_latest_db_update_date, insta
 from HoundSploit.searcher.engine.utils import check_file_existence, get_vulnerability_extension, get_n_needed_pages
 from HoundSploit.searcher.engine.csv2sqlite import create_db
 from HoundSploit.searcher.engine.sorter import sort_results
-from HoundSploit.searcher.engine.bookmarks import new_bookmark, is_bookmarked, remove_bookmark
+from HoundSploit.searcher.engine.bookmarks import new_bookmark, is_bookmarked, remove_bookmark, get_bookmark_list
 from shutil import copyfile
 
 
@@ -425,7 +425,7 @@ def bookmarks_manager():
     Open bookmarks manager
     :return: bookmarks manager template
     """
-    return render_template('bookmarks.html', suggestions=get_suggestions_list(), default_suggestions=DEFAULT_SUGGESTIONS)
+    return render_template('bookmarks.html', bookmark_list=get_bookmark_list())
 
 
 @app.route('/bookmark-exploit')

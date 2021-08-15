@@ -1,29 +1,54 @@
 {% extends 'base.html' %}
 {% block scripts_and_css %}
+    <script>getTheme("base_searcher.css")</script>
     <script>getTheme("bookmarks.css")</script>
 {% endblock %}
 {% block results_table %}
+    <div class="div-searcher" id="div-searcher" name="div-searcher" onsubmit="resetPages()">
+        <form action="/bookmarks" method="POST" id="searcher-form" name="searcher-form">
+            {% if searched_text %}
+                <input type="text" id="searched-text" name="searched-text" value="{{ searched_text }}">
+            {% else %}
+                <input type="text" id="searched-text" name="searched-text">
+            {% endif %}
+            <input type="hidden" id="hid-e-page" name="hid-e-page" value="{{ current_exploits_page }}">
+            <input type="hidden" id="hid-s-page" name="hid-s-page" value="{{ current_shellcodes_page }}">
+            <input type="hidden" id="current-view" name="current-view" value="">
+            <input type="submit" id="search-button" name="search-button" value="Search">
+        </form>
+    </div>
     <div>
-        <h2 class="vulnerability_type">Bookmarks</h2>
-        <table id="suggestions-table" name="suggestions-table" class="suggestions-table">
-            <tr>
-                <th>Searched words</th>
-                <th>Suggestion</th>
-                <th>Automatic replacement</th>
-                <th>Delete</th>
-                </tr>
-            {% for res in suggestions %}
-                <tr>
-                    <td>{{ res.searched }}</td>
-                    <td>{{ res.suggestion }}</td>
-                    <td>{{ res.autoreplacement }}</td>
-                    {% if res.searched in default_suggestions %}
-                        <td></td>
-                    {% else %}
-                        <td><input type="button" id="delete-suggestion-button" name="delete-suggestion-button" onclick="window.location.href = '/delete-suggestion?searched={{ res.searched }}'" value="Delete"></td>
-                    {% endif %}
+        <a name="bookmark_list"><h2 class="vulnerability_type">Bookmarks</h2></a>
+        <table class="results-table">
+            <tr class="results-table">
+                <th class="file">File</th>
+                <th class="description">Description</th>
+                <th class="date">Date</th>
+                <th class="author">Author</th>
+                <th class="vul-type">Type</th>
+                <th class="platform">Platform</th>
+                <th class="port">Port</th>
+            </tr>
+            {% for bookmark in bookmark_list %}
+                <tr class="results-table">
+                    <td class="file"><a href="/bookmark-details?bookmark-id={{ bookmark.id }}">{% autoescape off %}{{ bookmark.file }}{% endautoescape %}</a></td>
+                    <td class="description">{% autoescape off %}{{ bookmark.description }}{% endautoescape %}</td>
+                    <td class="date">{{ bookmark.date }}</td>
+                    <td class="author">{% autoescape off %}{{ bookmark.author }}{% endautoescape %}</td>
+                    <td class="vul-type">{{ bookmark.type }}</td>
+                    <td class="platform">{{ bookmark.platform }}</td>
+                    <td class="port">{% autoescape off %}{{ bookmark.port }}{% endautoescape %}</td>
                 </tr>
             {% endfor %}
-        </table>
+            </table>
+            <div class="nav-page">
+                <input type="button" id="first-exploit-page-btn" name="first-exploit-page-btn" class="nav-page" value="First" onclick="goFirstExploitsPage()">
+                <input type="button" id="previous-exploit-page-btn" name="previous-exploit-page-btn" class="nav-page" value="Previous" onclick="previousExploitsPage()">
+                <label for="exploit-page-number" id="exploit-page-label" name="exploit-page-label" class="nav-page">Page:</label>
+                <input type="number" id="exploit-page-number" name="exploit-page-number" class="nav-page" value="{{ current_exploits_page }}" min="1" max="{{ latest_exploits_page }}">
+                <input type="button" id="go-exploit-page-btn" name="go-exploit-page-btn" class="nav-page" value="Go" onclick="goExploitsPage()">
+                <input type="button" id="next-exploit-page-btn" name="next-exploit-page-btn" class="nav-page" value="Next" onclick="nextExploitsPage('{{ latest_exploits_page }}')">
+                <input type="button" id="last-exploit-page-btn" name="last-exploit-page-btn" class="nav-page" value="Last" onclick="goLastExploitsPage('{{ latest_exploits_page }}')">
+            </div>
     </div>
 {% endblock %}
