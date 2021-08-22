@@ -425,14 +425,26 @@ def bookmarks_manager():
     Open bookmarks manager
     :return: bookmarks manager template
     """
+    searched_text = ""
     bookmarks_list = get_bookmarks_list()
-    n_bookmarks = len(bookmarks_list)
-    latest_bookmarks_page = get_n_needed_pages(n_bookmarks)
 
     if request.method == 'POST':
+        searched_text = request.form['searched-text']
         current_bookmarks_page = int(request.form['hid-b-page'])
+        exploits_list = search_vulnerabilities_in_db(searched_text, 'searcher_exploit')
+        shellcodes_list = search_vulnerabilities_in_db(searched_text, 'searcher_shellcode')
+        results_list = exploits_list + shellcodes_list
+        filtered_bookmarks_list = []
+        for result in results_list:
+            for bookmark in bookmarks_list:
+                if result.description == bookmark.description:
+                    filtered_bookmarks_list.append(bookmark)
+        bookmarks_list = filtered_bookmarks_list
     else:
         current_bookmarks_page = 1
+
+    n_bookmarks = len(bookmarks_list)
+    latest_bookmarks_page = get_n_needed_pages(n_bookmarks)
 
     if current_bookmarks_page < 1:
         current_bookmarks_page = 1
@@ -445,7 +457,8 @@ def bookmarks_manager():
     index_last_result = index_first_result + N_RESULTS_FOR_PAGE
     bookmarks_list = bookmarks_list[index_first_result:index_last_result]
 
-    return render_template('bookmarks.html', bookmarks_list=bookmarks_list,
+    return render_template('bookmarks.html', searched_text=searched_text,
+                            bookmarks_list=bookmarks_list,
                             current_bookmarks_page=current_bookmarks_page,
                             latest_bookmarks_page=latest_bookmarks_page)
 
