@@ -427,9 +427,11 @@ def bookmarks_manager():
     """
     searched_text = ""
     bookmarks_list = get_bookmarks_list()
+    key_words_list = []
 
     if request.method == 'POST':
         searched_text = request.form['searched-text']
+        key_words_list = (str(searched_text).upper()).split()
         current_bookmarks_page = int(request.form['hid-b-page'])
         exploits_list = search_vulnerabilities_in_db(searched_text, 'searcher_exploit')
         shellcodes_list = search_vulnerabilities_in_db(searched_text, 'searcher_shellcode')
@@ -456,6 +458,7 @@ def bookmarks_manager():
         index_first_result = (int(current_bookmarks_page) - 1) * N_RESULTS_FOR_PAGE
     index_last_result = index_first_result + N_RESULTS_FOR_PAGE
     bookmarks_list = bookmarks_list[index_first_result:index_last_result]
+    bookmarks_list = highlight_keywords_in_description(key_words_list, bookmarks_list)
 
     return render_template('bookmarks.html', searched_text=searched_text,
                             bookmarks_list=bookmarks_list,
