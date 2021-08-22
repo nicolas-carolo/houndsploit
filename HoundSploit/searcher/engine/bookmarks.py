@@ -67,8 +67,8 @@ def is_bookmarked(vulnerability_id, vulnerability_class):
         return True
 
 
-def get_bookmark_list():
-    bookmark_list = []
+def get_bookmarks_list():
+    bookmarks_list = []
     session = start_session()
     queryset = session.query(Bookmark)
     result_list = queryset2list(queryset)
@@ -79,5 +79,5 @@ def get_bookmark_list():
         else:
             queryset = session.query(Shellcode).filter(Shellcode.id == bookmark.vulnerability_id)
             bookmark_item = queryset2list(queryset)[0]
-        bookmark_list.append(bookmark_item)
-    return bookmark_list
+        bookmarks_list.append(bookmark_item)
+    return bookmarks_list

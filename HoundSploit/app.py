@@ -14,7 +14,7 @@ from HoundSploit.searcher.engine.updates import get_latest_db_update_date, insta
 from HoundSploit.searcher.engine.utils import check_file_existence, get_vulnerability_extension, get_n_needed_pages
 from HoundSploit.searcher.engine.csv2sqlite import create_db
 from HoundSploit.searcher.engine.sorter import sort_results
-from HoundSploit.searcher.engine.bookmarks import new_bookmark, is_bookmarked, remove_bookmark, get_bookmark_list
+from HoundSploit.searcher.engine.bookmarks import new_bookmark, is_bookmarked, remove_bookmark, get_bookmarks_list
 from shutil import copyfile
 
 
@@ -419,16 +419,35 @@ def delete_suggestion():
         return render_template('suggestions.html', suggestions=get_suggestions_list(), suggestion_error=error, default_suggestions=DEFAULT_SUGGESTIONS)
 
 
-@app.route('/bookmarks')
+@app.route('/bookmarks', methods=['GET', 'POST'])
 def bookmarks_manager():
     """
     Open bookmarks manager
     :return: bookmarks manager template
     """
-    bookmark_list = get_bookmark_list()
-    n_bookmark_items = len(bookmark_list)
-    return render_template('bookmarks.html', bookmark_list=bookmark_list, current_bookmarks_page=1,
-                            latest_bookmarks_page=n_bookmark_items)
+    bookmarks_list = get_bookmarks_list()
+    n_bookmarks = len(bookmarks_list)
+    latest_bookmarks_page = get_n_needed_pages(n_bookmarks)
+
+    if request.method == 'POST':
+        current_bookmarks_page = int(request.form['hid-b-page'])
+    else:
+        current_bookmarks_page = 1
+
+    if current_bookmarks_page < 1:
+        current_bookmarks_page = 1
+        index_first_result = 0
+    elif current_bookmarks_page > latest_bookmarks_page:
+        current_bookmarks_page = latest_bookmarks_page
+        index_first_result = (int(current_bookmarks_page) - 1) * N_RESULTS_FOR_PAGE
+    else:
+        index_first_result = (int(current_bookmarks_page) - 1) * N_RESULTS_FOR_PAGE
+    index_last_result = index_first_result + N_RESULTS_FOR_PAGE
+    bookmarks_list = bookmarks_list[index_first_result:index_last_result]
+
+    return render_template('bookmarks.html', bookmarks_list=bookmarks_list,
+                            current_bookmarks_page=current_bookmarks_page,
+                            latest_bookmarks_page=latest_bookmarks_page)
 
 
 @app.route('/bookmark-exploit')
