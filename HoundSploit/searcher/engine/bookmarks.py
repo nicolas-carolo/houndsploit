@@ -49,7 +49,7 @@ def delete_bookmark_from_csv(vulnerability_id, vulnerability_class):
     with open(bookmarks_file, "r") as f:
         lines = f.readlines()
     f= open(bookmarks_file, "w+")
-    f.write("vulnerability_id,vulnerability_class\n")
+    f.write("vulnerability_id,vulnerability_class,date\n")
     f.close()
     with open(bookmarks_file, "a+") as f:
         for line in lines[1:]:
