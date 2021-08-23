@@ -78,7 +78,7 @@ class Bookmark(Base):
     vulnerability_id = Column(Integer, primary_key=True)
     vulnerability_class = Column(String, primary_key=True)
 
-    def __init__(self, vulnerability_id, vulnerability_class):
+    def __init__(self, vulnerability_id, vulnerability_class, date):
         self.vulnerability_id = vulnerability_id
         self.vulnerability_class = vulnerability_class
-
+        self.date = date

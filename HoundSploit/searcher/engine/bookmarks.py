@@ -2,6 +2,7 @@ from HoundSploit.searcher.db_manager.models import Bookmark, Exploit, Shellcode
 from HoundSploit.searcher.db_manager.session_manager import start_session
 from HoundSploit.searcher.db_manager.result_set import queryset2list
 from HoundSploit.searcher.engine.utils import check_file_existence
+from datetime import datetime
 import os
 
 
@@ -11,21 +12,22 @@ init_path = exploitdb_path = os.path.expanduser("~") + "/.HoundSploit"
 def new_bookmark(vulnerability_id, vulnerability_class):
     if not is_bookmarked(vulnerability_id, vulnerability_class):
         session = start_session()
-        new_bookmark = Bookmark(vulnerability_id, vulnerability_class)
+        today = datetime.now()
+        new_bookmark = Bookmark(vulnerability_id, vulnerability_class, today)
         session.add(new_bookmark)
-        add_bookmark_to_custom_csv(vulnerability_id, vulnerability_class)
+        add_bookmark_to_custom_csv(vulnerability_id, vulnerability_class, today)
         session.commit()
         session.close()
 
 
-def add_bookmark_to_custom_csv(vulnerability_id, vulnerability_class):
-    bookmarks_file = init_path + "/custom_bookmarks.csv"
+def add_bookmark_to_custom_csv(vulnerability_id, vulnerability_class, date):
+    bookmarks_file = init_path + "/bookmarks.csv"
     if not check_file_existence(bookmarks_file):
         f= open(bookmarks_file, "w+")
-        f.write("vulnerability_id,vulnerability_class\n")
+        f.write("vulnerability_id,vulnerability_class,date\n")
         f.close()
     f= open(bookmarks_file, "a+")
-    f.write(vulnerability_id + "," + vulnerability_class + "\n")
+    f.write(vulnerability_id + "," + vulnerability_class + ",\"" + str(date) + "\"\n")
     f.close()
 
 
@@ -43,7 +45,7 @@ def remove_bookmark(vulnerability_id, vulnerability_class):
 
 
 def delete_bookmark_from_csv(vulnerability_id, vulnerability_class):
-    bookmarks_file = init_path + "/custom_bookmarks.csv"
+    bookmarks_file = init_path + "/bookmarks.csv"
     with open(bookmarks_file, "r") as f:
         lines = f.readlines()
     f= open(bookmarks_file, "w+")

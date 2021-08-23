@@ -49,17 +49,16 @@ def create_db():
             to_db = [(i['searched'], i['suggestion'], i['autoreplacement']) for i in dr]
         cur.executemany("INSERT INTO searcher_suggestion (searched, suggestion, autoreplacement) VALUES (?, ?, ?);", to_db)
 
-    # TODO Add support for searcher_bookmarks with insert date
-    cur.execute("CREATE TABLE searcher_bookmark (vulnerability_id, vulnerability_class);")
+    cur.execute("CREATE TABLE searcher_bookmark (vulnerability_id, vulnerability_class, date);")
     if platform.system == "Windows":
-        custom_bookmarks_path = init_path + "\custom_bookmarks.csv"
+        custom_bookmarks_path = init_path + "\\bookmarks.csv"
     else:
-        custom_bookmarks_path = init_path + "/custom_bookmarks.csv"
+        custom_bookmarks_path = init_path + "/bookmarks.csv"
     if check_file_existence(custom_bookmarks_path):
         with open(custom_bookmarks_path, 'r', encoding="utf8") as fin:
             dr = csv.DictReader(fin)
-            to_db = [(i['vulnerability_id'], i['vulnerability_class']) for i in dr]
-        cur.executemany("INSERT INTO searcher_bookmark (vulnerability_id, vulnerability_class) VALUES (?, ?);", to_db)
+            to_db = [(i['vulnerability_id'], i['vulnerability_class'], i['date']) for i in dr]
+        cur.executemany("INSERT INTO searcher_bookmark (vulnerability_id, vulnerability_class, date) VALUES (?, ?, ?);", to_db)
 
     con.commit()
     con.close()
