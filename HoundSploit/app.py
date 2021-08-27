@@ -241,6 +241,12 @@ def view_exploit_details():
     """
     vulnerability_class = "exploit"
     exploit_id = request.args.get('exploit-id', None)
+    searched_text = request.args.get('searched-text', None)
+    is_prev_page_bookmarks = request.args.get('isprevpagebookmarks', None)
+    if is_prev_page_bookmarks == "true":
+        is_prev_page_bookmarks = True
+    else:
+        is_prev_page_bookmarks = False
     exploit = get_exploit_by_id(exploit_id)
     file_path = init_path + "/exploitdb/" + exploit.file
     try:
@@ -252,7 +258,8 @@ def view_exploit_details():
                                vulnerability_author=exploit.author, vulnerability_date=exploit.date,
                                vulnerability_type=exploit.type, vulnerability_platform=exploit.platform,
                                vulnerability_port=exploit.port, file_path=file_path, exploit_id=exploit_id,
-                               bookmarked=is_bookmarked(exploit_id, vulnerability_class))
+                               bookmarked=is_bookmarked(exploit_id, vulnerability_class),
+                               searched_text=searched_text, is_prev_page_bookmarks=is_prev_page_bookmarks)
     except FileNotFoundError:
         error_msg = 'Sorry! This file does not exist :('
         return render_template('error_page.html', error=error_msg)
@@ -293,6 +300,12 @@ def view_shellcode_details():
     """
     vulnerability_class = "shellcode"
     shellcode_id = request.args.get('shellcode-id', None)
+    searched_text = request.args.get('searched-text', None)
+    is_prev_page_bookmarks = request.args.get('isprevpagebookmarks', None)
+    if is_prev_page_bookmarks == "true":
+        is_prev_page_bookmarks = True
+    else:
+        is_prev_page_bookmarks = False
     shellcode = get_shellcode_by_id(shellcode_id)
     file_path = init_path + "/exploitdb/" + shellcode.file
     try:
@@ -304,7 +317,8 @@ def view_shellcode_details():
                                vulnerability_author=shellcode.author, vulnerability_date=shellcode.date,
                                vulnerability_type=shellcode.type, vulnerability_platform=shellcode.platform,
                                file_path=file_path, shellcode_id=shellcode_id,
-                               bookmarked=is_bookmarked(shellcode_id, vulnerability_class))
+                               bookmarked=is_bookmarked(shellcode_id, vulnerability_class),
+                               searched_text=searched_text, is_prev_page_bookmarks=is_prev_page_bookmarks)
     except FileNotFoundError:
         error_msg = 'Sorry! This file does not exist :('
         return render_template('error_page.html', error=error_msg)
@@ -431,8 +445,18 @@ def bookmarks_manager():
 
     if request.method == 'POST':
         searched_text = request.form['searched-text']
-        key_words_list = (str(searched_text).upper()).split()
         current_bookmarks_page = int(request.form['hid-b-page'])
+    else:
+        current_bookmarks_page = 1
+        searched_text = request.args.get('searched', None)
+    
+    if searched_text is None:
+        searched_text = ""
+    
+
+    if searched_text != "":
+        print(searched_text)
+        key_words_list = (str(searched_text).upper()).split()
         exploits_list = search_vulnerabilities_in_db(searched_text, 'searcher_exploit')
         shellcodes_list = search_vulnerabilities_in_db(searched_text, 'searcher_shellcode')
         results_list = exploits_list + shellcodes_list
@@ -442,8 +466,7 @@ def bookmarks_manager():
                 if result.description == bookmark.description:
                     filtered_bookmarks_list.append(bookmark)
         bookmarks_list = filtered_bookmarks_list
-    else:
-        current_bookmarks_page = 1
+
 
     n_bookmarks = len(bookmarks_list)
     latest_bookmarks_page = get_n_needed_pages(n_bookmarks)

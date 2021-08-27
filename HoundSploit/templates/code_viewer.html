@@ -3,7 +3,29 @@
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify/loader/run_prettify.js"></script>
     <script>getTheme("code_viewer.css")</script>
     <script>getTheme("tomorrow.css")</script>
-    <script src="/static/scripts/goback.js"></script>
+    {% if is_prev_page_bookmarks %}
+        <script>
+            window.addEventListener( "pageshow", function ( event ) {
+                var historyTraversal = event.persisted || ( typeof window.performance != "undefined" && window.performance.navigation.type === 2 );
+                if ( historyTraversal ) {
+                    // Handle page restore.
+                    //alert('refresh');
+                    window.location.href = '/bookmarks?searched={{ searched_text }}'
+                }
+            });
+        </script>
+    {% else %}
+    <script>
+        window.addEventListener( "pageshow", function ( event ) {
+            var historyTraversal = event.persisted || ( typeof window.performance != "undefined" && window.performance.navigation.type === 2 );
+            if ( historyTraversal ) {
+                // Handle page restore.
+                //alert('refresh');
+                window.history.back();
+            }
+        });
+    </script>
+    {% endif %}
 {% endblock %}
 {% block code_viewer %}
     {% if download_alert %}

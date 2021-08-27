@@ -2,7 +2,6 @@
 {% block scripts_and_css %}
     <script>getTheme("base_searcher.css")</script>
     <script>getTheme("bookmarks.css")</script>
-    <script src="/static/scripts/refresh.js"></script>
 {% endblock %}
 {% block results_table %}
     <div class="div-searcher" id="div-searcher" name="div-searcher" onsubmit="resetPages()">
@@ -31,9 +30,9 @@
             {% for bookmark in bookmarks_list %}
                 <tr class="results-table">
                     {% if 'exploit' in bookmark.file %}
-                        <td class="file"><a href="/exploit-details?exploit-id={{ bookmark.id }}">{% autoescape off %}{{ bookmark.file }}{% endautoescape %}</a></td>
+                        <td class="file"><a href="/exploit-details?exploit-id={{ bookmark.id }}&searched-text={{ searched_text }}&isprevpagebookmarks=true">{% autoescape off %}{{ bookmark.file }}{% endautoescape %}</a></td>
                     {% else %}
-                        <td class="file"><a href="/shellcode-details?shellcode-id={{ bookmark.id }}">{% autoescape off %}{{ bookmark.file }}{% endautoescape %}</a></td>
+                        <td class="file"><a href="/shellcode-details?shellcode-id={{ bookmark.id }}&searched-text={{ searched_text }}&isprevpagebookmarks=true">{% autoescape off %}{{ bookmark.file }}{% endautoescape %}</a></td>
                     {% endif %}
                     <td class="description">{% autoescape off %}{{ bookmark.description }}{% endautoescape %}</td>
                     <td class="date">{{ bookmark.date }}</td>
