@@ -23,6 +23,10 @@ td {
     padding-bottom: 12px;
 }
 
+td.empty-list {
+    text-align: center;
+}
+
 th.file, td.file {
     padding-left: 12px;
     padding-right: 3px;

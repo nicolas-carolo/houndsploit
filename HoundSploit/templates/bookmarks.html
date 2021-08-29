@@ -27,22 +27,29 @@
                 <th class="platform">Platform</th>
                 <th class="port">Port</th>
             </tr>
-            {% for bookmark in bookmarks_list %}
+            {% if bookmarks_list|length > 0 %}
+                {% for bookmark in bookmarks_list %}
+                    <tr class="results-table">
+                        {% if 'exploit' in bookmark.file %}
+                            <td class="file"><a href="/exploit-details?exploit-id={{ bookmark.id }}&searched-text={{ searched_text }}&isprevpagebookmarks=true">{% autoescape off %}{{ bookmark.file }}{% endautoescape %}</a></td>
+                        {% else %}
+                            <td class="file"><a href="/shellcode-details?shellcode-id={{ bookmark.id }}&searched-text={{ searched_text }}&isprevpagebookmarks=true">{% autoescape off %}{{ bookmark.file }}{% endautoescape %}</a></td>
+                        {% endif %}
+                        <td class="description">{% autoescape off %}{{ bookmark.description }}{% endautoescape %}</td>
+                        <td class="date">{{ bookmark.date }}</td>
+                        <td class="author">{% autoescape off %}{{ bookmark.author }}{% endautoescape %}</td>
+                        <td class="vul-type">{{ bookmark.type }}</td>
+                        <td class="platform">{{ bookmark.platform }}</td>
+                        <td class="port">{% autoescape off %}{{ bookmark.port }}{% endautoescape %}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
                 <tr class="results-table">
-                    {% if 'exploit' in bookmark.file %}
-                        <td class="file"><a href="/exploit-details?exploit-id={{ bookmark.id }}&searched-text={{ searched_text }}&isprevpagebookmarks=true">{% autoescape off %}{{ bookmark.file }}{% endautoescape %}</a></td>
-                    {% else %}
-                        <td class="file"><a href="/shellcode-details?shellcode-id={{ bookmark.id }}&searched-text={{ searched_text }}&isprevpagebookmarks=true">{% autoescape off %}{{ bookmark.file }}{% endautoescape %}</a></td>
-                    {% endif %}
-                    <td class="description">{% autoescape off %}{{ bookmark.description }}{% endautoescape %}</td>
-                    <td class="date">{{ bookmark.date }}</td>
-                    <td class="author">{% autoescape off %}{{ bookmark.author }}{% endautoescape %}</td>
-                    <td class="vul-type">{{ bookmark.type }}</td>
-                    <td class="platform">{{ bookmark.platform }}</td>
-                    <td class="port">{% autoescape off %}{{ bookmark.port }}{% endautoescape %}</td>
+                    <td class="empty-list" colspan="7">No bookmarks available</td>
                 </tr>
-            {% endfor %}
-            </table>
+            {% endif %}
+        </table>
+        {% if bookmarks_list|length > 0 %}
             <div class="nav-page">
                 <input type="button" id="first-bookmark-page-btn" name="first-bookmark-page-btn" class="nav-page" value="First" onclick="goFirstBookmarksPage()">
                 <input type="button" id="previous-bookmark-page-btn" name="previous-bookmark-page-btn" class="nav-page" value="Previous" onclick="previousBookmarksPage()">
@@ -52,5 +59,6 @@
                 <input type="button" id="next-bookmark-page-btn" name="next-bookmark-page-btn" class="nav-page" value="Next" onclick="nextBookmarksPage('{{ latest_bookmarks_page }}')">
                 <input type="button" id="last-bookmark-page-btn" name="last-bookmark-page-btn" class="nav-page" value="Last" onclick="goLastBookmarksPage('{{ latest_bookmarks_page }}')">
             </div>
+        {% endif %}
     </div>
 {% endblock %}
