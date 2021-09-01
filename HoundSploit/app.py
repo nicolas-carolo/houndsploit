@@ -455,7 +455,6 @@ def bookmarks_manager():
     
 
     if searched_text != "":
-        print(searched_text)
         key_words_list = (str(searched_text).upper()).split()
         exploits_list = search_vulnerabilities_in_db(searched_text, 'searcher_exploit')
         shellcodes_list = search_vulnerabilities_in_db(searched_text, 'searcher_shellcode')
