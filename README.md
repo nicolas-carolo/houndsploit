@@ -6,9 +6,9 @@ Author: Nicolas Carolo <nicolascarolo.dev@gmail.com>
 
 Copyright: © 2021, Nicolas Carolo.
 
-Date: 2021-08-09
+Date: 2021-09-02
 
-Version: 2.5.0
+Version: 2.6.0
 
 
 ## PURPOSE
@@ -27,6 +27,7 @@ the most accurate search results.
 * Syntax highlighting of the source code of exploits and shellcodes
 * Downloading of the source code of exploits and shellcodes
 * Highlighting of searched words in search results
+* Bookmarks
 * Check for updates (both for software and database)
 
 #### New features in HoundSploit 2
@@ -71,6 +72,13 @@ For each case you can also decide to use automatic replacement or not.
 It is possible to add new suggestions and delete the existing suggestions.
 
 ![Suggestions](/img/suggestions.png)
+
+
+#### Bookmarks
+
+You can add exploits and shellcodes to bookmarks and filter them using the searchbox.
+
+![Bookmarks](/img/bookmarks.png)
 
 #### Customization
 You can choose to use the Light or the Dark theme

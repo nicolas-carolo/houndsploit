@@ -6,7 +6,7 @@ Appendix C. Changelog
 :Copyright: © 2019, Nicolas Carolo.
 :License: BSD (see /LICENSE or :doc:`Appendix B <LICENSE>`.)
 :Date: 2019-11-27
-:Version: 2.5.0
+:Version: 2.6.0
 
 .. index:: CHANGELOG
 
