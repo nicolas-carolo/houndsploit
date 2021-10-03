@@ -1,7 +1,7 @@
 from HoundSploit.searcher.db_manager.models import Bookmark, Exploit, Shellcode
 from HoundSploit.searcher.db_manager.session_manager import start_session
 from HoundSploit.searcher.db_manager.result_set import queryset2list
-from HoundSploit.searcher.engine.utils import check_file_existence
+from HoundSploit.searcher.engine.utils import check_file_existence, check_vulnerability_existence
 from datetime import datetime
 import os
 
@@ -10,7 +10,7 @@ init_path = exploitdb_path = os.path.expanduser("~") + "/.HoundSploit"
 
 
 def new_bookmark(vulnerability_id, vulnerability_class):
-    if not is_bookmarked(vulnerability_id, vulnerability_class):
+    if not is_bookmarked(vulnerability_id, vulnerability_class) and check_vulnerability_existence(vulnerability_id, vulnerability_class):
         session = start_session()
         today = datetime.now()
         new_bookmark = Bookmark(vulnerability_id, vulnerability_class, today)
@@ -18,6 +18,9 @@ def new_bookmark(vulnerability_id, vulnerability_class):
         add_bookmark_to_custom_csv(vulnerability_id, vulnerability_class, today)
         session.commit()
         session.close()
+        return True
+    else:
+        return False
 
 
 def add_bookmark_to_custom_csv(vulnerability_id, vulnerability_class, date):

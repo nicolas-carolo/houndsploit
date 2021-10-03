@@ -8,7 +8,7 @@ Copyright: © 2021, Nicolas Carolo.
 
 Date: 2021-09-02
 
-Version: 2.6.0
+Version: 2.6.1
 
 
 ## PURPOSE

@@ -1,0 +1,14 @@
+div.info_container {
+    width: 40%;
+    margin: 15px auto 60px;
+    border: 1px solid #DDDDDD;
+    background-color: #484848;
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 2px 2px 2px black;
+}
+
+p.info_container {
+    color: orange;
+    font-size: 1.2em;
+}

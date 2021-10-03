@@ -1,4 +1,7 @@
 import re
+from HoundSploit.searcher.db_manager.models import Bookmark, Exploit, Shellcode
+from HoundSploit.searcher.db_manager.session_manager import start_session
+from HoundSploit.searcher.db_manager.result_set import queryset2list
 
 
 N_RESULTS_FOR_PAGE = 10
@@ -34,3 +37,18 @@ def get_n_needed_pages(n_results):
         return int(n_results / N_RESULTS_FOR_PAGE)
     else:
         return int(n_results / N_RESULTS_FOR_PAGE) + 1
+
+
+def check_vulnerability_existence(vulnerability_id, vulnerability_class):
+    session = start_session()
+    if vulnerability_class == "exploit":
+        queryset = session.query(Exploit).filter(Exploit.id == vulnerability_id)
+    else:
+        queryset = session.query(Shellcode).filter(Shellcode.id == vulnerability_id)
+    results_list = queryset2list(queryset)
+    if len(results_list) == 0:
+        session.close()
+        return False
+    else:
+        session.close()
+        return True

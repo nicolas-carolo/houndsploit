@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
+{% block scripts_and_css %}
+    <script>getTheme("error.css")</script>
+{% endblock %}
 {% block icon %}
-    <img src="/static/media/hound.png" alt="HoundSploit">
+    <img src="/static/media/icon.png" alt="HoundSploit">
 {% endblock %}
 {% block h1_style %}style="margin-top: 10px"{% endblock %}
 {% block about %}
     <div class ="info_container">
-        <p>{{ error }}</p>
+        <p class ="info_container">{{ error }}</p>
     </div>
 {% endblock %}
