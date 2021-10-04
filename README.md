@@ -6,7 +6,7 @@ Author: Nicolas Carolo <nicolascarolo.dev@gmail.com>
 
 Copyright: © 2021, Nicolas Carolo.
 
-Date: 2021-09-02
+Date: 2021-10-04
 
 Version: 2.6.1
 

@@ -24,10 +24,8 @@ if platform.system == "Windows":
     static_folder = os.path.abspath(init_path + '\houndsploit\HoundSploit\static')
 else:
     init_path = os.path.expanduser("~") + "/.HoundSploit"
-    # template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
-    template_dir = '/Users/nicolas/Projects/Python/houndsploit/HoundSploit/templates'
-    # static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
-    static_folder = '/Users/nicolas/Projects/Python/houndsploit/HoundSploit/static'
+    template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
+    static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
 app = Flask(__name__, template_folder=template_dir, static_folder=static_folder)
 
 N_RESULTS_FOR_PAGE = 10
@@ -550,7 +548,6 @@ def remove_bookmark_exploit():
             content = f.readlines()
             vulnerability_code = ''.join(content)
         test = remove_bookmark(exploit_id, vulnerability_class)
-        print(test)
         return render_template('code_viewer.html', vulnerability_code=vulnerability_code,
                                vulnerability_description=exploit.description, vulnerability_file=exploit.file,
                                vulnerability_author=exploit.author, vulnerability_date=exploit.date,
