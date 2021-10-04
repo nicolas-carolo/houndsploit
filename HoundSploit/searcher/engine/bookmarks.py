@@ -54,17 +54,6 @@ def remove_bookmark(vulnerability_id, vulnerability_class):
     :param vulnerability_class: the class of the vulnerability (exploit or shellcode).
     :return: True if the vulnerability was correctly deleted, otherwise False.
     """
-    if not is_bookmarked(vulnerability_id, vulnerability_class) and check_vulnerability_existence(vulnerability_id, vulnerability_class):
-        session = start_session()
-        today = datetime.now()
-        new_bookmark = Bookmark(vulnerability_id, vulnerability_class, today)
-        session.add(new_bookmark)
-        add_bookmark_to_custom_csv(vulnerability_id, vulnerability_class, today)
-        session.commit()
-        session.close()
-        return True
-    else:
-        return False
     if is_bookmarked(vulnerability_id, vulnerability_class):
         session = start_session()
         session.query(Bookmark).filter(Bookmark.vulnerability_id == vulnerability_id,

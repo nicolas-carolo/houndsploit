@@ -549,7 +549,8 @@ def remove_bookmark_exploit():
         with open(file_path, 'r') as f:
             content = f.readlines()
             vulnerability_code = ''.join(content)
-        remove_bookmark(exploit_id, vulnerability_class)
+        test = remove_bookmark(exploit_id, vulnerability_class)
+        print(test)
         return render_template('code_viewer.html', vulnerability_code=vulnerability_code,
                                vulnerability_description=exploit.description, vulnerability_file=exploit.file,
                                vulnerability_author=exploit.author, vulnerability_date=exploit.date,
