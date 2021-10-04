@@ -60,6 +60,13 @@ def get_suggestions_list():
 
 
 def new_suggestion(searched, suggestion, autoreplacement):
+    """
+    Create a new suggestion.
+    :param searched: the searched word.
+    :param suggestion: the research suggested by HoundSploit.
+    :param: autoreplacement: if True the searched word is automatically replaced with
+    the suggested one, otherwise HoundSploit suggests to search also for the suggested word
+    """
     session = start_session()
     searched = str(searched).lower()
     suggestion = str(suggestion).lower()
@@ -73,12 +80,16 @@ def new_suggestion(searched, suggestion, autoreplacement):
         edited_suggestion = session.query(Suggestion).get(searched)
         edited_suggestion.suggestion = suggestion
         edited_suggestion.autoreplacement = autoreplacement
-        edited_suggestion_in_csv(searched, suggestion, autoreplacement)
+        edit_suggestion_in_csv(searched, suggestion, autoreplacement)
     session.commit()
     session.close()
 
 
 def remove_suggestion(searched):
+    """
+    Remove the suggestion specified in the searched word.
+    :param searched: the searched word to remove from suggestions.
+    """
     session = start_session()
     suggestion_item = session.query(Suggestion).get(searched)
     if suggestion_item is not None:
@@ -92,6 +103,14 @@ def remove_suggestion(searched):
 
 
 def add_suggestion_to_custom_csv(searched, suggestion, autoreplacement):
+    """
+    Add the suggestion record to the CSV file used to restore the database when
+    HoundSploit is updated to a new version.
+    :param searched: the searched word.
+    :param suggestion: the research suggested by HoundSploit.
+    :param: autoreplacement: if True the searched word is automatically replaced with
+    the suggested one, otherwise HoundSploit suggests to search also for the suggested word
+    """
     suggestions_file = init_path + "/custom_suggestions.csv"
     if not check_file_existence(suggestions_file):
         f= open(suggestions_file, "w+")
@@ -102,7 +121,15 @@ def add_suggestion_to_custom_csv(searched, suggestion, autoreplacement):
     f.close()
 
 
-def edited_suggestion_in_csv(searched, suggestion, autoreplacement):
+def edit_suggestion_in_csv(searched, suggestion, autoreplacement):
+    """
+    Edit an existing suggestion record contained into the CSV file used to restore the database when
+    HoundSploit is updated to a new version.
+    :param searched: the searched word.
+    :param suggestion: the research suggested by HoundSploit.
+    :param: autoreplacement: if True the searched word is automatically replaced with
+    the suggested one, otherwise HoundSploit suggests to search also for the suggested word
+    """
     suggestions_file = init_path + "/custom_suggestions.csv"
     with open(suggestions_file, "r") as f:
         lines = f.readlines()[1:]
@@ -117,6 +144,11 @@ def edited_suggestion_in_csv(searched, suggestion, autoreplacement):
 
 
 def delete_suggestion_from_csv(searched):
+    """
+    Delete the specified suggestion record from the CSV file used to restore the
+    database when HoundSploit is updated to a new version.
+    :param searched: the searched word.
+    """
     suggestions_file = init_path + "/custom_suggestions.csv"
     with open(suggestions_file, "r") as f:
         lines = f.readlines()

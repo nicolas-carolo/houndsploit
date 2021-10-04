@@ -6,6 +6,9 @@ from HoundSploit.searcher.engine.utils import check_file_existence
 
 
 def create_db():
+    """
+    Create the database used by HoundSploit and hsploit
+    """
     if platform.system == "Windows":
         init_path = os.path.expanduser("~") + "\.HoundSploit"
         db_path = init_path + "\hound_db.sqlite3"
