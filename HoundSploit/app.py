@@ -15,6 +15,7 @@ from HoundSploit.searcher.engine.utils import check_file_existence, get_vulnerab
 from HoundSploit.searcher.engine.csv2sqlite import create_db
 from HoundSploit.searcher.engine.sorter import sort_results
 from HoundSploit.searcher.engine.bookmarks import new_bookmark, is_bookmarked, remove_bookmark, get_bookmarks_list
+from HoundSploit.searcher.engine.fix_dates import fix_known_dates
 from shutil import copyfile
 
 
@@ -24,8 +25,10 @@ if platform.system == "Windows":
     static_folder = os.path.abspath(init_path + '\houndsploit\HoundSploit\static')
 else:
     init_path = os.path.expanduser("~") + "/.HoundSploit"
-    template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
-    static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
+    # template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
+    # static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
+    template_dir = '/Users/nicolas/Projects/Python/houndsploit/HoundSploit/templates'
+    static_folder = '/Users/nicolas/Projects/Python/houndsploit/HoundSploit/static'
 app = Flask(__name__, template_folder=template_dir, static_folder=static_folder)
 
 N_RESULTS_FOR_PAGE = 10
@@ -618,6 +621,16 @@ def remove_bookmark_shellcode():
     except FileNotFoundError:
         error_msg = 'Sorry! This file does not exist :('
         return render_template('error_page.html', error=error_msg)
+
+
+@app.route('/fix-dates')
+def repair():
+
+    print("Starting fix")
+    fix_known_dates()
+    print("Ending fix")
+    return render_template('settings.html', latest_db_update=get_latest_db_update_date(), db_update_alert=False,
+                            sw_update_alert=False, no_updates_alert=False)
 
 
 def start_app():
