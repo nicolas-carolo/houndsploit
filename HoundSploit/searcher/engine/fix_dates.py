@@ -55,8 +55,9 @@ def fix_known_dates():
             edited_exploit = session.query(Exploit).get(exploit_date[0])
             edited_exploit.date = str(exploit_date[1])
             session.commit()
+            print("FIXED: Exploit", exploit_date[0], exploit_date[1])
         except AttributeError:
-            # print("ERROR:", exploit_date[0], exploit_date[1])
+            print("ERROR: Exploit", exploit_date[0], exploit_date[1])
             pass
 
     for shellcode_date in shellcode_dates_list:
@@ -64,8 +65,9 @@ def fix_known_dates():
             edited_shellcode = session.query(Shellcode).get(shellcode_date[0])
             edited_shellcode.date = str(shellcode_date[1])
             session.commit()
+            print("FIXED: Shellcode", shellcode_date[0], shellcode_date[1])
         except AttributeError:
-            print("ERROR:", shellcode_date[0], shellcode_date[1])
+            print("ERROR: Shellcode", shellcode_date[0], shellcode_date[1])
 
     session.close()
 
@@ -81,7 +83,7 @@ def fix_unknown_dates():
 
         try:
             bash_command = "curl " + exploit_url
-            print(bash_command)
+            # print(bash_command)
             process = subprocess.Popen(bash_command.split(), stdout=subprocess.PIPE)
             output, error = process.communicate()
             # print(output)
@@ -91,9 +93,9 @@ def fix_unknown_dates():
             edited_exploit = session.query(Exploit).get(exploit.id)
             edited_exploit.date = str(exploit_date)
             session.commit()
-            print(exploit.id, exploit.date)
+            print("FIXED: Exploit", exploit.id, exploit.date)
         except AttributeError:
-            print("ERROR", exploit.id)
+            print("ERROR: Exploit", exploit.id)
 
     queryset = session.query(Shellcode).filter(Shellcode.date == '1970-01-01')
     shellcodes_list = queryset2list(queryset)
@@ -102,7 +104,7 @@ def fix_unknown_dates():
             edited_shellcode = session.query(Shellcode).get(shellcode.id)
             edited_shellcode.date = shellcode_dates_dict[shellcode.id]
             session.commit()
-            print(shellcode.id, shellcode.date)
+            print("FIXED: Shellcode", shellcode.id, shellcode.date)
         except AttributeError:
-            print("ERROR", shellcode.id)
+            print("ERROR: Shellcode", shellcode.id)
     session.close()
