@@ -2,11 +2,27 @@ import subprocess
 import os
 import platform
 import csv
+import re
 from distutils.dir_util import copy_tree
 from HoundSploit.searcher.db_manager.models import Exploit, Shellcode
 from HoundSploit.searcher.db_manager.session_manager import start_session
+from HoundSploit.searcher.db_manager.result_set import queryset2list
 
-last_exploitdb_commit = '23acd8a13b7a871e735016897c7a9e7b0ac33448'
+last_exploitdb_commit = "23acd8a13b7a871e735016897c7a9e7b0ac33448"
+exploitdb_url = "https://www.exploit-db.com/exploits/"
+# date_pattern = "<h6 class=\"stats-title\">(.*?)</h6>"
+date_pattern = "<meta property=\"article:published_time\" content=\"(.*?)\" />"
+
+
+shellcode_dates_dict = {
+    '50291': "2021-09-13",
+    '50368': "2021-10-01"
+}
+
+
+def fix_dates():
+    fix_known_dates()
+    fix_unknown_dates()
 
 
 def fix_known_dates():
@@ -51,4 +67,42 @@ def fix_known_dates():
         except AttributeError:
             print("ERROR:", shellcode_date[0], shellcode_date[1])
 
+    session.close()
+
+
+def fix_unknown_dates():
+    session = start_session()
+
+    queryset = session.query(Exploit).filter(Exploit.date == '1970-01-01')
+    exploits_list = queryset2list(queryset)
+    for exploit in exploits_list:
+        exploit_url = exploitdb_url + exploit.id
+        print(exploit_url)
+
+        try:
+            bash_command = "curl " + exploit_url
+            print(bash_command)
+            process = subprocess.Popen(bash_command.split(), stdout=subprocess.PIPE)
+            output, error = process.communicate()
+            # print(output)
+
+            page_source = output.decode("utf-8")
+            exploit_date = re.search(date_pattern, page_source).group(1)
+            edited_exploit = session.query(Exploit).get(exploit.id)
+            edited_exploit.date = str(exploit_date)
+            session.commit()
+            print(exploit.id, exploit.date)
+        except AttributeError:
+            print("ERROR", exploit.id)
+
+    queryset = session.query(Shellcode).filter(Shellcode.date == '1970-01-01')
+    shellcodes_list = queryset2list(queryset)
+    for shellcode in shellcodes_list:
+        try:
+            edited_shellcode = session.query(Shellcode).get(shellcode.id)
+            edited_shellcode.date = shellcode_dates_dict[shellcode.id]
+            session.commit()
+            print(shellcode.id, shellcode.date)
+        except AttributeError:
+            print("ERROR", shellcode.id)
     session.close()

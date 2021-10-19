@@ -15,7 +15,7 @@ from HoundSploit.searcher.engine.utils import check_file_existence, get_vulnerab
 from HoundSploit.searcher.engine.csv2sqlite import create_db
 from HoundSploit.searcher.engine.sorter import sort_results
 from HoundSploit.searcher.engine.bookmarks import new_bookmark, is_bookmarked, remove_bookmark, get_bookmarks_list
-from HoundSploit.searcher.engine.fix_dates import fix_known_dates
+from HoundSploit.searcher.engine.fix_dates import fix_dates
 from shutil import copyfile
 
 
@@ -627,7 +627,7 @@ def remove_bookmark_shellcode():
 def repair():
 
     print("Starting fix")
-    fix_known_dates()
+    fix_dates()
     print("Ending fix")
     return render_template('settings.html', latest_db_update=get_latest_db_update_date(), db_update_alert=False,
                             sw_update_alert=False, no_updates_alert=False)
