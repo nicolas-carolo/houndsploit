@@ -16,6 +16,7 @@ __all__ = ()
 from HoundSploit.cl_parser import parse_args
 from HoundSploit.app import start_app
 from HoundSploit.searcher.engine.csv2sqlite import create_db
+from HoundSploit.searcher.engine.fix_dates import create_fixed_db
 from HoundSploit.searcher.engine.utils import check_file_existence
 from HoundSploit.searcher.engine.updates import migrate_to_new_installation
 import os

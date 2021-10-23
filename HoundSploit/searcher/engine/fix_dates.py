@@ -115,15 +115,17 @@ def create_fixed_db():
     if platform.system() == "Windows":
         houndsploit_path = os.path.expanduser("~") + "\.HoundSploit\\"
         exploitdb_path = os.path.expanduser("~") + "\.HoundSploit\\exploitdb\\"
-        fixed_exploitdb_path = os.path.expanduser("~") + "\.HoundSploit\\fixed_exploitdb\\"
     else:
         houndsploit_path = os.path.expanduser("~") + "/.HoundSploit/"
         exploitdb_path = os.path.expanduser("~") + "/.HoundSploit/exploitdb/"
-        fixed_exploitdb_path = os.path.expanduser("~") + "/.HoundSploit/fixed_exploitdb/"
     subprocess.check_output("cp " + houndsploit_path + "fixed_hound_db.sqlite3 " + houndsploit_path + "hound_db.sqlite3", shell=True)
-    add_new_exploits_to_db(exploitdb_path, fixed_exploitdb_path)
+    add_new_exploits_to_db(exploitdb_path, houndsploit_path)
 
 
-def add_new_exploits_to_db(exploitdb_path, fixed_exploitdb_path)
-    diff_output = subprocess.check_output("diff " + houndsploit_path + "files_exploits.csv " + houndsploit_path + "old_files_exploits.csv", shell=True)
-    # TODO incomplete
+def add_new_exploits_to_db(exploitdb_path, houndsploit_path):
+    bash_command = "diff " + exploitdb_path + "files_exploits.csv " + houndsploit_path + "old_files_exploits.csv"
+    process = subprocess.Popen(bash_command.split(), stdout=subprocess.PIPE)
+    output, error = process.communicate()
+    exploit_diff = output.decode("utf-8")
+    print(exploit_diff)
+    # TODO complete function

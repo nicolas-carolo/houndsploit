@@ -66,8 +66,8 @@ def store_copy_previous_csv_files():
     else:
         exploitdb_path = os.path.expanduser("~") + "/.HoundSploit/exploitdb/"
         houndsploit_path = os.path.expanduser("~") + "/.HoundSploit/"
-    subprocess.check_output("cp " + exploitdb_path + "files_shellcodes.csv " + houndsploit_path + "old_file_shellcodes.csv", shell=True)
-    subprocess.check_output("cp " + exploitdb_path + "files_exploits.csv " + houndsploit_path + "old_file_exploits.csv", shell=True)
+    subprocess.check_output("cp " + exploitdb_path + "files_shellcodes.csv " + houndsploit_path + "old_files_shellcodes.csv", shell=True)
+    subprocess.check_output("cp " + exploitdb_path + "files_exploits.csv " + houndsploit_path + "old_files_exploits.csv", shell=True)
 
 
 def store_copy_previous_db_file():
