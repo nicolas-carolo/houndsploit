@@ -10,6 +10,8 @@ def install_updates():
     Run the script for making the pull of HoundSploit and exploitdb repositories.
     This script also manages the necessary files for hsploit.
     """
+    store_copy_previous_csv_files()
+    store_copy_previous_db_file()
     if platform.system() == "Windows":
         installer_path = os.path.expanduser("~") + "\.HoundSploit\houndsploit\\"
     else:
@@ -55,3 +57,22 @@ def get_latest_db_update_date():
     else:
         date_latest_db_update = int(date_latest_db_update.decode("utf-8"))
     return time.strftime('%Y-%m-%d', time.localtime(date_latest_db_update))
+
+
+def store_copy_previous_csv_files():
+    if platform.system() == "Windows":
+        exploitdb_path = os.path.expanduser("~") + "\.HoundSploit\exploitdb\\"
+        houndsploit_path = os.path.expanduser("~") + "\.HoundSploit\\"
+    else:
+        exploitdb_path = os.path.expanduser("~") + "/.HoundSploit/exploitdb/"
+        houndsploit_path = os.path.expanduser("~") + "/.HoundSploit/"
+    subprocess.check_output("cp " + exploitdb_path + "files_shellcodes.csv " + houndsploit_path + "old_file_shellcodes.csv", shell=True)
+    subprocess.check_output("cp " + exploitdb_path + "files_exploits.csv " + houndsploit_path + "old_file_exploits.csv", shell=True)
+
+
+def store_copy_previous_db_file():
+    if platform.system() == "Windows":
+        houndsploit_path = os.path.expanduser("~") + "\.HoundSploit\\"
+    else:
+        houndsploit_path = os.path.expanduser("~") + "/.HoundSploit/"
+    subprocess.check_output("cp " + houndsploit_path + "hound_db.sqlite3 " + houndsploit_path + "fixed_hound_db.sqlite3", shell=True)

@@ -36,8 +36,10 @@ def main():
             print("\tPS> rm " + init_path + "\houndsploit_sw.lock")
             print("\tPS> houndsploit")
             exit(1)
-        if not os.path.isfile(init_path + "\hound_db.sqlite3"):
+        if not os.path.isfile(init_path + "\hound_db.sqlite3") and not os.path.isdir(init_path + "\\fixed_exploitdb"):
             create_db()
+        elif not os.path.isfile(init_path + "\hound_db.sqlite3") and os.path.isdir(init_path + "\\fixed_exploitdb"):
+            create_fixed_db()
     else:
         init_path = os.path.expanduser("~") + "/.HoundSploit"
         if not path.exists(init_path):
@@ -50,8 +52,10 @@ def main():
             print("\t$ rm " + init_path + "/houndsploit_sw.lock")
             print("\t$ houndsploit")
             exit(1)
-        if not os.path.isfile(init_path + "/hound_db.sqlite3"):
+        if not os.path.isfile(init_path + "/hound_db.sqlite3") and not os.path.isdir(init_path + "/fixed_exploitdb"):
             create_db()
+        elif not os.path.isfile(init_path + "/hound_db.sqlite3") and os.path.isdir(init_path + "/fixed_exploitdb"):
+            create_fixed_db()
     start_app()
 
 

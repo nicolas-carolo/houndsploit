@@ -37,6 +37,7 @@ def fix_known_dates():
         exploits_path = exploitdb_path_dst + "/files_exploits.csv"
         shellcodes_path = exploitdb_path_dst + "/files_shellcodes.csv"
 
+    # TODO download old commit only if the folder does not exists
     copy_tree(exploitdb_path_src, exploitdb_path_dst)
     subprocess.check_output("git -C " + exploitdb_path_dst + " checkout " + last_exploitdb_commit, shell=True)
 
@@ -108,3 +109,21 @@ def fix_unknown_dates():
         except AttributeError:
             print("ERROR: Shellcode", shellcode.id)
     session.close()
+
+
+def create_fixed_db():
+    if platform.system() == "Windows":
+        houndsploit_path = os.path.expanduser("~") + "\.HoundSploit\\"
+        exploitdb_path = os.path.expanduser("~") + "\.HoundSploit\\exploitdb\\"
+        fixed_exploitdb_path = os.path.expanduser("~") + "\.HoundSploit\\fixed_exploitdb\\"
+    else:
+        houndsploit_path = os.path.expanduser("~") + "/.HoundSploit/"
+        exploitdb_path = os.path.expanduser("~") + "/.HoundSploit/exploitdb/"
+        fixed_exploitdb_path = os.path.expanduser("~") + "/.HoundSploit/fixed_exploitdb/"
+    subprocess.check_output("cp " + houndsploit_path + "fixed_hound_db.sqlite3 " + houndsploit_path + "hound_db.sqlite3", shell=True)
+    add_new_exploits_to_db(exploitdb_path, fixed_exploitdb_path)
+
+
+def add_new_exploits_to_db(exploitdb_path, fixed_exploitdb_path)
+    diff_output = subprocess.check_output("diff " + houndsploit_path + "files_exploits.csv " + houndsploit_path + "old_files_exploits.csv", shell=True)
+    # TODO incomplete
