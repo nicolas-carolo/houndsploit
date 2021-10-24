@@ -10,7 +10,6 @@ from HoundSploit.searcher.db_manager.result_set import queryset2list
 
 last_exploitdb_commit = "23acd8a13b7a871e735016897c7a9e7b0ac33448"
 exploitdb_url = "https://www.exploit-db.com/exploits/"
-# date_pattern = "<h6 class=\"stats-title\">(.*?)</h6>"
 date_pattern = "<meta property=\"article:published_time\" content=\"(.*?)\" />"
 
 
@@ -123,9 +122,21 @@ def create_fixed_db():
 
 
 def add_new_exploits_to_db(exploitdb_path, houndsploit_path):
-    bash_command = "diff " + exploitdb_path + "files_exploits.csv " + houndsploit_path + "old_files_exploits.csv"
-    process = subprocess.Popen(bash_command.split(), stdout=subprocess.PIPE)
-    output, error = process.communicate()
+    """
+    bash_command_1 = "diff " + exploitdb_path + "files_exploits.csv " + houndsploit_path + "old_files_exploits.csv"
+    bash_command_2 = "grep '[<>]'"
+    p1 = subprocess.Popen(bash_command_1.split(), stdout=subprocess.PIPE)
+    p2 = subprocess.Popen(bash_command_2.split(), stdin=p1.stdout, stdout=subprocess.PIPE)
+    output, error = p2.communicate()
     exploit_diff = output.decode("utf-8")
-    print(exploit_diff)
+    """
+    with open(houndsploit_path + "old_files_exploits.csv", 'r') as t1, open(exploitdb_path + "files_exploits.csv", 'r') as t2:
+        fileone = t1.readlines()
+        filetwo = t2.readlines()
+
+    for line in filetwo:
+        if line not in fileone:
+            print(line)
+
+    # print(exploit_diff)
     # TODO complete function
