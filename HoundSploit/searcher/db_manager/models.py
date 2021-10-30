@@ -27,6 +27,17 @@ class Exploit(Base):
 
     def __ne__(self, other):
         return not self.__eq__(other)
+    
+
+    def __init__(self, id, file, description, date, author, exploit_type, platform, port):
+        self.id = id
+        self.file = file
+        self.description = description
+        self.date = date
+        self.author = author
+        self.type = exploit_type
+        self.platform = platform
+        self.port = port
 
 
 class Shellcode(Base):
