@@ -9,19 +9,11 @@ from HoundSploit.searcher.db_manager.models import Exploit, Shellcode
 from HoundSploit.searcher.db_manager.session_manager import start_session
 from HoundSploit.searcher.db_manager.result_set import queryset2list
 
+
 last_exploitdb_commit = "23acd8a13b7a871e735016897c7a9e7b0ac33448"
 exploitdb_url = "https://www.exploit-db.com/exploits/"
+shellcodedb_url = "https://www.exploit-db.com/shellcodes/"
 date_pattern = "<meta property=\"article:published_time\" content=\"(.*?)\" />"
-
-
-shellcode_dates_dict = {
-    '50291': "2021-09-13",
-    '50368': "2021-10-01",
-    '49756': "1970-01-01",
-    '49756': "2021-04-09",
-    '50369': "2021-10-01",
-    '50384': "2021-10-07"
-}
 
 
 def fix_dates():
@@ -85,15 +77,11 @@ def fix_unknown_dates():
     for exploit in exploits_list:
         exploit_url = exploitdb_url + exploit.id
         print(exploit_url)
-
         try:
             time.sleep(0.05)
             bash_command = "curl " + exploit_url
-            # print(bash_command)
             process = subprocess.Popen(bash_command.split(), stdout=subprocess.PIPE)
             output, error = process.communicate()
-            # print(output)
-
             page_source = output.decode("utf-8")
             exploit_date = re.search(date_pattern, page_source).group(1)
             edited_exploit = session.query(Exploit).get(exploit.id)
@@ -106,14 +94,20 @@ def fix_unknown_dates():
     queryset = session.query(Shellcode).filter(Shellcode.date == '1970-01-01')
     shellcodes_list = queryset2list(queryset)
     for shellcode in shellcodes_list:
+        shellcode_url = shellcodedb_url + shellcode.id
+        print(shellcode_url)
         try:
+            time.sleep(0.05)
+            bash_command = "curl " + shellcode_url
+            process = subprocess.Popen(bash_command.split(), stdout=subprocess.PIPE)
+            output, error = process.communicate()
+            page_source = output.decode("utf-8")
+            shellcode_date = re.search(date_pattern, page_source).group(1)
             edited_shellcode = session.query(Shellcode).get(shellcode.id)
-            edited_shellcode.date = shellcode_dates_dict[shellcode.id]
+            edited_shellcode.date = str(shellcode_date)
             session.commit()
             print("FIXED: Shellcode", shellcode.id, shellcode.date)
         except AttributeError:
-            print("ERROR: Shellcode", shellcode.id)
-        except KeyError:
             print("ERROR: Shellcode", shellcode.id)
     session.close()
 
@@ -127,6 +121,7 @@ def create_fixed_db():
         exploitdb_path = os.path.expanduser("~") + "/.HoundSploit/exploitdb/"
     subprocess.check_output("cp " + houndsploit_path + "fixed_hound_db.sqlite3 " + houndsploit_path + "hound_db.sqlite3", shell=True)
     add_new_exploits_to_db(exploitdb_path, houndsploit_path)
+    add_new_shellcodes_to_db(exploitdb_path, houndsploit_path)
     fix_unknown_dates()
 
 
@@ -181,5 +176,57 @@ def add_new_exploits_to_db(exploitdb_path, houndsploit_path):
                 edited_exploit.type = exploit_dict['type']
                 edited_exploit.platform = exploit_dict['platform']
                 edited_exploit.port = exploit_dict['port']
+            session.commit()
+            session.close()
+
+
+def add_new_shellcodes_to_db(exploitdb_path, houndsploit_path):
+    with open(houndsploit_path + "old_files_shellcodes.csv", 'r') as t1, open(exploitdb_path + "files_shellcodes.csv", 'r') as t2:
+        fileone = t1.readlines()
+        filetwo = t2.readlines()
+    
+    session = start_session()
+
+    for line in filetwo:
+        if line not in fileone:
+            print(line)
+            line = str(line).replace("\"", "")
+            splitted_line = str(line).split(",")
+            try:
+                shellcode_dict = {
+                    'id': splitted_line[0],
+                    'file': splitted_line[1],
+                    'description': splitted_line[2],
+                    'date': splitted_line[3],
+                    'author': splitted_line[4],
+                    'type': splitted_line[5],
+                    'platform': splitted_line[6]
+                }
+            except IndexError:
+               shellcode_dict = {
+                    'id': splitted_line[0],
+                    'file': splitted_line[1],
+                    'description': splitted_line[2],
+                    'date': splitted_line[3],
+                    'author': splitted_line[4],
+                    'type': splitted_line[5],
+                    'platform': splitted_line[6]
+                } 
+            queryset = session.query(Shellcode).filter(Shellcode.id == shellcode_dict['id'])
+            results_list = queryset2list(queryset)
+            if len(results_list) == 0:
+                new_shellcode = Shellcode(shellcode_dict['id'], shellcode_dict['file'],
+                                shellcode_dict['description'], shellcode_dict['date'],
+                                shellcode_dict['author'], shellcode_dict['type'],
+                                shellcode_dict['platform'])
+                session.add(new_shellcode)
+            else:
+                edited_shellcode = session.query(Shellcode).get(shellcode_dict['id'])
+                edited_shellcode.file = shellcode_dict['file']
+                edited_shellcode.description = shellcode_dict['description']
+                edited_shellcode.date = shellcode_dict['date']
+                edited_shellcode.author = shellcode_dict['author']
+                edited_shellcode.type = shellcode_dict['type']
+                edited_shellcode.platform = shellcode_dict['platform']
             session.commit()
             session.close()
