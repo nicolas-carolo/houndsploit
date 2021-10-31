@@ -17,7 +17,7 @@ date_pattern = "<meta property=\"article:published_time\" content=\"(.*?)\" />"
 
 
 def fix_dates():
-    #fix_known_dates()
+    fix_known_dates()
     fix_unknown_dates()
 
 
@@ -33,7 +33,6 @@ def fix_known_dates():
         exploits_path = exploitdb_path_dst + "/files_exploits.csv"
         shellcodes_path = exploitdb_path_dst + "/files_shellcodes.csv"
 
-    # TODO download old commit only if the folder does not exists
     copy_tree(exploitdb_path_src, exploitdb_path_dst)
     subprocess.check_output("git -C " + exploitdb_path_dst + " checkout " + last_exploitdb_commit, shell=True)
 
