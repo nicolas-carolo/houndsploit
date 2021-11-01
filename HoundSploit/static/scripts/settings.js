@@ -11,12 +11,12 @@ function savePreferences() {
     if (new_db == current_db) {
         alert("Your preferences have been updated");
         location.reload();
-    } else if (new_db = "fixed-dates" && current_db == "exploitdb") {
-        alert("Your preferences have been updated. Building the new database can take a while. You can follow the progress of the process from the terminal window ");
-        location.href = "/fix-dates"
-    } else {
-        alert("Restore original ExploitDB database (to be implemented)");
-        location.reload();
+    } else if (new_db == "fixed-dates" && current_db != new_db) {
+        alert("Your preferences have been updated. Building the new database can take a while. You can follow the progress of the process from the terminal window");
+        location.href = "/fix-dates";
+    } else if (new_db == "exploitdb" && current_db != new_db) {
+        alert("Your preferences have been updated. Restoring the original ExploitDB database");
+        location.href = "/restore-exploitdb";
     }
     
 }

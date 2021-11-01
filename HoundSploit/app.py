@@ -1,4 +1,5 @@
 import os
+import shutil
 import sys
 import datetime
 import platform
@@ -626,10 +627,27 @@ def remove_bookmark_shellcode():
 
 
 @app.route('/fix-dates')
-def repair():
+def repair_dates():
 
     print("Starting fix")
     fix_dates()
+    print("Ending fix")
+    return render_template('settings.html', latest_db_update=get_latest_db_update_date(), db_update_alert=False,
+                            sw_update_alert=False, no_updates_alert=False)
+
+
+@app.route('/restore-exploitdb')
+def restore_exploitdb():
+    print("Starting fix")
+    if platform.system == "Windows":
+        fixed_exploitdb_path = init_path + "\\fixed_exploitdb"
+        db_path = init_path + "\\hound_db.sqlite3"
+    else:
+        fixed_exploitdb_path = init_path + "/fixed_exploitdb"
+        db_path = init_path + "/hound_db.sqlite3"
+    shutil.rmtree(fixed_exploitdb_path)
+    os.remove(db_path)
+    create_db()
     print("Ending fix")
     return render_template('settings.html', latest_db_update=get_latest_db_update_date(), db_update_alert=False,
                             sw_update_alert=False, no_updates_alert=False)
