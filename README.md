@@ -101,6 +101,7 @@ You can choose to use the Light or the Dark theme
 * Python 3
 * SQLite 3
 * git
+* curl
 
 
 ## INSTALLATION

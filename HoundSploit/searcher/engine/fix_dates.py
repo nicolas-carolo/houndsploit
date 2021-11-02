@@ -34,7 +34,6 @@ def fix_known_dates():
         exploits_path = exploitdb_path_dst + "/files_exploits.csv"
         shellcodes_path = exploitdb_path_dst + "/files_shellcodes.csv"
 
-    print(exploitdb_path_src, exploitdb_path_dst)
     try:
         copy_tree(exploitdb_path_src, exploitdb_path_dst)
         subprocess.check_output("git -C " + exploitdb_path_dst + " checkout " + last_exploitdb_commit, shell=True)
