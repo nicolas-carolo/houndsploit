@@ -1,8 +1,9 @@
 import subprocess
-from datetime import datetime
+import shutil
 import os
 import platform
 import time
+from datetime import datetime
 
 
 def install_updates():
@@ -61,18 +62,21 @@ def get_latest_db_update_date():
 
 def store_copy_previous_csv_files():
     if platform.system() == "Windows":
-        exploitdb_path = os.path.expanduser("~") + "\.HoundSploit\exploitdb\\"
-        houndsploit_path = os.path.expanduser("~") + "\.HoundSploit\\"
+        exploitdb_path = os.path.expanduser("~") + "\\.HoundSploit\exploitdb\\"
+        houndsploit_path = os.path.expanduser("~") + "\\.HoundSploit\\"
     else:
         exploitdb_path = os.path.expanduser("~") + "/.HoundSploit/exploitdb/"
         houndsploit_path = os.path.expanduser("~") + "/.HoundSploit/"
-    subprocess.check_output("cp " + exploitdb_path + "files_shellcodes.csv " + houndsploit_path + "old_files_shellcodes.csv", shell=True)
-    subprocess.check_output("cp " + exploitdb_path + "files_exploits.csv " + houndsploit_path + "old_files_exploits.csv", shell=True)
+    # subprocess.check_output("cp " + exploitdb_path + "files_shellcodes.csv " + houndsploit_path + "old_files_shellcodes.csv", shell=True)
+    shutil.copyfile(exploitdb_path + "files_shellcodes.csv", houndsploit_path + "old_files_shellcodes.csv")
+    # subprocess.check_output("cp " + exploitdb_path + "files_exploits.csv " + houndsploit_path + "old_files_exploits.csv", shell=True)
+    shutil.copyfile(exploitdb_path + "files_exploits.csv", houndsploit_path + "old_files_exploits.csv")
 
 
 def store_copy_previous_db_file():
     if platform.system() == "Windows":
-        houndsploit_path = os.path.expanduser("~") + "\.HoundSploit\\"
+        houndsploit_path = os.path.expanduser("~") + "\\.HoundSploit\\"
     else:
         houndsploit_path = os.path.expanduser("~") + "/.HoundSploit/"
-    subprocess.check_output("cp " + houndsploit_path + "hound_db.sqlite3 " + houndsploit_path + "fixed_hound_db.sqlite3", shell=True)
+    # subprocess.check_output("cp " + houndsploit_path + "hound_db.sqlite3 " + houndsploit_path + "fixed_hound_db.sqlite3", shell=True)
+    shutil.copyfile(houndsploit_path + "hound_db.sqlite3", houndsploit_path + "fixed_hound_db.sqlite3")

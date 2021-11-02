@@ -15,7 +15,7 @@ if (-not (Test-Path $HOUNDSPLOIT_PATH\exploitdb)) {
     if ($gitOutput -eq "Already up to date.") {
         Write-Host "Database already up-to-date"
     } else {
-        if (-not (Test-Path $HOUNDSPLOIT_PATH\hound_db.sqlite3)) {
+        if (Test-Path $HOUNDSPLOIT_PATH\hound_db.sqlite3) {
             rm $HOUNDSPLOIT_PATH\hound_db.sqlite3
         }
         New-Item $HOUNDSPLOIT_PATH\houndsploit_db.lock

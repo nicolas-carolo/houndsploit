@@ -4,6 +4,7 @@ import platform
 import csv
 import re
 import time
+import shutil
 from distutils.dir_util import copy_tree
 from HoundSploit.searcher.db_manager.models import Exploit, Shellcode
 from HoundSploit.searcher.db_manager.session_manager import start_session
@@ -23,8 +24,8 @@ def fix_dates():
 
 def fix_known_dates():
     if platform.system() == "Windows":
-        exploitdb_path_src = os.path.expanduser("~") + "\.HoundSploit\exploitdb"
-        exploitdb_path_dst = os.path.expanduser("~") + "\.HoundSploit\\fixed_exploitdb"
+        exploitdb_path_src = os.path.expanduser("~") + "\\.HoundSploit\\exploitdb"
+        exploitdb_path_dst = os.path.expanduser("~") + "\\.HoundSploit\\fixed_exploitdb"
         exploits_path = exploitdb_path_dst + "\\files_exploits.csv"
         shellcodes_path = exploitdb_path_dst + "\\files_shellcodes.csv"
     else:
@@ -33,8 +34,13 @@ def fix_known_dates():
         exploits_path = exploitdb_path_dst + "/files_exploits.csv"
         shellcodes_path = exploitdb_path_dst + "/files_shellcodes.csv"
 
-    copy_tree(exploitdb_path_src, exploitdb_path_dst)
-    subprocess.check_output("git -C " + exploitdb_path_dst + " checkout " + last_exploitdb_commit, shell=True)
+    print(exploitdb_path_src, exploitdb_path_dst)
+    try:
+        copy_tree(exploitdb_path_src, exploitdb_path_dst)
+        subprocess.check_output("git -C " + exploitdb_path_dst + " checkout " + last_exploitdb_commit, shell=True)
+    except:
+        # TODO Fix for Windows
+        pass
 
     with open(exploits_path, 'r', encoding="utf8") as fin:
         dr = csv.DictReader(fin)
@@ -113,19 +119,20 @@ def fix_unknown_dates():
 
 def create_fixed_db():
     if platform.system() == "Windows":
-        houndsploit_path = os.path.expanduser("~") + "\.HoundSploit\\"
-        exploitdb_path = os.path.expanduser("~") + "\.HoundSploit\\exploitdb\\"
+        houndsploit_path = os.path.expanduser("~") + "\\.HoundSploit\\"
+        exploitdb_path = os.path.expanduser("~") + "\\.HoundSploit\\exploitdb\\"
     else:
         houndsploit_path = os.path.expanduser("~") + "/.HoundSploit/"
         exploitdb_path = os.path.expanduser("~") + "/.HoundSploit/exploitdb/"
-    subprocess.check_output("cp " + houndsploit_path + "fixed_hound_db.sqlite3 " + houndsploit_path + "hound_db.sqlite3", shell=True)
+    # subprocess.check_output("cp " + houndsploit_path + "fixed_hound_db.sqlite3 " + houndsploit_path + "hound_db.sqlite3", shell=True)
+    shutil.copyfile(houndsploit_path + "fixed_hound_db.sqlite3", houndsploit_path + "hound_db.sqlite3")
     add_new_exploits_to_db(exploitdb_path, houndsploit_path)
     add_new_shellcodes_to_db(exploitdb_path, houndsploit_path)
     fix_unknown_dates()
 
 
 def add_new_exploits_to_db(exploitdb_path, houndsploit_path):
-    with open(houndsploit_path + "old_files_exploits.csv", 'r') as t1, open(exploitdb_path + "files_exploits.csv", 'r') as t2:
+    with open(houndsploit_path + "old_files_exploits.csv", 'r', encoding="utf8") as t1, open(exploitdb_path + "files_exploits.csv", 'r', encoding="utf8") as t2:
         fileone = t1.readlines()
         filetwo = t2.readlines()
     
