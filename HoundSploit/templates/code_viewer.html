@@ -57,7 +57,7 @@
                 <th>Platform:</th>
                 <td>{{ vulnerability_platform }}</td>
             </tr>
-            {% if vulnerability_port %}
+            {% if vulnerability_port and vulnerability_port != "" %}
                 <tr>
                     <th>Port:</th>
                     <td>{{ vulnerability_port }}</td>

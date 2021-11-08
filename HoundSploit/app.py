@@ -16,7 +16,7 @@ from HoundSploit.searcher.engine.utils import check_file_existence, get_vulnerab
 from HoundSploit.searcher.engine.csv2sqlite import create_db
 from HoundSploit.searcher.engine.sorter import sort_results
 from HoundSploit.searcher.engine.bookmarks import new_bookmark, is_bookmarked, remove_bookmark, get_bookmarks_list
-from HoundSploit.searcher.engine.fix_dates import fix_dates
+from HoundSploit.searcher.engine.fix_dates import fix_dates, create_fixed_db
 from shutil import copyfile
 
 
@@ -28,10 +28,10 @@ else:
     init_path = os.path.expanduser("~") + "/.HoundSploit"
     # template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
     # static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
-    # template_dir = '/Users/nicolas/Projects/Python/houndsploit/HoundSploit/templates'
-    # static_folder = '/Users/nicolas/Projects/Python/houndsploit/HoundSploit/static'
-    template_dir = '/home/nicolas/Projects/Python/houndsploit/HoundSploit/templates'
-    static_folder = '/home/nicolas/Projects/Python/houndsploit/HoundSploit/static'
+    template_dir = '/Users/nicolas/Projects/Python/houndsploit/HoundSploit/templates'
+    static_folder = '/Users/nicolas/Projects/Python/houndsploit/HoundSploit/static'
+    # template_dir = '/home/nicolas/Projects/Python/houndsploit/HoundSploit/templates'
+    # static_folder = '/home/nicolas/Projects/Python/houndsploit/HoundSploit/static'
     # template_dir = 'C:\\Users\\Nicolas\\Projects\\Python\\houndsploit\\HoundSploit\\templates'
     # static_folder = 'C:\\Users\\Nicolas\\Projects\\Python\\houndsploit\\HoundSploit\static'
 app = Flask(__name__, template_folder=template_dir, static_folder=static_folder)
@@ -386,9 +386,11 @@ def get_updates():
     """
     install_updates()
     if check_file_existence(init_path + "/houndsploit_db.lock"):
-        if check_file_existence(init_path + "/hound_db.sqlite3"):
+        if check_file_existence(init_path + "/hound_db.sqlite3") and not os.path.isdir(init_path + "/fixed_exploitdb"):
             os.remove(init_path + "/hound_db.sqlite3")
-        create_db()
+            create_db()
+        elif check_file_existence(init_path + "/hound_db.sqlite3") and os.path.isdir(init_path + "/fixed_exploitdb"):
+            create_fixed_db()
         db_update_alert = True
     else:
         db_update_alert = False
@@ -630,7 +632,6 @@ def remove_bookmark_shellcode():
 
 @app.route('/fix-dates')
 def repair_dates():
-
     print("Starting fix")
     fix_dates()
     print("Ending fix")
