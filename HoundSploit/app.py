@@ -386,11 +386,12 @@ def get_updates():
     """
     install_updates()
     if check_file_existence(init_path + "/houndsploit_db.lock"):
-        if check_file_existence(init_path + "/hound_db.sqlite3") and not os.path.isdir(init_path + "/fixed_exploitdb"):
-            os.remove(init_path + "/hound_db.sqlite3")
-            create_db()
-        elif check_file_existence(init_path + "/hound_db.sqlite3") and os.path.isdir(init_path + "/fixed_exploitdb"):
+        if os.path.isdir(init_path + "/fixed_exploitdb"):
             create_fixed_db()
+        else:
+            if check_file_existence(init_path + "/hound_db.sqlite3"):
+                os.remove(init_path + "/hound_db.sqlite3")
+            create_db()
         db_update_alert = True
     else:
         db_update_alert = False
