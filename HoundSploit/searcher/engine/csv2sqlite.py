@@ -1,7 +1,6 @@
 import csv
 import sqlite3
 import os
-import platform
 from HoundSploit.searcher.engine.utils import check_file_existence
 
 
@@ -9,12 +8,8 @@ def create_db():
     """
     Create the database used by HoundSploit and hsploit
     """
-    if platform.system == "Windows":
-        init_path = os.path.expanduser("~") + "\.HoundSploit"
-        db_path = init_path + "\hound_db.sqlite3"
-    else:
-        init_path = os.path.expanduser("~") + "/.HoundSploit"
-        db_path = init_path + "/hound_db.sqlite3"
+    init_path = os.path.abspath(os.path.expanduser("~") + "/.HoundSploit")
+    db_path = os.path.abspath(init_path + "/hound_db.sqlite3")
     con = sqlite3.connect(db_path)
     cur = con.cursor()
 
@@ -33,19 +28,13 @@ def create_db():
     cur.executemany("INSERT INTO searcher_shellcode (id, file, description, date, author, type, platform) VALUES (?, ?, ?, ?, ?, ?, ?);", to_db)
 
     cur.execute("CREATE TABLE searcher_suggestion (searched, suggestion, autoreplacement);")
-    if platform.system == "Windows":
-        suggestions_path = init_path + "\houndsploit\csv\\files_suggestions.csv"
-    else:
-        suggestions_path = init_path + "/houndsploit/csv/files_suggestions.csv"
+    suggestions_path = os.path.abspath(init_path + "/houndsploit/csv/files_suggestions.csv")
     with open(suggestions_path, 'r', encoding="utf8") as fin:
         dr = csv.DictReader(fin)
         to_db = [(i['searched'], i['suggestion'], i['autoreplacement']) for i in dr]
     cur.executemany("INSERT INTO searcher_suggestion (searched, suggestion, autoreplacement) VALUES (?, ?, ?);", to_db)
 
-    if platform.system == "Windows":
-        custom_suggestions_path = init_path + "\custom_suggestions.csv"
-    else:
-        custom_suggestions_path = init_path + "/custom_suggestions.csv"
+    custom_suggestions_path = os.path.abspath(init_path + "/custom_suggestions.csv")
     if check_file_existence(custom_suggestions_path):
         with open(custom_suggestions_path, 'r', encoding="utf8") as fin:
             dr = csv.DictReader(fin)
@@ -53,10 +42,7 @@ def create_db():
         cur.executemany("INSERT INTO searcher_suggestion (searched, suggestion, autoreplacement) VALUES (?, ?, ?);", to_db)
 
     cur.execute("CREATE TABLE searcher_bookmark (vulnerability_id, vulnerability_class, date);")
-    if platform.system == "Windows":
-        custom_bookmarks_path = init_path + "\\bookmarks.csv"
-    else:
-        custom_bookmarks_path = init_path + "/bookmarks.csv"
+    custom_bookmarks_path = os.path.abspath(init_path + "/bookmarks.csv")
     if check_file_existence(custom_bookmarks_path):
         with open(custom_bookmarks_path, 'r', encoding="utf8") as fin:
             dr = csv.DictReader(fin)
@@ -67,13 +53,8 @@ def create_db():
     con.close()
 
     try:
-        if platform.system == "Windows":
-            f = open(os.path.expanduser("~") + "\.HoundSploit\houndsploit_db.lock")
-            f.close()
-            os.remove(os.path.expanduser("~") + "\.HoundSploit\houndsploit_db.lock")
-        else:
-            f = open(os.path.expanduser("~") + "/.HoundSploit/houndsploit_db.lock")
-            f.close()
-            os.remove(os.path.expanduser("~") + "/.HoundSploit/houndsploit_db.lock")
+        f = open(os.path.abspath(init_path + "/.HoundSploit/houndsploit_db.lock"))
+        f.close()
+        os.remove(os.path.abspath(init_path + "/.HoundSploit/houndsploit_db.lock"))
     except IOError:
         pass

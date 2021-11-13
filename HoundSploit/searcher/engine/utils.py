@@ -52,3 +52,4 @@ def check_vulnerability_existence(vulnerability_id, vulnerability_class):
     else:
         session.close()
         return True
+

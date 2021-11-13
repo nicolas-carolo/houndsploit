@@ -6,6 +6,9 @@ import time
 from datetime import datetime
 
 
+init_path = os.path.expanduser("~")
+
+
 def install_updates():
     """
     Run the script for making the pull of HoundSploit and exploitdb repositories.
@@ -61,12 +64,8 @@ def get_latest_db_update_date():
 
 
 def store_copy_previous_csv_files():
-    if platform.system() == "Windows":
-        exploitdb_path = os.path.expanduser("~") + "\\.HoundSploit\exploitdb\\"
-        houndsploit_path = os.path.expanduser("~") + "\\.HoundSploit\\"
-    else:
-        exploitdb_path = os.path.expanduser("~") + "/.HoundSploit/exploitdb/"
-        houndsploit_path = os.path.expanduser("~") + "/.HoundSploit/"
+    exploitdb_path = os.path.abspath(init_path + "/.HoundSploit/exploitdb/")
+    houndsploit_path = os.path.abspath(init_path + "/.HoundSploit/")
     # subprocess.check_output("cp " + exploitdb_path + "files_shellcodes.csv " + houndsploit_path + "old_files_shellcodes.csv", shell=True)
     shutil.copyfile(exploitdb_path + "files_shellcodes.csv", houndsploit_path + "old_files_shellcodes.csv")
     # subprocess.check_output("cp " + exploitdb_path + "files_exploits.csv " + houndsploit_path + "old_files_exploits.csv", shell=True)
@@ -74,9 +73,6 @@ def store_copy_previous_csv_files():
 
 
 def store_copy_previous_db_file():
-    if platform.system() == "Windows":
-        houndsploit_path = os.path.expanduser("~") + "\\.HoundSploit\\"
-    else:
-        houndsploit_path = os.path.expanduser("~") + "/.HoundSploit/"
+    houndsploit_path = os.path.abspath(init_path + "/.HoundSploit/")
     # subprocess.check_output("cp " + houndsploit_path + "hound_db.sqlite3 " + houndsploit_path + "fixed_hound_db.sqlite3", shell=True)
     shutil.copyfile(houndsploit_path + "hound_db.sqlite3", houndsploit_path + "fixed_hound_db.sqlite3")

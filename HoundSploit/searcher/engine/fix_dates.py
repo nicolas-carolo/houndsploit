@@ -1,6 +1,5 @@
 import subprocess
 import os
-import platform
 import csv
 import re
 import time
@@ -11,6 +10,7 @@ from HoundSploit.searcher.db_manager.session_manager import start_session
 from HoundSploit.searcher.db_manager.result_set import queryset2list
 
 
+init_path = os.path.expanduser("~")
 last_exploitdb_commit = "23acd8a13b7a871e735016897c7a9e7b0ac33448"
 exploitdb_url = "https://www.exploit-db.com/exploits/"
 shellcodedb_url = "https://www.exploit-db.com/shellcodes/"
@@ -23,16 +23,10 @@ def fix_dates():
 
 
 def fix_known_dates():
-    if platform.system() == "Windows":
-        exploitdb_path_src = os.path.expanduser("~") + "\\.HoundSploit\\exploitdb"
-        exploitdb_path_dst = os.path.expanduser("~") + "\\.HoundSploit\\fixed_exploitdb"
-        exploits_path = exploitdb_path_dst + "\\files_exploits.csv"
-        shellcodes_path = exploitdb_path_dst + "\\files_shellcodes.csv"
-    else:
-        exploitdb_path_src = os.path.expanduser("~") + "/.HoundSploit/exploitdb"
-        exploitdb_path_dst = os.path.expanduser("~") + "/.HoundSploit/fixed_exploitdb"
-        exploits_path = exploitdb_path_dst + "/files_exploits.csv"
-        shellcodes_path = exploitdb_path_dst + "/files_shellcodes.csv"
+    exploitdb_path_src = os.path.abspath(init_path + "/.HoundSploit/exploitdb")
+    exploitdb_path_dst = os.path.abspath(init_path + "/.HoundSploit/fixed_exploitdb")
+    exploits_path = os.path.abspath(exploitdb_path_dst + "/files_exploits.csv")
+    shellcodes_path = os.path.abspath(exploitdb_path_dst + "/files_shellcodes.csv")
 
     try:
         copy_tree(exploitdb_path_src, exploitdb_path_dst)
@@ -117,12 +111,8 @@ def fix_unknown_dates():
 
 
 def create_fixed_db():
-    if platform.system() == "Windows":
-        houndsploit_path = os.path.expanduser("~") + "\\.HoundSploit\\"
-        exploitdb_path = os.path.expanduser("~") + "\\.HoundSploit\\exploitdb\\"
-    else:
-        houndsploit_path = os.path.expanduser("~") + "/.HoundSploit/"
-        exploitdb_path = os.path.expanduser("~") + "/.HoundSploit/exploitdb/"
+    houndsploit_path = os.path.abspath(init_path + "/.HoundSploit/")
+    exploitdb_path = os.path.abspath(init_path + "/.HoundSploit/exploitdb/")
     # subprocess.check_output("cp " + houndsploit_path + "fixed_hound_db.sqlite3 " + houndsploit_path + "hound_db.sqlite3", shell=True)
     shutil.copyfile(houndsploit_path + "fixed_hound_db.sqlite3", houndsploit_path + "hound_db.sqlite3")
     add_new_exploits_to_db(exploitdb_path, houndsploit_path)

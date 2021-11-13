@@ -2,7 +2,6 @@ import os
 import shutil
 import sys
 import datetime
-import platform
 
 from flask import Flask, render_template, request
 from HoundSploit.searcher.engine.search_engine import search_vulnerabilities_in_db, get_exploit_by_id, get_shellcode_by_id,\
@@ -20,20 +19,17 @@ from HoundSploit.searcher.engine.fix_dates import fix_dates, create_fixed_db
 from shutil import copyfile
 
 
-if platform.system == "Windows":
-    init_path = os.path.expanduser("~") + "\\.HoundSploit"
-    template_dir = os.path.abspath(init_path + '\\houndsploit\\HoundSploit\\templates')
-    static_folder = os.path.abspath(init_path + '\\houndsploit\\HoundSploit\\static')
-else:
-    init_path = os.path.expanduser("~") + "/.HoundSploit"
-    # template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
-    # static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
-    template_dir = '/Users/nicolas/Projects/Python/houndsploit/HoundSploit/templates'
-    static_folder = '/Users/nicolas/Projects/Python/houndsploit/HoundSploit/static'
-    # template_dir = '/home/nicolas/Projects/Python/houndsploit/HoundSploit/templates'
-    # static_folder = '/home/nicolas/Projects/Python/houndsploit/HoundSploit/static'
-    # template_dir = 'C:\\Users\\Nicolas\\Projects\\Python\\houndsploit\\HoundSploit\\templates'
-    # static_folder = 'C:\\Users\\Nicolas\\Projects\\Python\\houndsploit\\HoundSploit\static'
+init_path = os.path.abspath(os.path.expanduser("~") + "/.HoundSploit")
+#template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
+#static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
+
+# template_dir = '/Users/nicolas/Projects/Python/houndsploit/HoundSploit/templates'
+# static_folder = '/Users/nicolas/Projects/Python/houndsploit/HoundSploit/static'
+# template_dir = '/home/nicolas/Projects/Python/houndsploit/HoundSploit/templates'
+# static_folder = '/home/nicolas/Projects/Python/houndsploit/HoundSploit/static'
+template_dir = "C:\\Users\\Nicolas\\Projects\\Python\\houndsploit\\HoundSploit\\templates"
+static_folder = "C:\\Users\\Nicolas\\Projects\\Python\\houndsploit\\HoundSploit\\static"
+
 app = Flask(__name__, template_folder=template_dir, static_folder=static_folder)
 
 N_RESULTS_FOR_PAGE = 10
@@ -643,12 +639,8 @@ def repair_dates():
 @app.route('/restore-exploitdb')
 def restore_exploitdb():
     print("Starting fix")
-    if platform.system == "Windows":
-        fixed_exploitdb_path = init_path + "\\fixed_exploitdb"
-        db_path = init_path + "\\hound_db.sqlite3"
-    else:
-        fixed_exploitdb_path = init_path + "/fixed_exploitdb"
-        db_path = init_path + "/hound_db.sqlite3"
+    fixed_exploitdb_path = os.path.abspath(init_path + "/fixed_exploitdb")
+    db_path = os.path.abspath(init_path + "/hound_db.sqlite3")
     shutil.rmtree(fixed_exploitdb_path)
     os.remove(db_path)
     create_db()
