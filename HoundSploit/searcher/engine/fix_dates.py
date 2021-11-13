@@ -111,17 +111,18 @@ def fix_unknown_dates():
 
 
 def create_fixed_db():
-    houndsploit_path = os.path.abspath(init_path + "/.HoundSploit/")
-    exploitdb_path = os.path.abspath(init_path + "/.HoundSploit/exploitdb/")
-    # subprocess.check_output("cp " + houndsploit_path + "fixed_hound_db.sqlite3 " + houndsploit_path + "hound_db.sqlite3", shell=True)
-    shutil.copyfile(houndsploit_path + "fixed_hound_db.sqlite3", houndsploit_path + "hound_db.sqlite3")
+    houndsploit_path = os.path.abspath(init_path + "/.HoundSploit")
+    exploitdb_path = os.path.abspath(init_path + "/.HoundSploit/exploitdb")
+    shutil.copyfile(os.path.abspath(houndsploit_path + "/fixed_hound_db.sqlite3"), os.path.abspath(houndsploit_path + "/hound_db.sqlite3"))
     add_new_exploits_to_db(exploitdb_path, houndsploit_path)
     add_new_shellcodes_to_db(exploitdb_path, houndsploit_path)
     fix_unknown_dates()
 
 
 def add_new_exploits_to_db(exploitdb_path, houndsploit_path):
-    with open(houndsploit_path + "old_files_exploits.csv", 'r', encoding="utf8") as t1, open(exploitdb_path + "files_exploits.csv", 'r', encoding="utf8") as t2:
+    old_exploits_file_path = os.path.abspath(houndsploit_path + "/old_files_exploits.csv")
+    new_exploits_file_path = os.path.abspath(exploitdb_path + "/files_exploits.csv")
+    with open(old_exploits_file_path, 'r', encoding="utf8") as t1, open(new_exploits_file_path, 'r', encoding="utf8") as t2:
         fileone = t1.readlines()
         filetwo = t2.readlines()
     
@@ -176,7 +177,9 @@ def add_new_exploits_to_db(exploitdb_path, houndsploit_path):
 
 
 def add_new_shellcodes_to_db(exploitdb_path, houndsploit_path):
-    with open(houndsploit_path + "old_files_shellcodes.csv", 'r') as t1, open(exploitdb_path + "files_shellcodes.csv", 'r') as t2:
+    old_shellcodes_file_path = os.path.abspath(houndsploit_path + "/old_files_shellcodes.csv")
+    new_shellcodes_file_path = os.path.abspath(exploitdb_path + "/files_shellcodes.csv")
+    with open(old_shellcodes_file_path, 'r') as t1, open(new_shellcodes_file_path, 'r') as t2:
         fileone = t1.readlines()
         filetwo = t2.readlines()
     

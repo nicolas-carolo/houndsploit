@@ -64,15 +64,12 @@ def get_latest_db_update_date():
 
 
 def store_copy_previous_csv_files():
-    exploitdb_path = os.path.abspath(init_path + "/.HoundSploit/exploitdb/")
-    houndsploit_path = os.path.abspath(init_path + "/.HoundSploit/")
-    # subprocess.check_output("cp " + exploitdb_path + "files_shellcodes.csv " + houndsploit_path + "old_files_shellcodes.csv", shell=True)
-    shutil.copyfile(exploitdb_path + "files_shellcodes.csv", houndsploit_path + "old_files_shellcodes.csv")
-    # subprocess.check_output("cp " + exploitdb_path + "files_exploits.csv " + houndsploit_path + "old_files_exploits.csv", shell=True)
-    shutil.copyfile(exploitdb_path + "files_exploits.csv", houndsploit_path + "old_files_exploits.csv")
+    exploitdb_path = os.path.abspath(init_path + "/.HoundSploit/exploitdb")
+    houndsploit_path = os.path.abspath(init_path + "/.HoundSploit")
+    shutil.copyfile(os.path.abspath(exploitdb_path + "/files_shellcodes.csv"), os.path.abspath(houndsploit_path + "/old_files_shellcodes.csv"))
+    shutil.copyfile(exploitdb_path + "/files_exploits.csv", houndsploit_path + "/old_files_exploits.csv")
 
 
 def store_copy_previous_db_file():
-    houndsploit_path = os.path.abspath(init_path + "/.HoundSploit/")
-    # subprocess.check_output("cp " + houndsploit_path + "hound_db.sqlite3 " + houndsploit_path + "fixed_hound_db.sqlite3", shell=True)
-    shutil.copyfile(houndsploit_path + "hound_db.sqlite3", houndsploit_path + "fixed_hound_db.sqlite3")
+    houndsploit_path = os.path.abspath(init_path + "/.HoundSploit")
+    shutil.copyfile(os.path.abspath(houndsploit_path + "/hound_db.sqlite3"), os.path.abspath(houndsploit_path + "/fixed_hound_db.sqlite3"))

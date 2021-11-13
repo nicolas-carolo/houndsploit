@@ -114,10 +114,13 @@ def get_bookmarks_list():
     result_list = queryset2list(queryset)
     for bookmark in result_list:
         if bookmark.vulnerability_class == 'exploit':
+            print(bookmark.vulnerability_id)
             queryset = session.query(Exploit).filter(Exploit.id == bookmark.vulnerability_id)
-            bookmark_item = queryset2list(queryset)[0]
         else:
             queryset = session.query(Shellcode).filter(Shellcode.id == bookmark.vulnerability_id)
+        try:
             bookmark_item = queryset2list(queryset)[0]
-        bookmarks_list.append(bookmark_item)
+            bookmarks_list.append(bookmark_item)
+        except IndexError:
+            pass
     return bookmarks_list
