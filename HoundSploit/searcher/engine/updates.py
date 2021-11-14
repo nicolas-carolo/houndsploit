@@ -16,10 +16,7 @@ def install_updates():
     """
     store_copy_previous_csv_files()
     store_copy_previous_db_file()
-    if platform.system() == "Windows":
-        installer_path = os.path.expanduser("~") + "\.HoundSploit\houndsploit\\"
-    else:
-        installer_path = os.path.expanduser("~") + "/.HoundSploit/houndsploit/"
+    installer_path = os.path.abspath(init_path + "/.HoundSploit/houndsploit/")
     if platform.system() == "Darwin":
         os.system(installer_path + "install_db_darwin.sh")
     elif platform.system() == "Linux":

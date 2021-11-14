@@ -2,6 +2,7 @@ import os
 import shutil
 import sys
 import datetime
+import platform
 
 from flask import Flask, render_template, request
 from HoundSploit.searcher.engine.search_engine import search_vulnerabilities_in_db, get_exploit_by_id, get_shellcode_by_id,\
@@ -23,12 +24,12 @@ init_path = os.path.abspath(os.path.expanduser("~") + "/.HoundSploit")
 #template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
 #static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
 
-template_dir = '/Users/nicolas/Projects/Python/houndsploit/HoundSploit/templates'
-static_folder = '/Users/nicolas/Projects/Python/houndsploit/HoundSploit/static'
+# template_dir = '/Users/nicolas/Projects/Python/houndsploit/HoundSploit/templates'
+# static_folder = '/Users/nicolas/Projects/Python/houndsploit/HoundSploit/static'
 # template_dir = '/home/nicolas/Projects/Python/houndsploit/HoundSploit/templates'
 # static_folder = '/home/nicolas/Projects/Python/houndsploit/HoundSploit/static'
-# template_dir = "C:\\Users\\Nicolas\\Projects\\Python\\houndsploit\\HoundSploit\\templates"
-# static_folder = "C:\\Users\\Nicolas\\Projects\\Python\\houndsploit\\HoundSploit\\static"
+template_dir = "C:\\Users\\Nicolas\\Projects\\Python\\houndsploit\\HoundSploit\\templates"
+static_folder = "C:\\Users\\Nicolas\\Projects\\Python\\houndsploit\\HoundSploit\\static"
 
 app = Flask(__name__, template_folder=template_dir, static_folder=static_folder)
 
@@ -641,8 +642,12 @@ def restore_exploitdb():
     print("Starting fix")
     fixed_exploitdb_path = os.path.abspath(init_path + "/fixed_exploitdb")
     db_path = os.path.abspath(init_path + "/hound_db.sqlite3")
-    shutil.rmtree(fixed_exploitdb_path)
-    os.remove(db_path)
+    if platform.system() == "Windows":
+        script_path = os.path.abspath(init_path + "/.HoundSploit/houndsploit/HoundSploit/scripts/restore_exploitdb.ps1")
+        os.system("powershell.exe -ExecutionPolicy Bypass -File " + script_path)
+    else:
+        shutil.rmtree(fixed_exploitdb_path)
+        os.remove(db_path)
     create_db()
     print("Ending fix")
     return render_template('settings.html', latest_db_update=get_latest_db_update_date(), db_update_alert=False,

@@ -1,5 +1,6 @@
 import subprocess
 import os
+import platform
 import csv
 import re
 import time
@@ -28,12 +29,13 @@ def fix_known_dates():
     exploits_path = os.path.abspath(exploitdb_path_dst + "/files_exploits.csv")
     shellcodes_path = os.path.abspath(exploitdb_path_dst + "/files_shellcodes.csv")
 
-    try:
+    if platform.system() == "Windows":
+        script_path = os.path.abspath(init_path + "/.HoundSploit/houndsploit/HoundSploit/scripts/fix_dates.ps1")
+        os.system("powershell.exe -ExecutionPolicy Bypass -File " + script_path)
+    else:
         copy_tree(exploitdb_path_src, exploitdb_path_dst)
         subprocess.check_output("git -C " + exploitdb_path_dst + " checkout " + last_exploitdb_commit, shell=True)
-    except:
-        # TODO Fix for Windows
-        pass
+
 
     with open(exploits_path, 'r', encoding="utf8") as fin:
         dr = csv.DictReader(fin)
