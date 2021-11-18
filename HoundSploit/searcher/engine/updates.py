@@ -18,11 +18,14 @@ def install_updates():
     store_copy_previous_db_file()
     installer_path = os.path.abspath(init_path + "/.HoundSploit/houndsploit/")
     if platform.system() == "Darwin":
-        os.system(installer_path + "install_db_darwin.sh")
+        installer_path = os.path.abspath(installer_path + "/install_db_darwin.sh")
+        os.system(installer_path)
     elif platform.system() == "Linux":
-        os.system(installer_path + "install_db_linux.sh")
+        installer_path = os.path.abspath(installer_path + "/install_db_linux.sh")
+        os.system(installer_path)
     elif platform.system() == "Windows":
-        os.system("powershell.exe -ExecutionPolicy Bypass -File " + installer_path + "install_db_windows.ps1")
+        installer_path = os.path.abspath(installer_path + "/install_db_windows.ps1")
+        os.system("powershell.exe -ExecutionPolicy Bypass -File " + installer_path)
     else:
         printf("ERROR: System not supported")
 

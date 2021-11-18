@@ -640,18 +640,20 @@ def repair_dates():
 @app.route('/restore-exploitdb')
 def restore_exploitdb():
     print("Starting fix")
-    fixed_exploitdb_path = os.path.abspath(init_path + "/fixed_exploitdb")
-    db_path = os.path.abspath(init_path + "/hound_db.sqlite3")
     if platform.system() == "Windows":
-        script_path = os.path.abspath(init_path + "/.HoundSploit/houndsploit/HoundSploit/scripts/restore_exploitdb.ps1")
+        script_path = os.path.abspath(init_path + "/houndsploit/HoundSploit/scripts/restore_exploitdb.ps1")
         os.system("powershell.exe -ExecutionPolicy Bypass -File " + script_path)
+        print("Ending fix")
+        return render_template('error_page.html', error="Please restart the application server for applying changes!")
     else:
+        fixed_exploitdb_path = os.path.abspath(init_path + "/fixed_exploitdb")
+        db_path = os.path.abspath(init_path + "/hound_db.sqlite3")
         shutil.rmtree(fixed_exploitdb_path)
         os.remove(db_path)
-    create_db()
-    print("Ending fix")
-    return render_template('settings.html', latest_db_update=get_latest_db_update_date(), db_update_alert=False,
-                            sw_update_alert=False, no_updates_alert=False)
+        create_db()
+        print("Ending fix")
+        return render_template('settings.html', latest_db_update=get_latest_db_update_date(), db_update_alert=False,
+                                sw_update_alert=False, no_updates_alert=False)
 
 
 def start_app():
