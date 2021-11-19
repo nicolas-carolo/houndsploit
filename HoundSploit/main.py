@@ -1,13 +1,13 @@
 # -*- encoding: utf-8 -*-
-# houndsploit v2.6.1
+# houndsploit v2.7.0
 # An advanced graphic search engine for Exploit-DB
-# Copyright © 2019, Nicolas Carolo.
+# Copyright © 2021, Nicolas Carolo.
 # See /LICENSE for licensing information.
 
 """
 INSERT MODULE DESCRIPTION HERE.
 
-:Copyright: © 2019, Nicolas Carolo.
+:Copyright: © 2021, Nicolas Carolo.
 :License: BSD (see /LICENSE).
 """
 

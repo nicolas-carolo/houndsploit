@@ -3,10 +3,10 @@ Appendix C. Changelog
 =====================
 :Info: This is the changelog for houndsploit.
 :Author: Nicolas Carolo <nicolascarolo.dev@gmail>
-:Copyright: © 2019, Nicolas Carolo.
+:Copyright: © 2021, Nicolas Carolo.
 :License: BSD (see /LICENSE or :doc:`Appendix B <LICENSE>`.)
-:Date: 2019-11-27
-:Version: 2.6.1
+:Date: 2021-11-19
+:Version: 2.7.0
 
 .. index:: CHANGELOG
 

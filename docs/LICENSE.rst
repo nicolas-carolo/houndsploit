@@ -3,14 +3,14 @@ Appendix B. License for houndsploit
 =======================================================
 :Info: This is the license for houndsploit.
 :Author: Nicolas Carolo <nicolascarolo.dev@gmail>
-:Copyright: © 2019, Nicolas Carolo.
+:Copyright: © 2021, Nicolas Carolo.
 :License: BSD (see /LICENSE or :doc:`Appendix B <LICENSE>`.)
-:Date: 2019-11-27
-:Version: 2.6.1
+:Date: 2021-11-19
+:Version: 2.7.0
 
 .. index:: LICENSE
 
-Copyright © 2019, Nicolas Carolo.
+Copyright © 2021, Nicolas Carolo.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

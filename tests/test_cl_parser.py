@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 # houndsploit test suite
-# Copyright © 2019, Nicolas Carolo.
+# Copyright © 2021, Nicolas Carolo.
 # See /LICENSE for licensing information.
 
 

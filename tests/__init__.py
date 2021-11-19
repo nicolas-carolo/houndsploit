@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 # houndsploit test suite
-# Copyright © 2019, Nicolas Carolo.
+# Copyright © 2021, Nicolas Carolo.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without

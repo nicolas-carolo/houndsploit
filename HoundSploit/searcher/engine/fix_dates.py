@@ -76,7 +76,6 @@ def fix_unknown_dates():
     exploits_list = queryset2list(queryset)
     for exploit in exploits_list:
         exploit_url = exploitdb_url + exploit.id
-        print(exploit_url)
         try:
             time.sleep(0.05)
             bash_command = "curl " + exploit_url
@@ -95,7 +94,6 @@ def fix_unknown_dates():
     shellcodes_list = queryset2list(queryset)
     for shellcode in shellcodes_list:
         shellcode_url = shellcodedb_url + shellcode.id
-        print(shellcode_url)
         try:
             time.sleep(0.05)
             bash_command = "curl " + shellcode_url
@@ -132,7 +130,7 @@ def add_new_exploits_to_db(exploitdb_path, houndsploit_path):
 
     for line in filetwo:
         if line not in fileone:
-            print(line)
+            # print(line)
             line = str(line).replace("\"", "")
             splitted_line = str(line).split(",")
             try:
@@ -189,7 +187,7 @@ def add_new_shellcodes_to_db(exploitdb_path, houndsploit_path):
 
     for line in filetwo:
         if line not in fileone:
-            print(line)
+            # print(line)
             line = str(line).replace("\"", "")
             splitted_line = str(line).split(",")
             try:

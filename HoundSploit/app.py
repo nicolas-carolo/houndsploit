@@ -21,15 +21,9 @@ from shutil import copyfile
 
 
 init_path = os.path.abspath(os.path.expanduser("~") + "/.HoundSploit")
-#template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
-#static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
+template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
+static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
 
-# template_dir = '/Users/nicolas/Projects/Python/houndsploit/HoundSploit/templates'
-# static_folder = '/Users/nicolas/Projects/Python/houndsploit/HoundSploit/static'
-# template_dir = '/home/nicolas/Projects/Python/houndsploit/HoundSploit/templates'
-# static_folder = '/home/nicolas/Projects/Python/houndsploit/HoundSploit/static'
-template_dir = "C:\\Users\\Nicolas\\Projects\\Python\\houndsploit\\HoundSploit\\templates"
-static_folder = "C:\\Users\\Nicolas\\Projects\\Python\\houndsploit\\HoundSploit\\static"
 
 app = Flask(__name__, template_folder=template_dir, static_folder=static_folder)
 
@@ -630,20 +624,20 @@ def remove_bookmark_shellcode():
 
 @app.route('/fix-dates')
 def repair_dates():
-    print("Starting fix")
+    # print("Starting fix")
     fix_dates()
-    print("Ending fix")
+    # print("Ending fix")
     return render_template('settings.html', latest_db_update=get_latest_db_update_date(), db_update_alert=False,
                             sw_update_alert=False, no_updates_alert=False)
 
 
 @app.route('/restore-exploitdb')
 def restore_exploitdb():
-    print("Starting fix")
+    # print("Starting fix")
     if platform.system() == "Windows":
         script_path = os.path.abspath(init_path + "/houndsploit/HoundSploit/scripts/restore_exploitdb.ps1")
         os.system("powershell.exe -ExecutionPolicy Bypass -File " + script_path)
-        print("Ending fix")
+        # print("Ending fix")
         return render_template('error_page.html', error="Please restart the application server for applying changes!")
     else:
         fixed_exploitdb_path = os.path.abspath(init_path + "/fixed_exploitdb")
@@ -651,7 +645,7 @@ def restore_exploitdb():
         shutil.rmtree(fixed_exploitdb_path)
         os.remove(db_path)
         create_db()
-        print("Ending fix")
+        # print("Ending fix")
         return render_template('settings.html', latest_db_update=get_latest_db_update_date(), db_update_alert=False,
                                 sw_update_alert=False, no_updates_alert=False)
 

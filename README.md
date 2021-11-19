@@ -6,9 +6,9 @@ Author: Nicolas Carolo <nicolascarolo.dev@gmail.com>
 
 Copyright: © 2021, Nicolas Carolo.
 
-Date: 2021-10-04
+Date: 2021-11-19
 
-Version: 2.6.1
+Version: 2.7.0
 
 
 ## PURPOSE
@@ -28,6 +28,7 @@ the most accurate search results.
 * Downloading of the source code of exploits and shellcodes
 * Highlighting of searched words in search results
 * Bookmarks
+* Fix of exploit and shellcode dates 
 * Check for updates (both for software and database)
 
 #### New features in HoundSploit 2
@@ -81,7 +82,9 @@ You can add exploits and shellcodes to bookmarks and filter them using the searc
 ![Bookmarks](/img/bookmarks.png)
 
 #### Customization
-You can choose to use the Light or the Dark theme
+You can choose to use:
+* The Light or the Dark theme
+* The original ExploitDB database or the ExploitDB database with dates fix.
 
 ![Light Theme](/img/light-theme.png)
 
