@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block scripts_and_css %}
+    <script>getTheme("base_searcher.css")</script>
+    <script>getTheme("bookmarks.css")</script>
+{% endblock %}
+{% block results_table %}
+    <div>
+        <a name="bookmarks_list"><h2 class="vulnerability_type">New Exploits</h2></a>
+        <table class="results-table">
+            <tr class="results-table">
+                <th class="file">File</th>
+                <th class="description">Description</th>
+                <th class="date">Date</th>
+                <th class="author">Author</th>
+                <th class="vul-type">Type</th>
+                <th class="platform">Platform</th>
+                <th class="port">Port</th>
+            </tr>
+            {% if exploits_list|length > 0 %}
+                {% for exploit in exploits_list %}
+                    <tr class="results-table">
+                        <td class="file"><a href="/exploit-details?exploit-id={{ exploit.id }}">{% autoescape off %}{{ exploit.file }}{% endautoescape %}</a></td>
+                        <td class="description">{% autoescape off %}{{ exploit.description }}{% endautoescape %}</td>
+                        <td class="date">{{ exploit.date }}</td>
+                        <td class="author">{% autoescape off %}{{ exploit.author }}{% endautoescape %}</td>
+                        <td class="vul-type">{{ exploit.type }}</td>
+                        <td class="platform">{{ exploit.platform }}</td>
+                        <td class="port">{% autoescape off %}{{ exploit.port }}{% endautoescape %}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr class="results-table">
+                    <td class="empty-list" colspan="7">No Exploits available</td>
+                </tr>
+            {% endif %}
+        </table>
+    </div>
+{% endblock %}

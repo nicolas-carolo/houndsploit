@@ -122,4 +122,5 @@ def get_bookmarks_list():
             bookmarks_list.append(bookmark_item)
         except IndexError:
             pass
+    session.close()
     return bookmarks_list

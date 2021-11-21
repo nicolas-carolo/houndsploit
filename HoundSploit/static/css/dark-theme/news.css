@@ -1,0 +1,117 @@
+table.results-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 99%;
+    border: 1px solid #484848;
+    margin: auto auto 30px;
+}
+
+th {
+    background-color: #464646;
+    font-size: 18px;
+    color: darkorange;
+    text-align: left;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+td {
+    font-size: 14px;
+    color: white;
+    text-align: left;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+td.empty-list {
+    text-align: center;
+}
+
+th.file, td.file {
+    padding-left: 12px;
+    padding-right: 3px;
+    width: 17%;
+}
+
+th.description, td.description {
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 50%;
+}
+
+tr.results-table:nth-child(even) {
+    background-color: #202020;
+}
+
+tr.results-table:nth-of-type(odd) {
+    background-color: #303030;
+}
+
+tr.results-table:hover {
+    background-color: black;
+}
+
+h4 {
+    text-align: center;
+    font-size: 14px;
+    color: white;
+    margin: 15px auto 20px;
+}
+
+span.keyword {
+    color: red;
+    font-weight: bold;
+}
+
+a {
+    color: orange
+}
+
+h4.link_to_top {
+    color: orange;
+    margin-bottom: 60px;
+}
+
+div.nav-page {
+    width: 70%;
+    margin: 0 auto;
+    border: 1px solid #DDDDDD;
+    background-color: #484848;
+    padding: 15px;
+    border-radius: 20px;
+    box-shadow: 2px 2px 2px black;
+    margin: auto auto 60px;
+}
+
+input[type=button].nav-page {
+    text-align: center;
+    font-size: 1em;
+    background-color: orange;
+    color: #FFFFFF;
+    border-radius: 20px;
+    border: 1px solid #eeeeee;
+    box-shadow: 1px 1px 1px black;
+    text-shadow:none;
+    padding: 5px 15px 5px;
+    margin: auto 5px auto;
+    width: 15%;
+}
+
+input[type=button].nav-page:hover {
+    background-color: darkorange;
+}
+
+label.nav-page {
+    color: white;
+}
+
+input[type=number].nav-page {
+    background-color: #484848;
+    color: white;
+    border: 1px solid #eeeeee;
+    border-radius: 10px;
+    padding: 2px;
+    font-size: 1em;
+    width: 10%;
+    text-align: center;
+}

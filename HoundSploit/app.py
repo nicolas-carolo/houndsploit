@@ -17,12 +17,16 @@ from HoundSploit.searcher.engine.csv2sqlite import create_db
 from HoundSploit.searcher.engine.sorter import sort_results
 from HoundSploit.searcher.engine.bookmarks import new_bookmark, is_bookmarked, remove_bookmark, get_bookmarks_list
 from HoundSploit.searcher.engine.fix_dates import fix_dates, create_fixed_db
+from HoundSploit.searcher.engine.news import get_latest_exploits_list
 from shutil import copyfile
 
 
 init_path = os.path.abspath(os.path.expanduser("~") + "/.HoundSploit")
-template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
-static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
+# template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
+# static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
+
+template_dir = os.path.abspath('/Users/nicolas/Projects/Python/houndsploit/HoundSploit/templates')
+static_folder = os.path.abspath('/Users/nicolas/Projects/Python/houndsploit/HoundSploit/static')
 
 
 app = Flask(__name__, template_folder=template_dir, static_folder=static_folder)
@@ -648,6 +652,17 @@ def restore_exploitdb():
         # print("Ending fix")
         return render_template('settings.html', latest_db_update=get_latest_db_update_date(), db_update_alert=False,
                                 sw_update_alert=False, no_updates_alert=False)
+
+
+@app.route('/news', methods=['GET', 'POST'])
+def get_news():
+    """
+    Open the list of the latest exploits and shellcodes
+    :return: the latest exploits and shellcodes template
+    """
+    exploits_list = get_latest_exploits_list()
+
+    return render_template('news.html', exploits_list=exploits_list)
 
 
 def start_app():
