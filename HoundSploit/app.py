@@ -27,6 +27,8 @@ init_path = os.path.abspath(os.path.expanduser("~") + "/.HoundSploit")
 
 template_dir = os.path.abspath('/Users/nicolas/Projects/Python/houndsploit/HoundSploit/templates')
 static_folder = os.path.abspath('/Users/nicolas/Projects/Python/houndsploit/HoundSploit/static')
+template_dir = os.path.abspath('/home/nicolas/Projects/Python/houndsploit/HoundSploit/templates')
+static_folder = os.path.abspath('/home/nicolas/Projects/Python/houndsploit/HoundSploit/static')
 
 
 app = Flask(__name__, template_folder=template_dir, static_folder=static_folder)
@@ -661,7 +663,6 @@ def get_news():
     :return: the latest exploits and shellcodes template
     """
     exploits_list = get_latest_exploits_list()
-
     return render_template('news.html', exploits_list=exploits_list)
 
 

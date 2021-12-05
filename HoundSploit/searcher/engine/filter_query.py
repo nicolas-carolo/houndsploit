@@ -218,7 +218,7 @@ def filter_exploits_for_port(input_list, port_filter):
 def filter_vulnerabilities_for_date_range(input_list, date_from, date_to):
     output_list = []
     for vulnerability in input_list:
-        if date_from < datetime.datetime.strptime(vulnerability.date, '%Y-%m-%d') < date_to:
+        if date_from <= datetime.datetime.strptime(vulnerability.date, '%Y-%m-%d') <= date_to:
             output_list.append(vulnerability)
     return output_list
 
