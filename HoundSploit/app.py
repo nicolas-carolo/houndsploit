@@ -25,8 +25,8 @@ init_path = os.path.abspath(os.path.expanduser("~") + "/.HoundSploit")
 # template_dir = os.path.abspath(init_path + '/houndsploit/HoundSploit/templates')
 # static_folder = os.path.abspath(init_path + '/houndsploit/HoundSploit/static')
 
-template_dir = os.path.abspath('/Users/nicolas/Projects/Python/houndsploit/HoundSploit/templates')
-static_folder = os.path.abspath('/Users/nicolas/Projects/Python/houndsploit/HoundSploit/static')
+# template_dir = os.path.abspath('/Users/nicolas/Projects/Python/houndsploit/HoundSploit/templates')
+# static_folder = os.path.abspath('/Users/nicolas/Projects/Python/houndsploit/HoundSploit/static')
 template_dir = os.path.abspath('/home/nicolas/Projects/Python/houndsploit/HoundSploit/templates')
 static_folder = os.path.abspath('/home/nicolas/Projects/Python/houndsploit/HoundSploit/static')
 

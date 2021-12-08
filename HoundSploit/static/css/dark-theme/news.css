@@ -115,3 +115,34 @@ input[type=number].nav-page {
     width: 10%;
     text-align: center;
 }
+
+div.div-news-selector {
+    background-color: #484848;
+    text-align: center;
+    width: 20%;
+    margin: 30px auto 25px;
+    padding: 15px 15px 15px;
+    border: 1px solid #DDDDDD;
+    border-radius: 20px;
+    box-shadow: 2px 5px 2px black;
+}
+
+div.div-news-selector select {
+    width: 60%;
+    background-color: #646464;
+    color: white;
+    border-radius: 10px;
+    border: 1px solid #eeeeee;
+    padding: 2px;
+    font-size: 12px;
+}
+
+div.div-news-selector option {
+    background-color: #646464;
+    color: white;
+    font-size: 12px;
+}
+
+div.div-news-selector label {
+    color: white;
+}
