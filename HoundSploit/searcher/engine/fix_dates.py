@@ -6,7 +6,8 @@ import re
 import time
 import shutil
 from distutils.dir_util import copy_tree
-from HoundSploit.searcher.db_manager.models import Exploit, Shellcode
+from HoundSploit.searcher.entities.shellcode import Shellcode
+from HoundSploit.searcher.entities.exploit import Exploit
 from HoundSploit.searcher.db_manager.session_manager import start_session
 from HoundSploit.searcher.db_manager.result_set import queryset2list
 

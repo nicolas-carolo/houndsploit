@@ -6,7 +6,8 @@ from HoundSploit.searcher.engine.filter_query import filter_exploits_without_com
     filter_shellcodes_without_comparator, filter_shellcodes_with_comparator
 
 from sqlalchemy import and_, or_
-from HoundSploit.searcher.db_manager.models import Exploit, Shellcode
+from HoundSploit.searcher.entities.shellcode import Shellcode
+from HoundSploit.searcher.entities.exploit import Exploit
 from HoundSploit.searcher.db_manager.session_manager import start_session
 from HoundSploit.searcher.db_manager.result_set import queryset2list, void_result_set
 from HoundSploit.searcher.engine.lists import remove_duplicates_by_list, join_lists
@@ -16,13 +17,8 @@ from HoundSploit.searcher.engine.filter_query import filter_vulnerabilities_for_
 N_MAX_RESULTS_NUMB_VERSION = 20000
 
 
+# TODO remove
 def search_vulnerabilities_in_db(searched_text, db_table):
-    """
-    Perform a search in the database.
-    :param searched_text: the text searched by the user.
-    :param db_table: the database table in which perform the search.
-    :return: the list containing the result of the performed search.
-    """
     word_list = str(searched_text).split()
     if str(searched_text).isnumeric():
         return search_vulnerabilities_numerical(word_list[0], db_table)
@@ -48,15 +44,8 @@ def search_vulnerabilities_in_db(searched_text, db_table):
             else:
                 return search_vulnerabilities_for_author(word_list, db_table)
 
-
+# TODO remove
 def search_vulnerabilities_numerical(searched_text, db_table):
-    """
-    Perform a search based on vulnerabilities' description, file, id, and port (only if it is an exploit) for an only
-    numerical search input.
-    :param searched_text: the search input.
-    :param db_table: the DB table in which we want to perform the search.
-    :return: a queryset with search results.
-    """
     session = start_session()
     if db_table == 'searcher_exploit':
         queryset = session.query(Exploit).filter(or_(Exploit.description.contains(searched_text),

@@ -1,6 +1,7 @@
-from sqlalchemy import or_
-from HoundSploit.searcher.db_manager.models import Exploit, Shellcode
-from HoundSploit.searcher.db_manager.session_manager import start_session
+# from sqlalchemy import or_
+#from HoundSploit.searcher.entities.shellcode import Shellcode
+#from HoundSploit.searcher.entities.exploit import Exploit
+#from HoundSploit.searcher.db_manager.session_manager import start_session
 
 
 def queryset2list(queryset):

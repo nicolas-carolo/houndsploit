@@ -18,6 +18,7 @@ from HoundSploit.searcher.engine.sorter import sort_results
 from HoundSploit.searcher.engine.bookmarks import new_bookmark, is_bookmarked, remove_bookmark, get_bookmarks_list
 from HoundSploit.searcher.engine.fix_dates import fix_dates, create_fixed_db
 from shutil import copyfile
+from HoundSploit.searcher.entities.exploit import Exploit
 
 
 init_path = os.path.abspath(os.path.expanduser("~") + "/.HoundSploit")
@@ -60,7 +61,7 @@ def get_results_table():
             return render_template('home.html', current_exploits_page=1, current_shellcodes_page=1, sorting_type="Most recent")
         key_words_list = (str(searched_text).upper()).split()
         
-        exploits_list = search_vulnerabilities_in_db(searched_text, 'searcher_exploit')
+        exploits_list = Exploit.search_exploits(searched_text)
         exploits_list = sort_results(exploits_list, sorting_type)
         n_exploits = len(exploits_list)
 

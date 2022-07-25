@@ -1,5 +1,7 @@
 import re
-from HoundSploit.searcher.db_manager.models import Bookmark, Exploit, Shellcode
+from HoundSploit.searcher.db_manager.models import Bookmark
+from HoundSploit.searcher.entities.exploit import Exploit
+from HoundSploit.searcher.entities.shellcode import Shellcode
 from HoundSploit.searcher.db_manager.session_manager import start_session
 from HoundSploit.searcher.db_manager.result_set import queryset2list
 
