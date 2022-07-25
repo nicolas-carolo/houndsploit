@@ -5,7 +5,7 @@ import datetime
 import platform
 
 from flask import Flask, render_template, request
-from HoundSploit.searcher.engine.search_engine import search_vulnerabilities_in_db, get_exploit_by_id, get_shellcode_by_id,\
+from HoundSploit.searcher.engine.search_engine import get_exploit_by_id, get_shellcode_by_id,\
     get_vulnerability_extension, get_vulnerability_filters, search_vulnerabilities_advanced
 from HoundSploit.searcher.engine.keywords_highlighter import highlight_keywords_in_description, highlight_keywords_in_file, \
     highlight_keywords_in_port
@@ -19,6 +19,7 @@ from HoundSploit.searcher.engine.bookmarks import new_bookmark, is_bookmarked, r
 from HoundSploit.searcher.engine.fix_dates import fix_dates, create_fixed_db
 from shutil import copyfile
 from HoundSploit.searcher.entities.exploit import Exploit
+from HoundSploit.searcher.entities.shellcode import Shellcode
 
 
 init_path = os.path.abspath(os.path.expanduser("~") + "/.HoundSploit")
@@ -61,7 +62,7 @@ def get_results_table():
             return render_template('home.html', current_exploits_page=1, current_shellcodes_page=1, sorting_type="Most recent")
         key_words_list = (str(searched_text).upper()).split()
         
-        exploits_list = Exploit.search_exploits(searched_text)
+        exploits_list = Exploit.search(searched_text)
         exploits_list = sort_results(exploits_list, sorting_type)
         n_exploits = len(exploits_list)
 
@@ -81,7 +82,7 @@ def get_results_table():
                 result.port = ''
 
 
-        shellcodes_list = search_vulnerabilities_in_db(searched_text, 'searcher_shellcode')
+        shellcodes_list = Shellcode.search(searched_text)
         shellcodes_list = sort_results(shellcodes_list, sorting_type)
         n_shellcodes = len(shellcodes_list)
 

@@ -10,7 +10,7 @@ def str_contains_numbers(str):
     return bool(re.search(r'\d', str))
 
 
-def str_is_num_version(str):
+def str_contains_num_version(str):
     """
     Check if a string contains a number of version.
     :param str: the string to check.
