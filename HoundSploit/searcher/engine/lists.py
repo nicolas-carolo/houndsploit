@@ -1,4 +1,4 @@
-def remove_duplicates_by_list(input_list):
+def remove_list_duplicates(input_list):
     """
     Remove the duplicates from the input list
     :param input_list: the input list

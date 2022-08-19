@@ -5,14 +5,13 @@ import datetime
 import platform
 
 from flask import Flask, render_template, request
-from HoundSploit.searcher.engine.search_engine import get_exploit_by_id, get_shellcode_by_id,\
-    get_vulnerability_extension, get_vulnerability_filters, search_vulnerabilities_advanced
+from HoundSploit.searcher.engine.search_engine import get_vulnerability_filters
 from HoundSploit.searcher.engine.keywords_highlighter import highlight_keywords_in_description, highlight_keywords_in_file, \
     highlight_keywords_in_port
 from HoundSploit.searcher.engine.suggestions import substitute_with_suggestions, propose_suggestions, get_suggestions_list,\
     new_suggestion, remove_suggestion, DEFAULT_SUGGESTIONS
 from HoundSploit.searcher.engine.updates import get_latest_db_update_date, install_updates
-from HoundSploit.searcher.engine.utils import check_file_existence, get_vulnerability_extension, get_n_needed_pages
+from HoundSploit.searcher.engine.utils import check_file_existence, get_n_needed_pages
 from HoundSploit.searcher.engine.csv2sqlite import create_db
 from HoundSploit.searcher.engine.sorter import sort_results
 from HoundSploit.searcher.engine.bookmarks import new_bookmark, is_bookmarked, remove_bookmark, get_bookmarks_list
@@ -196,12 +195,8 @@ def get_results_table_advanced():
             if result.port is None:
                 result.port = ''
         
-
-        #shellcodes_list = search_vulnerabilities_advanced(searched_text, 'searcher_shellcode', operator_filter,
-        #                                                  type_filter, platform_filter, author_filter, port_filter,
-        #                                                  date_from_filter, date_to_filter)
-        #shellcodes_list = sort_results(shellcodes_list, sorting_type)
-        shellcodes_list = []
+        shellcodes_list = Shellcode.advanced_search(searched_text, filters)
+        shellcodes_list = sort_results(shellcodes_list, sorting_type)
         n_shellcodes = len(shellcodes_list)
 
         latest_shellcodes_page = get_n_needed_pages(n_shellcodes)
@@ -271,7 +266,7 @@ def view_exploit_details():
         is_prev_page_bookmarks = True
     else:
         is_prev_page_bookmarks = False
-    exploit = get_exploit_by_id(exploit_id)
+    exploit = Exploit.get_by_id(exploit_id)
     if exploit is None:
         error_msg = 'Sorry! This exploit does not exist :('
         return render_template('error_page.html', error=error_msg)
@@ -300,7 +295,7 @@ def download_exploit_details():
     """
     vulnerability_class = "exploit"
     exploit_id = request.args.get('exploit-id', None)
-    exploit = get_exploit_by_id(exploit_id)
+    exploit = Exploit.get_by_id(exploit_id)
     if exploit is None:
         error_msg = 'Sorry! This exploit does not exist :('
         return render_template('error_page.html', error=error_msg)
@@ -309,8 +304,8 @@ def download_exploit_details():
         with open(file_path, 'r') as f:
             content = f.readlines()
             vulnerability_code = ''.join(content)
-        copyfile(file_path, os.path.expanduser("~") + "/exploit_" + exploit_id + get_vulnerability_extension(exploit.file))
-        download_alert = "exploit_" + exploit_id + get_vulnerability_extension(exploit.file) + " has been downloaded in your home directory"
+        copyfile(file_path, os.path.expanduser("~") + "/exploit_" + exploit_id + exploit.get_extension())
+        download_alert = "exploit_" + exploit_id + exploit.get_extension() + " has been downloaded in your home directory"
         return render_template('code_viewer.html', vulnerability_code=vulnerability_code,
                                vulnerability_description=exploit.description, vulnerability_file=exploit.file,
                                vulnerability_author=exploit.author, vulnerability_date=exploit.date,
@@ -336,7 +331,7 @@ def view_shellcode_details():
         is_prev_page_bookmarks = True
     else:
         is_prev_page_bookmarks = False
-    shellcode = get_shellcode_by_id(shellcode_id)
+    shellcode = Shellcode.get_by_id(shellcode_id)
     if shellcode is None:
         error_msg = 'Sorry! This shellcode does not exist :('
         return render_template('error_page.html', error=error_msg)
@@ -345,13 +340,20 @@ def view_shellcode_details():
         with open(file_path, 'r') as f:
             content = f.readlines()
             vulnerability_code = ''.join(content)
-        return render_template('code_viewer.html', vulnerability_code=vulnerability_code,
-                               vulnerability_description=shellcode.description, vulnerability_file=shellcode.file,
-                               vulnerability_author=shellcode.author, vulnerability_date=shellcode.date,
-                               vulnerability_type=shellcode.type, vulnerability_platform=shellcode.platform,
-                               file_path=file_path, shellcode_id=shellcode_id,
-                               bookmarked=is_bookmarked(shellcode_id, vulnerability_class),
-                               searched_text=searched_text, is_prev_page_bookmarks=is_prev_page_bookmarks)
+        return render_template('code_viewer.html',
+                            vulnerability_code=vulnerability_code,
+                            vulnerability_description=shellcode.description,
+                            vulnerability_file=shellcode.file,
+                            vulnerability_author=shellcode.author,
+                            vulnerability_date=shellcode.date,
+                            vulnerability_type=shellcode.type,
+                            vulnerability_platform=shellcode.platform,
+                            file_path=file_path,
+                            shellcode_id=shellcode_id,
+                            bookmarked=is_bookmarked(shellcode_id, vulnerability_class),
+                            searched_text=searched_text,
+                            is_prev_page_bookmarks=is_prev_page_bookmarks
+                            )
     except FileNotFoundError:
         error_msg = 'Sorry! This file does not exist :('
         return render_template('error_page.html', error=error_msg)
@@ -365,7 +367,7 @@ def download_shellcode():
     """
     vulnerability_class = "shellcode"
     shellcode_id = request.args.get('shellcode-id', None)
-    shellcode = get_shellcode_by_id(shellcode_id)
+    shellcode = Shellcode.get_by_id(shellcode_id)
     if shellcode is None:
         error_msg = 'Sorry! This shellcode does not exist :('
         return render_template('error_page.html', error=error_msg)
@@ -374,14 +376,21 @@ def download_shellcode():
         with open(file_path, 'r') as f:
             content = f.readlines()
             vulnerability_code = ''.join(content)
-        copyfile(file_path, os.path.expanduser("~") + "/shellcode_" + shellcode_id + get_vulnerability_extension(shellcode.file))
-        download_alert = "shellcode_" + shellcode_id + get_vulnerability_extension(shellcode.file) + " has been downloaded in your home directory"
-        return render_template('code_viewer.html', vulnerability_code=vulnerability_code,
-                               vulnerability_description=shellcode.description, vulnerability_file=shellcode.file,
-                               vulnerability_author=shellcode.author, vulnerability_date=shellcode.date,
-                               vulnerability_type=shellcode.type, vulnerability_platform=shellcode.platform,
-                               file_path=file_path, download_alert=download_alert, shellcode_id=shellcode_id,
-                               bookmarked=is_bookmarked(shellcode_id, vulnerability_class))
+        copyfile(file_path, os.path.expanduser("~") + "/shellcode_" + shellcode_id + shellcode.get_extension())
+        download_alert = "shellcode_" + shellcode_id + shellcode.get_extension() + " has been downloaded in your home directory"
+        return render_template('code_viewer.html',
+                            vulnerability_code=vulnerability_code,
+                            vulnerability_description=shellcode.description,
+                            vulnerability_file=shellcode.file,
+                            vulnerability_author=shellcode.author,
+                            vulnerability_date=shellcode.date,
+                            vulnerability_type=shellcode.type,
+                            vulnerability_platform=shellcode.platform,
+                            file_path=file_path,
+                            download_alert=download_alert,
+                            shellcode_id=shellcode_id,
+                            bookmarked=is_bookmarked(shellcode_id, vulnerability_class)
+                            )
     except FileNotFoundError:
         error_msg = 'Sorry! This file does not exist :('
         return render_template('error_page.html', error=error_msg)
@@ -535,7 +544,7 @@ def bookmark_exploit():
     """
     vulnerability_class = "exploit"
     exploit_id = request.args.get('exploit-id', None)
-    exploit = get_exploit_by_id(exploit_id)
+    exploit = Exploit.get_by_id(exploit_id)
     if exploit is None:
         error_msg = 'Sorry! This exploit does not exist :('
         return render_template('error_page.html', error=error_msg)
@@ -567,7 +576,7 @@ def remove_bookmark_exploit():
     """
     vulnerability_class = "exploit"
     exploit_id = request.args.get('exploit-id', None)
-    exploit = get_exploit_by_id(exploit_id)
+    exploit = Exploit.get_by_id(exploit_id)
     if exploit is None:
         error_msg = 'Sorry! This exploit does not exist :('
         return render_template('error_page.html', error=error_msg)
@@ -596,7 +605,7 @@ def bookmark_shellcode():
     """
     vulnerability_class = "shellcode"
     shellcode_id = request.args.get('shellcode-id', None)
-    shellcode = get_shellcode_by_id(shellcode_id)
+    shellcode = Shellcode.get_by_id(shellcode_id)
     if shellcode is None:
         error_msg = 'Sorry! This shellcode does not exist :('
         return render_template('error_page.html', error=error_msg)
@@ -628,7 +637,7 @@ def remove_bookmark_shellcode():
     """
     vulnerability_class = "shellcode"
     shellcode_id = request.args.get('shellcode-id', None)
-    shellcode = get_shellcode_by_id(shellcode_id)
+    shellcode = Shellcode.get_by_id(shellcode_id)
     if shellcode is None:
         error_msg = 'Sorry! This shellcode does not exist :('
         return render_template('error_page.html', error=error_msg)
