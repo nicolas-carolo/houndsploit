@@ -1,7 +1,7 @@
 import csv
 import sqlite3
 import os
-from HoundSploit.searcher.engine.utils import check_file_existence
+from HoundSploit.searcher.utils.file import check_file_existence
 
 
 def create_db():

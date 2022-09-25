@@ -11,7 +11,7 @@ from HoundSploit.searcher.engine.keywords_highlighter import highlight_keywords_
 from HoundSploit.searcher.engine.suggestions import substitute_with_suggestions, propose_suggestions, get_suggestions_list,\
     new_suggestion, remove_suggestion, DEFAULT_SUGGESTIONS
 from HoundSploit.searcher.engine.updates import get_latest_db_update_date, install_updates
-from HoundSploit.searcher.engine.utils import check_file_existence, get_n_needed_pages
+from HoundSploit.searcher.utils.searcher import get_n_needed_pages_for_showing_results
 from HoundSploit.searcher.engine.csv2sqlite import create_db
 from HoundSploit.searcher.engine.sorter import sort_results
 from HoundSploit.searcher.engine.bookmarks import new_bookmark, is_bookmarked, remove_bookmark, get_bookmarks_list
@@ -19,6 +19,7 @@ from HoundSploit.searcher.engine.fix_dates import fix_dates, create_fixed_db
 from shutil import copyfile
 from HoundSploit.searcher.entities.exploit import Exploit
 from HoundSploit.searcher.entities.shellcode import Shellcode
+from HoundSploit.searcher.utils.file import check_file_existence
 
 
 init_path = os.path.abspath(os.path.expanduser("~") + "/.HoundSploit")
@@ -65,7 +66,7 @@ def get_results_table():
         exploits_list = sort_results(exploits_list, sorting_type)
         n_exploits = len(exploits_list)
 
-        latest_exploits_page = get_n_needed_pages(n_exploits)
+        latest_exploits_page = get_n_needed_pages_for_showing_results(n_exploits)
         if current_exploits_page < 1:
             current_exploits_page = 1
             index_first_result = 0
@@ -85,7 +86,7 @@ def get_results_table():
         shellcodes_list = sort_results(shellcodes_list, sorting_type)
         n_shellcodes = len(shellcodes_list)
 
-        latest_shellcodes_page = get_n_needed_pages(n_shellcodes)
+        latest_shellcodes_page = get_n_needed_pages_for_showing_results(n_shellcodes)
         if current_shellcodes_page < 1:
             current_shellcodes_page = 1
             index_first_result = 0
@@ -179,7 +180,7 @@ def get_results_table_advanced():
         exploits_list = sort_results(exploits_list, sorting_type)
         n_exploits = len(exploits_list)
 
-        latest_exploits_page = get_n_needed_pages(n_exploits)
+        latest_exploits_page = get_n_needed_pages_for_showing_results(n_exploits)
         if current_exploits_page < 1:
             current_exploits_page = 1
             index_first_result = 0
@@ -199,7 +200,7 @@ def get_results_table_advanced():
         shellcodes_list = sort_results(shellcodes_list, sorting_type)
         n_shellcodes = len(shellcodes_list)
 
-        latest_shellcodes_page = get_n_needed_pages(n_shellcodes)
+        latest_shellcodes_page = get_n_needed_pages_for_showing_results(n_shellcodes)
         if current_shellcodes_page < 1:
             current_shellcodes_page = 1
             index_first_result = 0
@@ -504,8 +505,8 @@ def bookmarks_manager():
 
     if searched_text != "":
         key_words_list = (str(searched_text).upper()).split()
-        exploits_list = search_vulnerabilities_in_db(searched_text, 'searcher_exploit')
-        shellcodes_list = search_vulnerabilities_in_db(searched_text, 'searcher_shellcode')
+        exploits_list = Exploit.search(searched_text)
+        shellcodes_list = Shellcode.search(searched_text)
         results_list = exploits_list + shellcodes_list
         filtered_bookmarks_list = []
         for result in results_list:
@@ -516,7 +517,7 @@ def bookmarks_manager():
 
 
     n_bookmarks = len(bookmarks_list)
-    latest_bookmarks_page = get_n_needed_pages(n_bookmarks)
+    latest_bookmarks_page = get_n_needed_pages_for_showing_results(n_bookmarks)
 
     if current_bookmarks_page < 1:
         current_bookmarks_page = 1
