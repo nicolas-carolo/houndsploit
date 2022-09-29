@@ -14,3 +14,9 @@ def str_contains_software_name_and_num_version(text):
         return True
     else:
         return False
+
+def string_contains(text_string, text_substring):
+    if text_string.lower().__contains__(text_substring.lower()):
+        return True
+    else:
+        return False

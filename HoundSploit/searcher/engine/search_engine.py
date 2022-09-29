@@ -2,7 +2,7 @@ from HoundSploit.searcher.db_manager.session_manager import start_session
 from HoundSploit.searcher.entities.exploit import Exploit
 from HoundSploit.searcher.entities.shellcode import Shellcode
 from HoundSploit.searcher.db_manager.result_set import queryset2list
-from HoundSploit.searcher.engine.lists import remove_list_duplicates
+from HoundSploit.searcher.utils.list import remove_list_duplicates
 
 def get_vulnerability_filters():
     """

@@ -1,6 +1,6 @@
 import re
 
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String
 from sqlalchemy import and_, or_
 from sqlalchemy.ext.declarative import declarative_base
 from HoundSploit.searcher.db_manager.session_manager import start_session

@@ -1,4 +1,4 @@
-from HoundSploit.searcher.db_manager.models import Suggestion
+from HoundSploit.searcher.entities.suggestion import Suggestion
 from HoundSploit.searcher.db_manager.session_manager import start_session
 from HoundSploit.searcher.db_manager.result_set import queryset2list
 from HoundSploit.searcher.utils.file import check_file_existence
@@ -9,48 +9,23 @@ DEFAULT_SUGGESTIONS = ["joomla", "linux", "phpbb", "macos", "mac os x", "html 5"
 
 
 def substitute_with_suggestions(searched_text):
-    """
-    Substitute automatically an user's input with an appropriate suggestion.
-    :param searched_text: the user's input.
-    :return: the new input to use for the search.
-    """
-    session = start_session()
-    suggestions = session.query(Suggestion)
-    session.close()
-    for suggested_word in suggestions:
-        if searched_text.lower().__contains__(suggested_word.searched.lower())\
-                and suggested_word.autoreplacement == 'true' \
-                and not str(searched_text).lower().__contains__(suggested_word.suggestion.lower()):
-            searched_text = str(searched_text.lower()).replace(suggested_word.searched.lower(),
-                                                               suggested_word.suggestion.lower())
+    suggestions_list = get_suggestions_list()
+    for suggested_word in suggestions_list:
+        if suggested_word.is_eligible(searched_text) and suggested_word.autoreplacement == 'true':
+            searched_text = suggested_word.replace_searched_text_with_suggestion(searched_text)
     return searched_text
 
 
 def propose_suggestions(searched_text):
-    """
-    Suggest to the user a related search that he can do.
-    :param searched_text: the user's input.
-    :return: the suggested search.
-    """
-    suggested_searched_text = ''
-    session = start_session()
-    queryset = session.query(Suggestion)
-    suggestions = queryset2list(queryset)
-    session.close()
-    for suggested_word in suggestions:
-        if searched_text.lower().__contains__(suggested_word.searched.lower()) \
-                and suggested_word.autoreplacement == 'false' \
-                and not str(searched_text).lower().__contains__(suggested_word.suggestion.lower()):
-            suggested_searched_text = str(searched_text.lower()).replace(suggested_word.searched.lower(),
-                                                                     suggested_word.suggestion.lower())
+    suggested_searched_text = ""
+    suggestions_list = get_suggestions_list()
+    for suggested_word in suggestions_list:
+        if suggested_word.is_eligible(searched_text) and suggested_word.autoreplacement == 'false':
+            suggested_searched_text = suggested_word.replace_searched_text_with_suggestion(searched_text)
     return suggested_searched_text
 
 
 def get_suggestions_list():
-    """
-    Get all suggestions in the database
-    :return: a list containing all suggestions
-    """
     session = start_session()
     queryset = session.query(Suggestion)
     suggestions_list = queryset2list(queryset)
@@ -59,13 +34,6 @@ def get_suggestions_list():
 
 
 def new_suggestion(searched, suggestion, autoreplacement):
-    """
-    Create a new suggestion.
-    :param searched: the searched word.
-    :param suggestion: the research suggested by HoundSploit.
-    :param: autoreplacement: if True the searched word is automatically replaced with
-    the suggested one, otherwise HoundSploit suggests to search also for the suggested word
-    """
     session = start_session()
     searched = str(searched).lower()
     suggestion = str(suggestion).lower()
@@ -85,10 +53,6 @@ def new_suggestion(searched, suggestion, autoreplacement):
 
 
 def remove_suggestion(searched):
-    """
-    Remove the suggestion specified in the searched word.
-    :param searched: the searched word to remove from suggestions.
-    """
     session = start_session()
     suggestion_item = session.query(Suggestion).get(searched)
     if suggestion_item is not None:

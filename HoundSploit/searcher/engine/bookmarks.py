@@ -1,4 +1,4 @@
-from HoundSploit.searcher.db_manager.models import Bookmark
+from HoundSploit.searcher.entities.bookmark import Bookmark
 from HoundSploit.searcher.entities.exploit import Exploit
 from HoundSploit.searcher.entities.shellcode import Shellcode
 from HoundSploit.searcher.db_manager.session_manager import start_session
@@ -66,14 +66,12 @@ def get_bookmarks_list():
     session = start_session()
     queryset = session.query(Bookmark)
     result_list = queryset2list(queryset)
+    session.close()
     for bookmark in result_list:
         if bookmark.vulnerability_class == 'exploit':
-            queryset = session.query(Exploit).filter(Exploit.id == bookmark.vulnerability_id)
+            bookmark_item = Exploit.get_by_id(bookmark.vulnerability_id)
         else:
-            queryset = session.query(Shellcode).filter(Shellcode.id == bookmark.vulnerability_id)
-        try:
-            bookmark_item = queryset2list(queryset)[0]
+            bookmark_item = Shellcode.get_by_id(bookmark.vulnerability_id)
+        if bookmark_item is not None:
             bookmarks_list.append(bookmark_item)
-        except IndexError:
-            pass
     return bookmarks_list
