@@ -15,6 +15,19 @@ def queryset2list(queryset):
         list.append(instance)
     return list
 
+def queryset2filterlist(queryset):
+    """
+    Convert a queryset into a list
+    :param queryset: the queryset to be converted.
+    :return: the list corresponding to the queryset.
+    """
+    input_list = queryset2list(queryset)
+    output_list = []
+    for tuple_item in input_list:
+        item = tuple_item[0]
+        output_list.append(item)
+    return output_list
+
 
 def void_result_set():
     """

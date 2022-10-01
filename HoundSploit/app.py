@@ -5,7 +5,7 @@ import datetime
 import platform
 
 from flask import Flask, render_template, request
-from HoundSploit.searcher.engine.search_engine import get_vulnerability_filters
+from HoundSploit.searcher.utils.searcher import get_vulnerability_filters
 from HoundSploit.searcher.engine.keywords_highlighter import highlight_keywords_in_description, highlight_keywords_in_file, \
     highlight_keywords_in_port
 from HoundSploit.searcher.engine.suggestions import substitute_with_suggestions, propose_suggestions, get_suggestions_list,\
