@@ -56,6 +56,7 @@ class Shellcode(Base):
         return extension
 
 
+
     @staticmethod
     def search(searched_text):
         word_list = str(searched_text).split()

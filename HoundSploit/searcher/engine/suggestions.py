@@ -62,4 +62,5 @@ def remove_suggestion(searched):
         delete_suggestion_from_csv(searched)
         return True
     else:
+        session.close()
         return False

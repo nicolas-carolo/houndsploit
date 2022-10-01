@@ -1,12 +1,6 @@
 from datetime import datetime
 
 def sort_results(results_list, sorting_type):
-    """
-    Sort the result items contained into a list according to the specified sorting algorithm.
-    :param results_list: the list of results to be sorted.
-    :param sorting_type: the algorithm used to sort the results.
-    :return: True if the vulnerability is already bookmarked, otherwise False.
-    """
     if sorting_type == "Oldest":
         return sort_results_by_date(results_list, False)
     elif sorting_type == "Description A-Z":

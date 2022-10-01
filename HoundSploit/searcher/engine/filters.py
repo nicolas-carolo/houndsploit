@@ -2,7 +2,7 @@ import datetime
 from pkg_resources import parse_version
 from HoundSploit.searcher.engine.version_comparator import get_num_version_with_comparator, get_num_version,\
     is_in_version_range_with_x, is_equal_with_x, is_in_version_range, is_lte_with_comparator_x
-from HoundSploit.searcher.engine.string import str_contains_num_version_range_with_x, str_contains_num_version_range
+from HoundSploit.searcher.utils.string import str_contains_num_version_range_with_x, str_contains_num_version_range
 
 
 def filter_vulnerabilities(vulnerabilities_list, filters):
@@ -50,8 +50,11 @@ def filter_vulnerabilities_for_platform(vulnerabilities_list, platform_filter):
 def filter_exploits_for_port(vulnerabilities_list, port_filter):
     output_list = []
     for vulnerability in vulnerabilities_list:
-        if vulnerability.port == port_filter:
-            output_list.append(vulnerability)
+        try:
+            if vulnerability.port == port_filter:
+                output_list.append(vulnerability)
+        except AttributeError:
+            pass
     return output_list
 
 
