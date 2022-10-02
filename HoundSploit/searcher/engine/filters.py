@@ -1,7 +1,4 @@
 import datetime
-from pkg_resources import parse_version
-from HoundSploit.searcher.engine.version_comparator import get_num_version_with_comparator, get_num_version,\
-    is_in_version_range_with_x, is_equal_with_x, is_in_version_range, is_lte_with_comparator_x
 from HoundSploit.searcher.utils.string import str_contains_num_version_range_with_x, str_contains_num_version_range
 
 

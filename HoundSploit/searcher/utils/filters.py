@@ -1,6 +1,6 @@
 import datetime
 from pkg_resources import parse_version
-from HoundSploit.searcher.engine.version_comparator import get_num_version_with_comparator, get_num_version,\
+from HoundSploit.searcher.engine.version_comparator import get_num_version_with_comparator, get_num_version_without_comparator,\
     is_in_version_range_with_x, is_equal_with_x, is_in_version_range, is_lte_with_comparator_x
 from HoundSploit.searcher.utils.string import str_contains_num_version_range_with_x, str_contains_num_version_range
 
@@ -9,14 +9,14 @@ def filter_vulnerabilities_without_comparator(vulnerability, num_version, softwa
     if not vulnerability.description.__contains__('.x'):
         # exclude the vulnerability from results table if the number of version is not equal and contains 'x'
         try:
-            if parse_version(num_version) == parse_version(get_num_version(software_name, vulnerability.description)):
+            if parse_version(num_version) == parse_version(get_num_version_without_comparator(software_name, vulnerability.description)):
                 final_result_set.append(vulnerability)
         except TypeError:
             pass
     else:
         # exclude the vulnerability from results table if the number of version is not equal and not contains 'x'
         try:
-            if is_equal_with_x(num_version, get_num_version(software_name, vulnerability.description)):
+            if is_equal_with_x(num_version, get_num_version_without_comparator(software_name, vulnerability.description)):
                 final_result_set.append(vulnerability)
         except TypeError:
             pass
