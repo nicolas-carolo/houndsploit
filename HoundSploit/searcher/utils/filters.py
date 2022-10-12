@@ -1,7 +1,7 @@
 import datetime
 from pkg_resources import parse_version
 from HoundSploit.searcher.engine.version_comparator import get_num_version_with_comparator, get_num_version_without_comparator,\
-    is_in_version_range_with_x, is_equal_with_x, is_in_version_range, is_lte_with_comparator_x
+    is_in_version_range_with_x, is_equal_with_x, is_in_version_range_without_x, is_lte_with_comparator_x
 from HoundSploit.searcher.utils.string import str_contains_num_version_range_with_x, str_contains_num_version_range
 
 
@@ -33,7 +33,7 @@ def filter_vulnerabilities_with_comparator(vulnerability, num_version, software_
 
 def filter_vulnerabilities_with_comparator_and_without_x(vulnerability, num_version, software_name, final_result_set):
     if str_contains_num_version_range(str(vulnerability.description)):
-        if is_in_version_range(num_version, software_name, vulnerability.description):
+        if is_in_version_range_without_x(num_version, software_name, vulnerability.description):
             final_result_set.append(vulnerability)
     else:
         try:

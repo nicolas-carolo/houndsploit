@@ -83,65 +83,68 @@ def get_num_version_rounded(num_version, num_to_compare):
         return None
 
 
-def is_in_version_range(num_version, software_name, description):
-    """
-    Check if the number of version (without x) of the software searched by the user is contained in the range of
-    version in the vulnerability's description.
-    :param num_version: the number of version searched by the user.
-    :param software_name: the name of the software searched by the user.
-    :param description: the vulnerability's description in which to do the check.
-    :return: True if the number of version (without x) of the software searched by the user is contained in the range of
-        version in the vulnerability's description, False else.
-    """
+def is_in_version_range_without_x(num_version, software_name, description):
+    contains_x = False
     software_name = software_name.upper()
     description = description.upper()
-    regex = re.search(software_name + r' \d+((\.\d+)+)? < \d+((\.\d+)+)?', description)
-    try:
-        software = regex.group(0)
-        regex = re.search(r'(?P<from_version>\d+((\.\d+)+)?) < (?P<to_version>\d+((\.\d+)+)?)', software)
-        if parse_version(num_version) >= parse_version(regex.group('from_version')) and parse_version(
-                num_version) <= parse_version(regex.group('to_version')):
-            return True
-        else:
-            return False
-    except AttributeError:
+    regex_filter = software_name + r' \d+((\.\d+)+)? < \d+((\.\d+)+)?'
+    software = extract_software_from_description(software_name, description, regex_filter)
+    if software is None:
+        return False
+    regex_filter = r'(?P<from_version>\d+((\.\d+)+)?) < (?P<to_version>\d+((\.\d+)+)?)'
+    parsed_from_version, parsed_to_version, x_flag = extract_num_version_range_from_software(software, regex_filter, contains_x)
+    if parsed_from_version is None or parsed_to_version is None:
+        return False
+    parsed_num_version = parse_version(num_version)
+    if parsed_from_version <= parsed_num_version and parsed_num_version <= parsed_to_version:
+        return True
+    else:
         return False
 
 
 def is_in_version_range_with_x(num_version, software_name, description):
-    """
-    Check if the number of version (with x) of the software searched by the user is contained in the range of
-    version in the vulnerability's description.
-    :param num_version: the number of version searched by the user.
-    :param software_name: the name of the software searched by the user.
-    :param description: the vulnerability's description in which to do the check.
-    :return: True if the number of version (without x) of the software searched by the user is contained in the range of
-                version in the vulnerability's description, False else.
-    """
+    contains_x = True
     software_name = software_name.upper()
     description = description.upper()
-    regex = re.search(software_name + r' \w+((\.\w+)+)?(\.x)? < \w+((\.\w+)+)?(\.x)?', description)
-    try:
-        software = regex.group(0)
-        regex = re.search(
-            r'(?P<from_version>\d+((\.\d+)+)?)(\.X)? < (?P<to_version>\d+((\.\d+)+)?(\.X)?)',
-            software)
-        from_version = regex.group('from_version')
-        to_version = regex.group('to_version')
-        regex = re.search(r'(?P<base>.+)\.(?P<least_digit>\d+)($|\.X)', to_version)
-        if to_version.__contains__('X'):
-            least_digit = int(regex.group('least_digit')) + 1
-            x_flag = True
-        else:
-            least_digit = int(regex.group('least_digit'))
-            x_flag = False
-        to_version = regex.group('base') + '.' + str(least_digit)
-        if (parse_version(from_version) <= parse_version(num_version) <= parse_version(to_version) and x_flag is False)\
-                or (parse_version(from_version) <= parse_version(num_version) < parse_version(to_version)
-                    and x_flag is True):
-            return True
-        else:
-            return False
-    except AttributeError:
+    regex_filter = software_name + r' \w+((\.\w+)+)?(\.x)? < \w+((\.\w+)+)?(\.x)?'
+    software = extract_software_from_description(software_name, description, regex_filter)
+    if software is None:
+        return False
+    regex_filter = r'(?P<from_version>\d+((\.\d+)+)?)(\.X)? < (?P<to_version>\d+((\.\d+)+)?(\.X)?)'
+    parsed_from_version, parsed_to_version, x_flag = extract_num_version_range_from_software(software, regex_filter, contains_x)
+    if parsed_from_version is None or parsed_to_version is None:
+        return False
+    parsed_num_version = parse_version(num_version)
+    if parsed_from_version <= parsed_num_version <= parsed_to_version and x_flag is False:
+        return True
+    elif parsed_from_version <= parsed_num_version < parsed_to_version and x_flag is True:
+        return True
+    else:
         return False
 
+
+def extract_num_version_range_from_software(software, regex_filter, contains_x):
+    x_flag = False
+    regex = re.search(regex_filter, software)
+    try:
+        from_version = regex.group('from_version')
+        to_version = regex.group('to_version')
+        if contains_x:
+            to_version, x_flag = get_to_version_with_x(to_version)
+        parsed_from_version = parse_version(from_version)
+        parsed_to_version = parse_version(to_version)
+        return parsed_from_version, parsed_to_version, x_flag
+    except AttributeError:
+        return None, None, None
+
+
+def get_to_version_with_x(to_version):
+    regex = re.search(r'(?P<base>.+)\.(?P<least_digit>\d+)($|\.X)', to_version)
+    if to_version.__contains__('X'):
+        least_digit = int(regex.group('least_digit')) + 1
+        x_flag = True
+    else:
+        least_digit = int(regex.group('least_digit'))
+        x_flag = False
+    to_version = regex.group('base') + '.' + str(least_digit)
+    return to_version, x_flag
