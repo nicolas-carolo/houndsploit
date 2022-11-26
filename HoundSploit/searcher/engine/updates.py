@@ -14,8 +14,6 @@ def install_updates():
     Run the script for making the pull of HoundSploit and exploitdb repositories.
     This script also manages the necessary files for hsploit.
     """
-    store_copy_previous_csv_files()
-    store_copy_previous_db_file()
     installer_path = os.path.abspath(init_path + "/.HoundSploit/houndsploit/")
     if platform.system() == "Darwin":
         installer_path = os.path.abspath(installer_path + "/install_db_darwin.sh")
@@ -61,15 +59,3 @@ def get_latest_db_update_date():
     else:
         date_latest_db_update = int(date_latest_db_update.decode("utf-8"))
     return time.strftime('%Y-%m-%d', time.localtime(date_latest_db_update))
-
-
-def store_copy_previous_csv_files():
-    exploitdb_path = os.path.abspath(init_path + "/.HoundSploit/exploitdb")
-    houndsploit_path = os.path.abspath(init_path + "/.HoundSploit")
-    shutil.copyfile(os.path.abspath(exploitdb_path + "/files_shellcodes.csv"), os.path.abspath(houndsploit_path + "/old_files_shellcodes.csv"))
-    shutil.copyfile(exploitdb_path + "/files_exploits.csv", houndsploit_path + "/old_files_exploits.csv")
-
-
-def store_copy_previous_db_file():
-    houndsploit_path = os.path.abspath(init_path + "/.HoundSploit")
-    shutil.copyfile(os.path.abspath(houndsploit_path + "/hound_db.sqlite3"), os.path.abspath(houndsploit_path + "/fixed_hound_db.sqlite3"))

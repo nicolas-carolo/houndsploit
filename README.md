@@ -6,9 +6,9 @@ Author: Nicolas Carolo <nicolascarolo.dev@gmail.com>
 
 Copyright: © 2021, Nicolas Carolo.
 
-Date: 2021-11-19
+Date: 2021-11-26
 
-Version: 2.7.0
+Version: 2.8.0
 
 
 ## PURPOSE

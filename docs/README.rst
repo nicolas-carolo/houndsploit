@@ -4,8 +4,8 @@ houndsploit.  An advanced graphic search engine for Exploit-DB
 :Info: This is the README file for houndsploit.
 :Author: Nicolas Carolo <nicolascarolo.dev@gmail>
 :Copyright: © 2021, Nicolas Carolo.
-:Date: 2021-11-19
-:Version: 2.7.0
+:Date: 2021-11-26
+:Version: 2.8.0
 
 .. index: README
 .. image:: https://travis-ci.org/nicolas-carolo/houndsploit.svg?branch=master

@@ -16,7 +16,6 @@ from HoundSploit.searcher.engine.utils import check_file_existence, get_vulnerab
 from HoundSploit.searcher.engine.csv2sqlite import create_db
 from HoundSploit.searcher.engine.sorter import sort_results
 from HoundSploit.searcher.engine.bookmarks import new_bookmark, is_bookmarked, remove_bookmark, get_bookmarks_list
-from HoundSploit.searcher.engine.fix_dates import fix_dates, create_fixed_db
 from shutil import copyfile
 
 
@@ -377,12 +376,9 @@ def get_updates():
     """
     install_updates()
     if check_file_existence(init_path + "/houndsploit_db.lock"):
-        if os.path.isdir(init_path + "/fixed_exploitdb"):
-            create_fixed_db()
-        else:
-            if check_file_existence(init_path + "/hound_db.sqlite3"):
-                os.remove(init_path + "/hound_db.sqlite3")
-            create_db()
+        if check_file_existence(init_path + "/hound_db.sqlite3"):
+            os.remove(init_path + "/hound_db.sqlite3")
+        create_db()
         db_update_alert = True
     else:
         db_update_alert = False
@@ -620,34 +616,6 @@ def remove_bookmark_shellcode():
     except FileNotFoundError:
         error_msg = 'Sorry! This file does not exist :('
         return render_template('error_page.html', error=error_msg)
-
-
-@app.route('/fix-dates')
-def repair_dates():
-    # print("Starting fix")
-    fix_dates()
-    # print("Ending fix")
-    return render_template('settings.html', latest_db_update=get_latest_db_update_date(), db_update_alert=False,
-                            sw_update_alert=False, no_updates_alert=False)
-
-
-@app.route('/restore-exploitdb')
-def restore_exploitdb():
-    # print("Starting fix")
-    if platform.system() == "Windows":
-        script_path = os.path.abspath(init_path + "/houndsploit/HoundSploit/scripts/restore_exploitdb.ps1")
-        os.system("powershell.exe -ExecutionPolicy Bypass -File " + script_path)
-        # print("Ending fix")
-        return render_template('error_page.html', error="Please restart the application server for applying changes!")
-    else:
-        fixed_exploitdb_path = os.path.abspath(init_path + "/fixed_exploitdb")
-        db_path = os.path.abspath(init_path + "/hound_db.sqlite3")
-        shutil.rmtree(fixed_exploitdb_path)
-        os.remove(db_path)
-        create_db()
-        # print("Ending fix")
-        return render_template('settings.html', latest_db_update=get_latest_db_update_date(), db_update_alert=False,
-                                sw_update_alert=False, no_updates_alert=False)
 
 
 def start_app():
