@@ -8,7 +8,7 @@ if (-not (Test-Path $HOUNDSPLOIT_PATH)) {
 
 if (-not (Test-Path $HOUNDSPLOIT_PATH\exploitdb)) {
     cd $HOUNDSPLOIT_PATH
-    git clone https://github.com/offensive-security/exploitdb
+    git clone https://gitlab.com/exploit-database/exploitdb
 } else {
     cd $HOUNDSPLOIT_PATH\exploitdb
     $gitOutput = git pull

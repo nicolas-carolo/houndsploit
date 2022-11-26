@@ -1,3 +1,6 @@
+import os
+
+
 def check_file_existence(filename):
     try:
         f = open(filename)

@@ -10,7 +10,7 @@ from HoundSploit.searcher.engine.keywords_highlighter import highlight_keywords_
     highlight_keywords_in_port
 from HoundSploit.searcher.engine.suggestions import substitute_with_suggestions, propose_suggestions, get_suggestions_list,\
     new_suggestion, remove_suggestion, DEFAULT_SUGGESTIONS
-from HoundSploit.searcher.engine.updates import get_latest_db_update_date, install_updates
+from HoundSploit.searcher.engine.updates import get_last_db_update_date, install_updates
 from HoundSploit.searcher.utils.searcher import get_n_needed_pages_for_showing_results
 from HoundSploit.searcher.engine.csv2sqlite import create_db
 from HoundSploit.searcher.engine.sorter import sort_results
@@ -403,7 +403,7 @@ def settings():
     Show settings page
     :return: settings templates
     """
-    return render_template('settings.html', latest_db_update=get_latest_db_update_date())
+    return render_template('settings.html', latest_db_update=get_last_db_update_date())
 
 
 @app.route('/update')
@@ -434,7 +434,7 @@ def get_updates():
     else:
         no_updates_alert = False
 
-    return render_template('settings.html', latest_db_update=get_latest_db_update_date(), db_update_alert=db_update_alert,
+    return render_template('settings.html', latest_db_update=get_last_db_update_date(), db_update_alert=db_update_alert,
                             sw_update_alert=sw_update_alert, no_updates_alert=no_updates_alert)
 
 
@@ -664,7 +664,7 @@ def repair_dates():
     # print("Starting fix")
     fix_dates()
     # print("Ending fix")
-    return render_template('settings.html', latest_db_update=get_latest_db_update_date(), db_update_alert=False,
+    return render_template('settings.html', latest_db_update=get_last_db_update_date(), db_update_alert=False,
                             sw_update_alert=False, no_updates_alert=False)
 
 
@@ -683,7 +683,7 @@ def restore_exploitdb():
         os.remove(db_path)
         create_db()
         # print("Ending fix")
-        return render_template('settings.html', latest_db_update=get_latest_db_update_date(), db_update_alert=False,
+        return render_template('settings.html', latest_db_update=get_last_db_update_date(), db_update_alert=False,
                                 sw_update_alert=False, no_updates_alert=False)
 
 
