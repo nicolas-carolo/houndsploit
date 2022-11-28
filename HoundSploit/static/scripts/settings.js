@@ -3,22 +3,10 @@ function checkForUpdates() {
 }
 
 function savePreferences() {
-    var current_db = getCookie("database")
     var theme = document.getElementById("theme-selector").value;
-    var new_db = document.getElementById("db-selector").value;
     document.cookie = "theme=" + theme + "; expires=Tue, 31 Dec 2030 23:59:59 UTC";
-    document.cookie = "database=" + new_db + "; expires=Tue, 31 Dec 2030 23:59:59 UTC";
-    if (new_db == current_db) {
-        alert("Your preferences have been updated");
-        location.reload();
-    } else if (new_db == "fixed-dates" && current_db != new_db) {
-        alert("Your preferences have been updated. Building the new database can take a while. You can follow the progress of the process from the terminal window");
-        location.href = "/fix-dates";
-    } else if (new_db == "exploitdb" && current_db != new_db) {
-        alert("Your preferences have been updated. Restoring the original ExploitDB database.");
-        location.href = "/restore-exploitdb";
-    }
-    
+    alert("Your preferences have been updated");
+    location.reload();    
 }
 
 function getTheme(template) {

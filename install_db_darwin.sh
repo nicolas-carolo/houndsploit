@@ -18,7 +18,7 @@ fi
 
 if ! [ -d "$HOUNDSPLOIT_PATH/exploitdb" ] ; then
     cd $HOUNDSPLOIT_PATH
-    git clone https://gitlab.com/exploit-database/exploitdb
+    git clone https://gitlab.com/exploit-database/exploitdb.git
 else
     cd $HOUNDSPLOIT_PATH/exploitdb
     git_output=$(git pull)
