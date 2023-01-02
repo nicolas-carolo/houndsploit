@@ -1,10 +1,10 @@
-from HoundSploit.searcher.utils.constants import BASE_PATH
+from HoundSploit.searcher.utils.constants import BASE_DIR
 from HoundSploit.searcher.utils.file import check_file_existence
 
 bookmarks_csv_header = "vulnerability_id,vulnerability_class,date\n"
 suggestions_csv_header = "searched,suggestion,autoreplacement\n"
-bookmarks_csv_file = BASE_PATH + "bookmarks.csv"
-suggestions_csv_file = BASE_PATH + "custom_suggestions.csv"
+bookmarks_csv_file = BASE_DIR + "bookmarks.csv"
+suggestions_csv_file = BASE_DIR + "custom_suggestions.csv"
 
 
 def add_bookmark_to_csv(vulnerability_id, vulnerability_class, date):

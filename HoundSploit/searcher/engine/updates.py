@@ -4,13 +4,13 @@ import os
 import platform
 import time
 from datetime import datetime
-from HoundSploit.searcher.utils.constants import BASE_PATH, EXPLOITDB_PATH
+from HoundSploit.searcher.utils.constants import BASE_DIR, EXPLOITDB_PATH
 
 
 INSTALLER_CMD = {
-    "Darwin": BASE_PATH + "houndsploit/install_db_darwin.sh",
-    "Linux": BASE_PATH + "houndsploit/install_db_linux.sh",
-    "Windows": "powershell.exe -ExecutionPolicy Bypass -File " + BASE_PATH + "houndsploit/install_db_windows.ps1"
+    "Darwin": BASE_DIR + "houndsploit/install_db_darwin.sh",
+    "Linux": BASE_DIR + "houndsploit/install_db_linux.sh",
+    "Windows": "powershell.exe -ExecutionPolicy Bypass -File " + BASE_DIR + "houndsploit/install_db_windows.ps1"
 }
     
 
