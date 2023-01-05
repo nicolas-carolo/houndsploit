@@ -35,60 +35,59 @@
         <table id="vulnerability-info-table" name="vulnerability-info-table" class="vulnerability_info">
             <tr>
                 <th>Description:</th>
-                <td>{{ vulnerability_description }}</td>
+                <td>{{ vulnerability.description }}</td>
             </tr>
             <tr>
                 <th>Author:</th>
-                <td>{{ vulnerability_author }}</td>
+                <td>{{ vulnerability.author }}</td>
             </tr>
             <tr>
                 <th>File:</th>
-                <td>{{ vulnerability_file }}</td>
+                <td>{{ vulnerability.file }}</td>
             </tr>
             <tr>
                 <th>Date:</th>
-                <td>{{ vulnerability_date }}</td>
+                <td>{{ vulnerability.date }}</td>
             </tr>
             <tr>
                 <th>Type:</th>
-                <td>{{ vulnerability_type }}</td>
+                <td>{{ vulnerability.type }}</td>
             </tr>
             <tr>
                 <th>Platform:</th>
-                <td>{{ vulnerability_platform }}</td>
+                <td>{{ vulnerability.platform }}</td>
             </tr>
-            {% if vulnerability_port and vulnerability_port != "" %}
+            {% if vulnerability.port and vulnerability.port != "" %}
                 <tr>
                     <th>Port:</th>
-                    <td>{{ vulnerability_port }}</td>
+                    <td>{{ vulnerability.port }}</td>
                 </tr>
             {% endif %}
         </table>
         <table class="buttons-table">
             <tr class="buttons-table">
-                {% if exploit_id %}
+                {% if vulnerability.type == "shellcode" %}
                     <td class="buttons-table">
-                        <a href="/download-exploit?exploit-id={{ exploit_id }}""><button>Download</button></a>
+                        <a href="/download-shellcode?shellcode-id={{ vulnerability.id }}"><button>Download</button></a>
                     </td>
                     <td class="buttons-table">
                         {% if bookmarked %}
-                            <a href="/remove-bookmark-exploit?exploit-id={{ exploit_id }}""><button>Delete Bookmark</button></a>
+                            <a href="/remove-bookmark-shellcode?shellcode-id={{ vulnerability.id }}"><button>Delete Bookmark</button></a>
                         {% else %}
-                            <a href="/bookmark-exploit?exploit-id={{ exploit_id }}""><button>Add Bookmark</button></a>
+                            <a href="/bookmark-shellcode?shellcode-id={{ vulnerability.id }}"><button>Add Bookmark</button></a>
                         {% endif %}
                     </td>
-                {% endif %}
-                {% if shellcode_id %}
+                {% else %}
                     <td class="buttons-table">
-                        <a href="/download-shellcode?shellcode-id={{ shellcode_id }}""><button>Download</button></a>
+                        <a href="/download-exploit?exploit-id={{ vulnerability.id }}"><button>Download</button></a>
                     </td>
                     <td class="buttons-table">
                         {% if bookmarked %}
-                            <a href="/remove-bookmark-shellcode?shellcode-id={{ shellcode_id }}""><button>Delete Bookmark</button></a>
+                            <a href="/remove-bookmark-exploit?exploit-id={{ vulnerability.id }}"><button>Delete Bookmark</button></a>
                         {% else %}
-                            <a href="/bookmark-shellcode?shellcode-id={{ shellcode_id }}""><button>Add Bookmark</button></a>
+                            <a href="/bookmark-exploit?exploit-id={{ vulnerability.id }}"><button>Add Bookmark</button></a>
                         {% endif %}
-                    </td>
+                    </td>                   
                 {% endif %}
             </tr>
         </table>

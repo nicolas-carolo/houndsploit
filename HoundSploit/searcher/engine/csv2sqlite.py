@@ -24,7 +24,7 @@ def create_db():
     shellcodes_path = init_path + "/exploitdb/files_shellcodes.csv"
     with open(shellcodes_path, 'r', encoding="utf8") as fin:
         dr = csv.DictReader(fin)
-        to_db = [(i['id'], i['file'], i['description'], i['date_published'], i['author'], i['type'], i['platform']) for i in dr]
+        to_db = [(i['id'], i['file'], i['description'], i['date_published'], i['author'], 'shellcode', i['platform']) for i in dr]
     cur.executemany("INSERT INTO searcher_shellcode (id, file, description, date, author, type, platform) VALUES (?, ?, ?, ?, ?, ?, ?);", to_db)
 
     cur.execute("CREATE TABLE searcher_suggestion (searched, suggestion, autoreplacement);")
