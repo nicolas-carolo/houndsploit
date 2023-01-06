@@ -18,14 +18,13 @@ from HoundSploit.searcher.engine.bookmarks import new_bookmark, is_bookmarked, r
 from shutil import copyfile
 from HoundSploit.searcher.entities.exploit import Exploit
 from HoundSploit.searcher.entities.shellcode import Shellcode
-from HoundSploit.searcher.utils.file import check_file_existence
+from HoundSploit.searcher.utils.file import check_file_existence, download_vulnerability_file
 from HoundSploit.searcher.utils.constants import BASE_DIR, TEMPLATE_DIR, STATIC_DIR, N_RESULTS_FOR_PAGE
 
 from HoundSploit.server.requests.details import get_exploit_from_params, get_shellcode_from_params
 from HoundSploit.server.requests.search_engine import get_searched_text, is_previous_page_bookmarks
 from HoundSploit.server.responses.details import render_exploit_details, render_shellcode_details
 from HoundSploit.server.responses.error_page import render_error_page
-from HoundSploit.server.file.download import download_exploit_file
 
 def request_search_results():
     if request.method == 'POST':
@@ -242,55 +241,35 @@ def request_exploit_details():
     exploit = get_exploit_from_params(request)
     searched_text = get_searched_text(request)
     is_prev_page_bookmarks = is_previous_page_bookmarks(request)
-    return render_exploit_details(exploit, is_prev_page_bookmarks)  
+    return render_exploit_details(exploit, is_prev_page_bookmarks, None)  
 
 
 def request_download_exploit():
     exploit = get_exploit_from_params(request)
-    status, message = download_exploit_file(exploit)
+    status, message = download_vulnerability_file(exploit)
+    is_prev_page_bookmarks = is_previous_page_bookmarks(request)
     if status:
-        return render_exploit_details(exploit, is_prev_page_bookmarks)
+        return render_exploit_details(exploit, is_prev_page_bookmarks, message)
     else:
-        retur render_error_page(message)
+        return render_error_page(message)
 
 
 def request_shellcode_details():
     shellcode = get_shellcode_from_params(request)
     searched_text = get_searched_text(request)
     is_prev_page_bookmarks = is_previous_page_bookmarks(request)
-    return render_shellcode_details(shellcode, is_prev_page_bookmarks) 
+    return render_shellcode_details(shellcode, is_prev_page_bookmarks, None) 
 
 
 def request_download_shellcode():
-    vulnerability_class = "shellcode"
-    shellcode_id = request.args.get('shellcode-id', None)
-    shellcode = Shellcode.get_by_id(shellcode_id)
-    if shellcode is None:
-        error_msg = 'Sorry! This shellcode does not exist :('
-        return render_template('error_page.html', error=error_msg)
-    file_path = BASE_DIR + "/exploitdb/" + shellcode.file
-    try:
-        with open(file_path, 'r') as f:
-            content = f.readlines()
-            vulnerability_code = ''.join(content)
-        copyfile(file_path, os.path.expanduser("~") + "/shellcode_" + shellcode_id + shellcode.get_extension())
-        download_alert = "shellcode_" + shellcode_id + shellcode.get_extension() + " has been downloaded in your home directory"
-        return render_template('code_viewer.html',
-                            vulnerability_code=vulnerability_code,
-                            vulnerability_description=shellcode.description,
-                            vulnerability_file=shellcode.file,
-                            vulnerability_author=shellcode.author,
-                            vulnerability_date=shellcode.date,
-                            vulnerability_type=shellcode.type,
-                            vulnerability_platform=shellcode.platform,
-                            file_path=file_path,
-                            download_alert=download_alert,
-                            shellcode_id=shellcode_id,
-                            bookmarked=is_bookmarked(shellcode_id, vulnerability_class)
-                            )
-    except FileNotFoundError:
-        error_msg = 'Sorry! This file does not exist :('
-        return render_template('error_page.html', error=error_msg)
+    shellcode = get_shellcode_from_params(request)
+    print(shellcode.id)
+    status, message = download_vulnerability_file(shellcode)
+    is_prev_page_bookmarks = is_previous_page_bookmarks(request)
+    if status:
+        return render_shellcode_details(shellcode, is_prev_page_bookmarks, message)
+    else:
+        return render_error_page(message)
 
 
 def request_settings():
