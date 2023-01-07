@@ -10,11 +10,9 @@ from HoundSploit.searcher.engine.keywords_highlighter import highlight_keywords_
     highlight_keywords_in_port
 from HoundSploit.searcher.engine.suggestions import substitute_with_suggestions, propose_suggestions, get_suggestions_list,\
     new_suggestion, remove_suggestion, DEFAULT_SUGGESTIONS
-from HoundSploit.searcher.engine.updates import get_last_db_update_date, install_updates
 from HoundSploit.searcher.utils.searcher import get_n_needed_pages_for_showing_results
 from HoundSploit.searcher.engine.csv2sqlite import create_db
 from HoundSploit.searcher.engine.sorter import sort_results
-from HoundSploit.searcher.engine.bookmarks import new_bookmark, is_bookmarked, remove_bookmark, get_bookmarks_list
 from shutil import copyfile
 from HoundSploit.searcher.entities.exploit import Exploit
 from HoundSploit.searcher.entities.shellcode import Shellcode
@@ -23,8 +21,11 @@ from HoundSploit.searcher.utils.constants import BASE_DIR, TEMPLATE_DIR, STATIC_
 
 from HoundSploit.server.requests.details import get_exploit_from_params, get_shellcode_from_params
 from HoundSploit.server.requests.search_engine import get_searched_text, is_previous_page_bookmarks
-from HoundSploit.server.responses.details import render_exploit_details, render_shellcode_details
+from HoundSploit.server.responses.details import render_vulnerability_details
 from HoundSploit.server.responses.error_page import render_error_page
+from HoundSploit.server.responses.settings import render_settings
+from HoundSploit.searcher.engine.updates import install_updates, check_db_changes,check_software_changes, check_no_updates
+from HoundSploit.searcher.engine.bookmarks import new_bookmark, is_bookmarked, remove_bookmark, get_bookmarks_list
 
 def request_search_results():
     if request.method == 'POST':
@@ -241,7 +242,14 @@ def request_exploit_details():
     exploit = get_exploit_from_params(request)
     searched_text = get_searched_text(request)
     is_prev_page_bookmarks = is_previous_page_bookmarks(request)
-    return render_exploit_details(exploit, is_prev_page_bookmarks, None)  
+    return render_vulnerability_details(exploit, is_prev_page_bookmarks, None)  
+
+
+def request_shellcode_details():
+    shellcode = get_shellcode_from_params(request)
+    searched_text = get_searched_text(request)
+    is_prev_page_bookmarks = is_previous_page_bookmarks(request)
+    return render_vulnerability_details(shellcode, is_prev_page_bookmarks, None) 
 
 
 def request_download_exploit():
@@ -249,16 +257,9 @@ def request_download_exploit():
     status, message = download_vulnerability_file(exploit)
     is_prev_page_bookmarks = is_previous_page_bookmarks(request)
     if status:
-        return render_exploit_details(exploit, is_prev_page_bookmarks, message)
+        return render_vulnerability_details(exploit, is_prev_page_bookmarks, message)
     else:
         return render_error_page(message)
-
-
-def request_shellcode_details():
-    shellcode = get_shellcode_from_params(request)
-    searched_text = get_searched_text(request)
-    is_prev_page_bookmarks = is_previous_page_bookmarks(request)
-    return render_shellcode_details(shellcode, is_prev_page_bookmarks, None) 
 
 
 def request_download_shellcode():
@@ -267,38 +268,63 @@ def request_download_shellcode():
     status, message = download_vulnerability_file(shellcode)
     is_prev_page_bookmarks = is_previous_page_bookmarks(request)
     if status:
-        return render_shellcode_details(shellcode, is_prev_page_bookmarks, message)
+        return render_vulnerability_details(shellcode, is_prev_page_bookmarks, message)
     else:
         return render_error_page(message)
 
 
+def request_add_bookmark_exploit():
+    exploit = get_exploit_from_params(request)
+    is_prev_page_bookmarks = is_previous_page_bookmarks(request)
+    status, message = new_bookmark(exploit)
+    if status:
+        return render_vulnerability_details(exploit, is_prev_page_bookmarks, None)
+    else:
+        return render_error_page(message)
+
+
+def request_add_bookmark_shellcode():
+    shellcode = get_shellcode_from_params(request)
+    is_prev_page_bookmarks = is_previous_page_bookmarks(request)
+    status, message = new_bookmark(shellcode)
+    if status:
+        return render_vulnerability_details(shellcode, is_prev_page_bookmarks, None)
+    else:
+        return render_error_page(message)
+
+
+def request_delete_bookmark_exploit():
+    exploit = get_exploit_from_params(request)
+    is_prev_page_bookmarks = is_previous_page_bookmarks(request)
+    status, message = remove_bookmark(exploit)
+    if status:
+        return render_vulnerability_details(exploit, is_prev_page_bookmarks, None)
+    else:
+        return render_error_page(message)
+
+
+def request_delete_bookmark_shellcode():
+    shellcode = get_shellcode_from_params(request)
+    is_prev_page_bookmarks = is_previous_page_bookmarks(request)
+    status, message = remove_bookmark(shellcode)
+    if status:
+        return render_vulnerability_details(shellcode, is_prev_page_bookmarks, None)
+    else:
+        return render_error_page(message)
+
+
+
 def request_settings():
-    return render_template('settings.html', latest_db_update=get_last_db_update_date())
+    return render_settings(False, False, False)
 
 
 def request_update():
     install_updates()
-    if check_file_existence(BASE_DIR + "/houndsploit_db.lock"):
-        if check_file_existence(BASE_DIR + "/hound_db.sqlite3"):
-            os.remove(BASE_DIR + "/hound_db.sqlite3")
-        create_db()
-        db_update_alert = True
-    else:
-        db_update_alert = False
-
-    if check_file_existence(BASE_DIR + "/houndsploit_sw.lock"):
-        sw_update_alert = True
-    else:
-        sw_update_alert = False
-
-    if sw_update_alert == False and db_update_alert == False:
-        no_updates_alert = True
-    else:
-        no_updates_alert = False
-
-    return render_template('settings.html', latest_db_update=get_last_db_update_date(), db_update_alert=db_update_alert,
-                            sw_update_alert=sw_update_alert, no_updates_alert=no_updates_alert)
-
+    db_update_alert = check_db_changes()
+    sw_update_alert = check_software_changes()
+    no_updates_alert = check_no_updates(db_update_alert, sw_update_alert)
+    return render_settings(db_update_alert, sw_update_alert, no_updates_alert)
+    
 
 def request_suggestions_manager():
     return render_template('suggestions.html', suggestions=get_suggestions_list(), default_suggestions=DEFAULT_SUGGESTIONS)
@@ -378,97 +404,3 @@ def request_bookmarks_manager():
                             bookmarks_list=bookmarks_list,
                             current_bookmarks_page=current_bookmarks_page,
                             latest_bookmarks_page=latest_bookmarks_page)
-
-
-def request_add_bookmark_exploit():
-    exploit_id = request.args.get('exploit-id', None)
-    exploit = Exploit.get_by_id(exploit_id)
-    if exploit is None:
-        error_msg = 'Sorry! This exploit does not exist :('
-        return render_template('error_page.html', error=error_msg)
-    file_path = BASE_DIR + "/exploitdb/" + exploit.file
-    try:
-        with open(file_path, 'r') as f:
-            content = f.readlines()
-            vulnerability_code = ''.join(content)
-        if new_bookmark(exploit_id, 'exploit'):
-            return render_template('code_viewer.html', vulnerability_code=vulnerability_code,
-                                vulnerability=exploit, file_path=file_path,
-                                bookmarked=is_bookmarked(exploit.id, 'exploit'))
-        else:
-            error_msg = 'Sorry! This exploit does not exist :('
-            return render_template('error_page.html', error=error_msg)
-    except FileNotFoundError:
-        error_msg = 'Sorry! This file does not exist :('
-        return render_template('error_page.html', error=error_msg)
-
-
-def request_delete_bookmark_exploit():
-    vulnerability_class = "exploit"
-    exploit_id = request.args.get('exploit-id', None)
-    exploit = Exploit.get_by_id(exploit_id)
-    if exploit is None:
-        error_msg = 'Sorry! This exploit does not exist :('
-        return render_template('error_page.html', error=error_msg)
-    file_path = BASE_DIR + "/exploitdb/" + exploit.file
-    try:
-        with open(file_path, 'r') as f:
-            content = f.readlines()
-            vulnerability_code = ''.join(content)
-        test = remove_bookmark(exploit_id, vulnerability_class)
-        return render_template('code_viewer.html', vulnerability_code=vulnerability_code,
-                               vulnerability_description=exploit.description, vulnerability_file=exploit.file,
-                               vulnerability_author=exploit.author, vulnerability_date=exploit.date,
-                               vulnerability_type=exploit.type, vulnerability_platform=exploit.platform,
-                               vulnerability_port=exploit.port, file_path=file_path, exploit_id=exploit_id,
-                               bookmarked=is_bookmarked(exploit_id, vulnerability_class))
-    except FileNotFoundError:
-        error_msg = 'Sorry! This file does not exist :('
-        return render_template('error_page.html', error=error_msg)
-
-
-def request_add_bookmark_shellcode():
-    shellcode_id = request.args.get('shellcode-id', None)
-    shellcode = Shellcode.get_by_id(shellcode_id)
-    if shellcode is None:
-        error_msg = 'Sorry! This shellcode does not exist :('
-        return render_template('error_page.html', error=error_msg)
-    file_path = BASE_DIR + "/exploitdb/" + shellcode.file
-    try:
-        with open(file_path, 'r') as f:
-            content = f.readlines()
-            vulnerability_code = ''.join(content)
-        if new_bookmark(shellcode_id, 'shellcode'):
-            return render_template('code_viewer.html', vulnerability_code=vulnerability_code,
-                                vulnerability=shellcode, file_path=file_path,
-                                bookmarked=is_bookmarked(shellcode_id, 'shellcode'))
-        else:
-            error_msg = 'Sorry! This shellcode does not exist :('
-            return render_template('error_page.html', error=error_msg)
-    except FileNotFoundError:
-        error_msg = 'Sorry! This file does not exist :('
-        return render_template('error_page.html', error=error_msg)
-
-
-def request_delete_bookmark_shellcode():
-    vulnerability_class = "shellcode"
-    shellcode_id = request.args.get('shellcode-id', None)
-    shellcode = Shellcode.get_by_id(shellcode_id)
-    if shellcode is None:
-        error_msg = 'Sorry! This shellcode does not exist :('
-        return render_template('error_page.html', error=error_msg)
-    file_path = BASE_DIR + "/exploitdb/" + shellcode.file
-    try:
-        with open(file_path, 'r') as f:
-            content = f.readlines()
-            vulnerability_code = ''.join(content)
-        remove_bookmark(shellcode_id, vulnerability_class)
-        return render_template('code_viewer.html', vulnerability_code=vulnerability_code,
-                               vulnerability_description=shellcode.description, vulnerability_file=shellcode.file,
-                               vulnerability_author=shellcode.author, vulnerability_date=shellcode.date,
-                               vulnerability_type=shellcode.type, vulnerability_platform=shellcode.platform,
-                               file_path=file_path, shellcode_id=shellcode_id,
-                               bookmarked=is_bookmarked(shellcode_id, vulnerability_class))
-    except FileNotFoundError:
-        error_msg = 'Sorry! This file does not exist :('
-        return render_template('error_page.html', error=error_msg)

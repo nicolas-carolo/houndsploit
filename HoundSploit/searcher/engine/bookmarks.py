@@ -8,27 +8,29 @@ from HoundSploit.searcher.utils.file import check_file_existence
 from datetime import datetime
 
 
-def new_bookmark(vulnerability_id, vulnerability_class):
-    if can_be_bookmarked(vulnerability_id, vulnerability_class):
+def new_bookmark(vulnerability):
+    if vulnerability is None:
+        return False, 'Sorry! This item does not exist :('
+    if vulnerability.type == 'shellcode':
+        vulnerability_class = 'shellcode'
+    else:
+        vulnerability_class = 'exploit'
+    if can_be_bookmarked(vulnerability, vulnerability_class):
         session = start_session()
         today = datetime.now()
-        new_bookmark = Bookmark(vulnerability_id, vulnerability_class, today)
+        new_bookmark = Bookmark(vulnerability.id, vulnerability_class, today)
         session.add(new_bookmark)
-        add_bookmark_to_csv(vulnerability_id, vulnerability_class, today)
+        add_bookmark_to_csv(vulnerability.id, vulnerability_class, today)
         session.commit()
         session.close()
-        return True
+        return True, "New bookmark added"
     else:
-        return False
+        return False, 'Sorry! This item cannot be bookmarked :('
 
 
-def can_be_bookmarked(vulnerability_id, vulnerability_class):
-    if vulnerability_class == 'exploit':
-        vulnerability_obj = Exploit.get_by_id(vulnerability_id)
-    elif vulnerability_class == 'shellcode':
-        vulnerability_obj = Shellcode.get_by_id(vulnerability_id)
-    if vulnerability_obj is not None:
-        if not is_bookmarked(vulnerability_id, vulnerability_class):
+def can_be_bookmarked(vulnerability, vulnerability_class):
+    if vulnerability is not None:
+        if not is_bookmarked(vulnerability.id, vulnerability_class):
             return True
         else:
             return False
@@ -36,17 +38,23 @@ def can_be_bookmarked(vulnerability_id, vulnerability_class):
         return False
 
 
-def remove_bookmark(vulnerability_id, vulnerability_class):
-    if is_bookmarked(vulnerability_id, vulnerability_class):
+def remove_bookmark(vulnerability):
+    if vulnerability is None:
+        return False, 'Sorry! This item does not exist :('
+    if vulnerability.type == 'shellcode':
+        vulnerability_class = 'shellcode'
+    else:
+        vulnerability_class = 'exploit'
+    if is_bookmarked(vulnerability.id, vulnerability_class):
         session = start_session()
-        session.query(Bookmark).filter(Bookmark.vulnerability_id == vulnerability_id,
+        session.query(Bookmark).filter(Bookmark.vulnerability_id == vulnerability.id,
                                     Bookmark.vulnerability_class == vulnerability_class).delete()
         session.commit()
         session.close()
-        delete_bookmark_from_csv(vulnerability_id, vulnerability_class)
-        return True
+        delete_bookmark_from_csv(vulnerability.id, vulnerability_class)
+        return True, "Bookmark deleted"
     else:
-        return False
+        return False, 'Sorry! This bookmark cannot be deleted :('
 
 
 def is_bookmarked(vulnerability_id, vulnerability_class):

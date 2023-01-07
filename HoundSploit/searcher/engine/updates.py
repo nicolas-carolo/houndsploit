@@ -5,6 +5,7 @@ import platform
 import time
 from datetime import datetime
 from HoundSploit.searcher.utils.constants import BASE_DIR, EXPLOITDB_PATH
+from HoundSploit.searcher.utils.file import check_file_existence
 
 
 INSTALLER_CMD = {
@@ -33,3 +34,29 @@ def get_last_db_update_date():
     else:
         date_latest_db_update = int(date_latest_db_update.decode("utf-8"))
     return time.strftime('%Y-%m-%d', time.localtime(date_latest_db_update))
+
+
+def check_db_changes():
+    if check_file_existence(BASE_DIR + "/houndsploit_db.lock"):
+        if check_file_existence(BASE_DIR + "/hound_db.sqlite3"):
+            os.remove(BASE_DIR + "/hound_db.sqlite3")
+        create_db()
+        db_update_alert = True
+    else:
+        db_update_alert = False
+    return db_update_alert
+
+
+def check_software_changes():
+    if check_file_existence(BASE_DIR + "/houndsploit_sw.lock"):
+        sw_update_alert = True
+    else:
+        sw_update_alert = False
+    return sw_update_alert
+
+
+def check_no_updates(db_update_alert, sw_update_alert):
+    if sw_update_alert == False and db_update_alert == False:
+        return True
+    else:
+        return False
