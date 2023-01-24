@@ -1,6 +1,7 @@
 from sqlalchemy import Column, String
 from sqlalchemy.ext.declarative import declarative_base
 from HoundSploit.searcher.utils.string import string_contains
+from HoundSploit.searcher.utils.constants import DEFAULT_SUGGESTIONS
 
 Base = declarative_base()
 
@@ -31,3 +32,11 @@ class Suggestion(Base):
         new_word = str(self.suggestion).lower()
         searched_text = searched_text.replace(old_word, new_word)
         return searched_text
+    
+
+    @staticmethod
+    def is_default_suggestion(searched):
+        if str(searched).lower() in DEFAULT_SUGGESTIONS:
+            return True
+        else:
+            return False

@@ -9,7 +9,7 @@ from HoundSploit.searcher.utils.searcher import get_vulnerability_filters
 from HoundSploit.searcher.engine.keywords_highlighter import highlight_keywords_in_description, highlight_keywords_in_file, \
     highlight_keywords_in_port
 from HoundSploit.searcher.engine.suggestions import substitute_with_suggestions, propose_suggestions, get_suggestions_list,\
-    new_suggestion, remove_suggestion, DEFAULT_SUGGESTIONS
+    new_suggestion, remove_suggestion
 from HoundSploit.searcher.utils.searcher import get_n_needed_pages_for_showing_results
 from HoundSploit.searcher.engine.csv2sqlite import create_db
 from HoundSploit.searcher.engine.sorter import sort_results
@@ -17,15 +17,18 @@ from shutil import copyfile
 from HoundSploit.searcher.entities.exploit import Exploit
 from HoundSploit.searcher.entities.shellcode import Shellcode
 from HoundSploit.searcher.utils.file import check_file_existence, download_vulnerability_file
-from HoundSploit.searcher.utils.constants import BASE_DIR, TEMPLATE_DIR, STATIC_DIR, N_RESULTS_FOR_PAGE
+from HoundSploit.searcher.utils.constants import BASE_DIR, TEMPLATE_DIR, STATIC_DIR, N_RESULTS_FOR_PAGE, DEFAULT_SUGGESTIONS
 
 from HoundSploit.server.requests.details import get_exploit_from_params, get_shellcode_from_params
 from HoundSploit.server.requests.search_engine import get_searched_text, is_previous_page_bookmarks
+from HoundSploit.server.requests.suggestions import get_searched_text_suggestion, get_search_suggestion, get_suggestion_autoreplacement_flag
 from HoundSploit.server.responses.details import render_vulnerability_details
 from HoundSploit.server.responses.error_page import render_error_page
 from HoundSploit.server.responses.settings import render_settings
+from HoundSploit.server.responses.suggestions import render_suggestions
 from HoundSploit.searcher.engine.updates import install_updates, check_db_changes,check_software_changes, check_no_updates
 from HoundSploit.searcher.engine.bookmarks import new_bookmark, is_bookmarked, remove_bookmark, get_bookmarks_list
+from HoundSploit.searcher.engine.suggestions import new_suggestion
 
 def request_search_results():
     if request.method == 'POST':
@@ -332,16 +335,14 @@ def request_suggestions_manager():
 
 
 def request_add_suggestion():
-    if request.method == 'POST':
-        searched = request.form['searched']
-        suggestion = request.form['suggestion']
-        autoreplacement = request.form['autoreplacement']
-        if not str(searched).lower() in DEFAULT_SUGGESTIONS:
-            new_suggestion(searched, suggestion, autoreplacement)
-            return render_template('suggestions.html', suggestions=get_suggestions_list(), default_suggestions=DEFAULT_SUGGESTIONS)
-        else:
-            error = 'ERROR: Default suggestions cannot be modified!'
-            return render_template('suggestions.html', suggestions=get_suggestions_list(), suggestion_error=error, default_suggestions=DEFAULT_SUGGESTIONS)
+    searched = get_searched_text_suggestion(request)
+    suggestion = get_search_suggestion(request)
+    autoreplacement = get_suggestion_autoreplacement_flag(request)
+    status, message = new_suggestion(searched, suggestion, autoreplacement)
+    if (status):
+        return render_suggestions()
+    else:
+        return render_error_page(message)
 
 
 def request_delete_suggestion():

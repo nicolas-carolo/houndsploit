@@ -8,3 +8,4 @@ TEMPLATE_DIR = os.path.abspath('/home/nicolas/Projects/Python/houndsploit/HoundS
 STATIC_DIR = os.path.abspath('/home/nicolas/Projects/Python/houndsploit/HoundSploit/static')
 
 N_RESULTS_FOR_PAGE = 10
+DEFAULT_SUGGESTIONS = ["joomla", "linux", "phpbb", "macos", "mac os x", "html 5", "wordpress"]

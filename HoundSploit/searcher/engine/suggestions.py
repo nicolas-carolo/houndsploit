@@ -5,8 +5,6 @@ from HoundSploit.searcher.utils.file import check_file_existence
 from HoundSploit.searcher.utils.csv import add_suggestion_to_csv, delete_suggestion_from_csv,\
     edit_suggestion_in_csv
 
-DEFAULT_SUGGESTIONS = ["joomla", "linux", "phpbb", "macos", "mac os x", "html 5", "wordpress"]
-
 
 def substitute_with_suggestions(searched_text):
     suggestions_list = get_suggestions_list()
@@ -34,22 +32,27 @@ def get_suggestions_list():
 
 
 def new_suggestion(searched, suggestion, autoreplacement):
-    session = start_session()
-    searched = str(searched).lower()
-    suggestion = str(suggestion).lower()
-    queryset = session.query(Suggestion).filter(Suggestion.searched == searched)
-    results_list = queryset2list(queryset)
-    if len(results_list) == 0:
-        new_suggestion = Suggestion(searched, suggestion, autoreplacement)
-        session.add(new_suggestion)
-        add_suggestion_to_csv(searched, suggestion, autoreplacement)
+    if Suggestion.is_default_suggestion(searched):
+        message = "ERROR: Default suggestions cannot be modified!"
+        return False, message
     else:
-        edited_suggestion = session.query(Suggestion).get(searched)
-        edited_suggestion.suggestion = suggestion
-        edited_suggestion.autoreplacement = autoreplacement
-        edit_suggestion_in_csv(searched, suggestion, autoreplacement)
-    session.commit()
-    session.close()
+        session = start_session()
+        searched = str(searched).lower()
+        suggestion = str(suggestion).lower()
+        queryset = session.query(Suggestion).filter(Suggestion.searched == searched)
+        results_list = queryset2list(queryset)
+        if len(results_list) == 0:
+            new_suggestion = Suggestion(searched, suggestion, autoreplacement)
+            session.add(new_suggestion)
+            add_suggestion_to_csv(searched, suggestion, autoreplacement)
+        else:
+            edited_suggestion = session.query(Suggestion).get(searched)
+            edited_suggestion.suggestion = suggestion
+            edited_suggestion.autoreplacement = autoreplacement
+            edit_suggestion_in_csv(searched, suggestion, autoreplacement)
+        session.commit()
+        session.close()
+        return True, ""
 
 
 def remove_suggestion(searched):
