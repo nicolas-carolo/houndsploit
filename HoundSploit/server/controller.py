@@ -333,7 +333,6 @@ def request_suggestions_manager():
     return render_template('suggestions.html', suggestions=get_suggestions_list(), default_suggestions=DEFAULT_SUGGESTIONS)
 
 
-
 def request_add_suggestion():
     searched = get_searched_text_suggestion(request)
     suggestion = get_search_suggestion(request)
@@ -346,15 +345,12 @@ def request_add_suggestion():
 
 
 def request_delete_suggestion():
-    searched = request.args.get('searched', None)
-    if str(searched).lower() in DEFAULT_SUGGESTIONS:
-        error = 'ERROR: Default suggestions cannot be deleted!'
-        return render_template('suggestions.html', suggestions=get_suggestions_list(), suggestion_error=error, default_suggestions=DEFAULT_SUGGESTIONS)
-    if remove_suggestion(searched):
-        return render_template('suggestions.html', suggestions=get_suggestions_list(), default_suggestions=DEFAULT_SUGGESTIONS)
+    searched = get_searched_text_suggestion(request)
+    status, message = remove_suggestion(searched)
+    if (status):
+        return render_suggestions()
     else:
-        error = 'ERROR: The suggestion you want to delete does not exist!'
-        return render_template('suggestions.html', suggestions=get_suggestions_list(), suggestion_error=error, default_suggestions=DEFAULT_SUGGESTIONS)
+        return render_error_page(message)
 
 
 def request_bookmarks_manager():

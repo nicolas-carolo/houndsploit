@@ -56,14 +56,18 @@ def new_suggestion(searched, suggestion, autoreplacement):
 
 
 def remove_suggestion(searched):
-    session = start_session()
-    suggestion_item = session.query(Suggestion).get(searched)
-    if suggestion_item is not None:
-        session.query(Suggestion).filter(Suggestion.searched == searched).delete()
-        session.commit()
-        session.close()
-        delete_suggestion_from_csv(searched)
-        return True
+    if Suggestion.is_default_suggestion(searched):
+        error = "ERROR: Default suggestions cannot be deleted!"
+        return True, error
     else:
-        session.close()
-        return False
+        session = start_session()
+        suggestion_item = session.query(Suggestion).get(searched)
+        if suggestion_item is not None:
+            session.query(Suggestion).filter(Suggestion.searched == searched).delete()
+            session.commit()
+            session.close()
+            delete_suggestion_from_csv(searched)
+            return True, ""
+        else:
+            session.close()
+            return False, "ERROR: The suggestion you want to delete does not exist!"

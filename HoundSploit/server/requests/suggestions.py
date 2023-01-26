@@ -4,7 +4,10 @@ from flask import request
 def get_searched_text_suggestion(request):
     if request.method == 'POST':
         searched_text_suggestion = request.form['searched']
-        return searched_text_suggestion
+        
+    else:
+        searched_text_suggestion = request.args.get('searched', None)
+    return searched_text_suggestion
 
 
 def get_search_suggestion(request):
