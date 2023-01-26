@@ -85,9 +85,7 @@ def get_bookmarks_list():
     return bookmarks_list
 
 
-def get_filtered_bookmarks_list(searched_text):
-    key_words_list = []
-    key_words_list = (str(searched_text).upper()).split()
+def get_filtered_bookmarks_list(key_words_list):
     exploits_list = Exploit.search(searched_text)
     shellcodes_list = Shellcode.search(searched_text)
     results_list = exploits_list + shellcodes_list
