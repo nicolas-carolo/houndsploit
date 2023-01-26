@@ -22,12 +22,14 @@ from HoundSploit.searcher.utils.constants import BASE_DIR, TEMPLATE_DIR, STATIC_
 from HoundSploit.server.requests.details import get_exploit_from_params, get_shellcode_from_params
 from HoundSploit.server.requests.search_engine import get_searched_text, is_previous_page_bookmarks
 from HoundSploit.server.requests.suggestions import get_searched_text_suggestion, get_search_suggestion, get_suggestion_autoreplacement_flag
+from HoundSploit.server.requests.bookmarks import get_bookmarks_request_params
 from HoundSploit.server.responses.details import render_vulnerability_details
 from HoundSploit.server.responses.error_page import render_error_page
 from HoundSploit.server.responses.settings import render_settings
 from HoundSploit.server.responses.suggestions import render_suggestions
 from HoundSploit.searcher.engine.updates import install_updates, check_db_changes,check_software_changes, check_no_updates
-from HoundSploit.searcher.engine.bookmarks import new_bookmark, is_bookmarked, remove_bookmark, get_bookmarks_list
+from HoundSploit.searcher.engine.bookmarks import new_bookmark, is_bookmarked, remove_bookmark,\
+    get_bookmarks_list, get_filtered_bookmarks_list
 from HoundSploit.searcher.engine.suggestions import new_suggestion
 
 def request_search_results():
@@ -354,35 +356,16 @@ def request_delete_suggestion():
 
 
 def request_bookmarks_manager():
-    searched_text = ""
-    bookmarks_list = get_bookmarks_list()
     key_words_list = []
+    searched_text, current_bookmarks_page = get_bookmarks_request_params(request)
 
-    if request.method == 'POST':
-        searched_text = request.form['searched-text']
-        current_bookmarks_page = int(request.form['hid-b-page'])
+    if searched_text == "":
+        bookmarks_list = get_bookmarks_list()
     else:
-        current_bookmarks_page = 1
-        searched_text = request.args.get('searched', None)
-    
-    if searched_text is None:
-        searched_text = ""
-    
-
-    if searched_text != "":
         key_words_list = (str(searched_text).upper()).split()
-        exploits_list = Exploit.search(searched_text)
-        shellcodes_list = Shellcode.search(searched_text)
-        results_list = exploits_list + shellcodes_list
-        filtered_bookmarks_list = []
-        for result in results_list:
-            for bookmark in bookmarks_list:
-                if result.description == bookmark.description:
-                    filtered_bookmarks_list.append(bookmark)
-        bookmarks_list = filtered_bookmarks_list
-
-
+        bookmarks_list = get_filtered_bookmarks_list(key_words_list)
     n_bookmarks = len(bookmarks_list)
+
     latest_bookmarks_page = get_n_needed_pages_for_showing_results(n_bookmarks)
 
     if current_bookmarks_page < 1:

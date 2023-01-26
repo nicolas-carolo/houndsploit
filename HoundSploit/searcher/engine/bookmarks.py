@@ -83,3 +83,17 @@ def get_bookmarks_list():
         if bookmark_item is not None:
             bookmarks_list.append(bookmark_item)
     return bookmarks_list
+
+
+def get_filtered_bookmarks_list(searched_text):
+    key_words_list = []
+    key_words_list = (str(searched_text).upper()).split()
+    exploits_list = Exploit.search(searched_text)
+    shellcodes_list = Shellcode.search(searched_text)
+    results_list = exploits_list + shellcodes_list
+    filtered_bookmarks_list = []
+    for result in results_list:
+        for bookmark in bookmarks_list:
+            if result.description == bookmark.description:
+                filtered_bookmarks_list.append(bookmark)
+    return filtered_bookmarks_list
