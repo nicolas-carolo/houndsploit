@@ -8,8 +8,7 @@ from flask import Flask, render_template, request
 from HoundSploit.searcher.utils.searcher import get_vulnerability_filters
 from HoundSploit.searcher.engine.keywords_highlighter import highlight_keywords_in_description, highlight_keywords_in_file, \
     highlight_keywords_in_port
-from HoundSploit.searcher.engine.suggestions import substitute_with_suggestions, propose_suggestions, get_suggestions_list,\
-    new_suggestion, remove_suggestion
+from HoundSploit.searcher.engine.suggestions import get_suggestions_list
 from HoundSploit.searcher.utils.searcher import get_n_needed_pages_for_showing_results
 from HoundSploit.searcher.engine.csv2sqlite import create_db
 from HoundSploit.searcher.engine.sorter import sort_results
@@ -20,7 +19,8 @@ from HoundSploit.searcher.utils.file import check_file_existence, download_vulne
 from HoundSploit.searcher.utils.constants import BASE_DIR, TEMPLATE_DIR, STATIC_DIR, N_RESULTS_FOR_PAGE, DEFAULT_SUGGESTIONS
 
 from HoundSploit.server.requests.details import get_exploit_from_params, get_shellcode_from_params
-from HoundSploit.server.requests.search_engine import get_searched_text, is_previous_page_bookmarks
+from HoundSploit.server.requests.search_engine import get_searched_text, is_previous_page_bookmarks, get_current_exploits_page,\
+    get_current_shellcodes_page, get_current_results_view, get_sorting_type
 from HoundSploit.server.requests.suggestions import get_searched_text_suggestion, get_search_suggestion, get_suggestion_autoreplacement_flag
 from HoundSploit.server.requests.bookmarks import get_bookmarks_request_params
 from HoundSploit.server.responses.details import render_vulnerability_details
@@ -28,86 +28,26 @@ from HoundSploit.server.responses.error_page import render_error_page
 from HoundSploit.server.responses.settings import render_settings
 from HoundSploit.server.responses.suggestions import render_suggestions
 from HoundSploit.server.responses.bookmarks import render_bookmarks
+from HoundSploit.server.responses.search_engine import render_home_page, render_search_results
 from HoundSploit.searcher.engine.updates import install_updates, check_db_changes,check_software_changes, check_no_updates
 from HoundSploit.searcher.engine.bookmarks import new_bookmark, is_bookmarked, remove_bookmark
-from HoundSploit.searcher.engine.suggestions import new_suggestion
+from HoundSploit.searcher.engine.suggestions import new_suggestion, remove_suggestion
+
 
 def request_search_results():
-    if request.method == 'POST':
-        current_exploits_page = request.form['hid-e-page']
-        current_view = request.form['current-view']
-        try:
-            current_exploits_page = int(current_exploits_page)
-        except ValueError:
-            current_exploits_page = 1
-
-        current_shellcodes_page = request.form['hid-s-page']
-        current_view = request.form['current-view']
-        try:
-            current_shellcodes_page = int(current_shellcodes_page)
-        except ValueError:
-            current_shellcodes_page = 1
-
-        sorting_type = request.form['sorting-type']
-
-        searched_text = request.form['searched-text']
-        searched_text = substitute_with_suggestions(searched_text)
-        suggested_search_text = propose_suggestions(searched_text)
-        if str(searched_text).isspace() or searched_text == "":
-            return render_template('home.html', current_exploits_page=1, current_shellcodes_page=1, sorting_type="Most recent")
-        key_words_list = (str(searched_text).upper()).split()
-        
-        exploits_list = Exploit.search(searched_text)
-        exploits_list = sort_results(exploits_list, sorting_type)
-        n_exploits = len(exploits_list)
-
-        latest_exploits_page = get_n_needed_pages_for_showing_results(n_exploits)
-        if current_exploits_page < 1:
-            current_exploits_page = 1
-            index_first_result = 0
-        elif current_exploits_page > latest_exploits_page:
-            current_exploits_page = latest_exploits_page
-            index_first_result = (int(current_exploits_page) - 1) * N_RESULTS_FOR_PAGE
-        else:
-            index_first_result = (int(current_exploits_page) - 1) * N_RESULTS_FOR_PAGE
-        index_last_result = index_first_result + N_RESULTS_FOR_PAGE
-        exploits_list = exploits_list[index_first_result:index_last_result]
-        for result in exploits_list:
-            if result.port is None:
-                result.port = ''
-
-
-        shellcodes_list = Shellcode.search(searched_text)
-        shellcodes_list = sort_results(shellcodes_list, sorting_type)
-        n_shellcodes = len(shellcodes_list)
-
-        latest_shellcodes_page = get_n_needed_pages_for_showing_results(n_shellcodes)
-        if current_shellcodes_page < 1:
-            current_shellcodes_page = 1
-            index_first_result = 0
-        elif current_shellcodes_page > latest_shellcodes_page:
-            current_shellcodes_page = latest_shellcodes_page
-            index_first_result = (int(current_shellcodes_page) - 1) * N_RESULTS_FOR_PAGE
-        else:
-            index_first_result = (int(current_shellcodes_page) - 1) * N_RESULTS_FOR_PAGE
-        index_last_result = index_first_result + N_RESULTS_FOR_PAGE
-        shellcodes_list = shellcodes_list[index_first_result:index_last_result]
-
-        if str(searched_text).isnumeric():
-            exploits_list = highlight_keywords_in_file(key_words_list, exploits_list)
-            shellcodes_list = highlight_keywords_in_file(key_words_list, shellcodes_list)
-            exploits_list = highlight_keywords_in_port(key_words_list, exploits_list)
-        exploits_list = highlight_keywords_in_description(key_words_list, exploits_list)
-        shellcodes_list = highlight_keywords_in_description(key_words_list, shellcodes_list)
-        return render_template('results_table.html', searched_item=searched_text,
-                               exploits_list=exploits_list, shellcodes_list=shellcodes_list,
-                               searched_text=searched_text, suggested_search_text=suggested_search_text,
-                               n_exploits=n_exploits, current_exploits_page=current_exploits_page,
-                               latest_exploits_page=latest_exploits_page, current_view=current_view,
-                               n_shellcodes=n_shellcodes, current_shellcodes_page=current_shellcodes_page,
-                               latest_shellcodes_page=latest_shellcodes_page, sorting_type=sorting_type)
+    searched_text = get_searched_text(request)
+    if str(searched_text).isspace() or searched_text == "":
+        return render_home_page()
     else:
-        return render_template('home.html', current_exploits_page=1, current_shellcodes_page=1, sorting_type="Most recent")
+        search_params = {
+            'current_exploits_page': get_current_exploits_page(request),
+            'current_shellcodes_page': get_current_shellcodes_page(request),
+            'current_view': get_current_results_view(request),
+            'sorting_type': get_sorting_type(request)
+        }
+        return render_search_results(searched_text, search_params)
+        
+    
 
 
 def request_advanced_search_results():
@@ -170,12 +110,12 @@ def request_advanced_search_results():
         exploits_list = sort_results(exploits_list, sorting_type)
         n_exploits = len(exploits_list)
 
-        latest_exploits_page = get_n_needed_pages_for_showing_results(n_exploits)
+        last_exploits_page = get_n_needed_pages_for_showing_results(n_exploits)
         if current_exploits_page < 1:
             current_exploits_page = 1
             index_first_result = 0
-        elif current_exploits_page > latest_exploits_page:
-            current_exploits_page = latest_exploits_page
+        elif current_exploits_page > last_exploits_page:
+            current_exploits_page = last_exploits_page
             index_first_result = (int(current_exploits_page) - 1) * N_RESULTS_FOR_PAGE
         else:
             index_first_result = (int(current_exploits_page) - 1) * N_RESULTS_FOR_PAGE
@@ -190,12 +130,12 @@ def request_advanced_search_results():
         shellcodes_list = sort_results(shellcodes_list, sorting_type)
         n_shellcodes = len(shellcodes_list)
 
-        latest_shellcodes_page = get_n_needed_pages_for_showing_results(n_shellcodes)
+        last_shellcodes_page = get_n_needed_pages_for_showing_results(n_shellcodes)
         if current_shellcodes_page < 1:
             current_shellcodes_page = 1
             index_first_result = 0
-        elif current_shellcodes_page > latest_shellcodes_page:
-            current_shellcodes_page = latest_shellcodes_page
+        elif current_shellcodes_page > last_shellcodes_page:
+            current_shellcodes_page = last_shellcodes_page
             index_first_result = (int(current_shellcodes_page) - 1) * N_RESULTS_FOR_PAGE
         else:
             index_first_result = (int(current_shellcodes_page) - 1) * N_RESULTS_FOR_PAGE
@@ -226,11 +166,11 @@ def request_advanced_search_results():
                             date_alert=date_alert,
                             n_exploits=n_exploits,
                             current_exploits_page=current_exploits_page,
-                            latest_exploits_page=latest_exploits_page,
+                            last_exploits_page=last_exploits_page,
                             current_view=current_view,
                             n_shellcodes=n_shellcodes,
                             current_shellcodes_page=current_shellcodes_page,
-                            latest_shellcodes_page=latest_shellcodes_page,
+                            last_shellcodes_page=last_shellcodes_page,
                             sorting_type=sorting_type
                             )
     else:

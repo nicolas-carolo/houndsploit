@@ -97,11 +97,3 @@ def get_filtered_bookmarks_list(searched_text):
             if result.description == bookmark.description:
                 filtered_bookmarks_list.append(bookmark)
     return filtered_bookmarks_list
-
-
-def get_index_first_bookmark_result(current_bookmarks_page):
-    return (int(current_bookmarks_page) - 1) * N_RESULTS_FOR_PAGE
-
-
-def get_index_last_bookmark_result(index_first_result):
-    return index_first_result + N_RESULTS_FOR_PAGE

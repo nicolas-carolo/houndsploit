@@ -40,3 +40,11 @@ def get_vulnerability_platforms():
     platforms_list = remove_list_duplicates(exploit_platforms_list + shellcode_platforms_list)
     platforms_list = sorted(platforms_list)
     return platforms_list
+
+
+def get_index_first_result(current_bookmarks_page):
+    return (int(current_bookmarks_page) - 1) * N_RESULTS_FOR_PAGE
+
+
+def get_index_last_result(index_first_result):
+    return index_first_result + N_RESULTS_FOR_PAGE

@@ -3,8 +3,8 @@ function makeSuggestedSearch(keywords) {
     document.getElementById("searcher-form").submit();
 }
 
-function nextExploitsPage(latest_exploits_page) {
-    if (parseInt(document.getElementById("exploit-page-number").value) < parseInt(latest_exploits_page)){
+function nextExploitsPage(last_exploits_page) {
+    if (parseInt(document.getElementById("exploit-page-number").value) < parseInt(last_exploits_page)){
         document.getElementById("current-view").value = "exploits";
         document.getElementById("exploit-page-number").value = parseInt(document.getElementById("exploit-page-number").value) + 1;
         document.getElementById("hid-e-page").value = document.getElementById("exploit-page-number").value;
@@ -34,14 +34,14 @@ function goFirstExploitsPage() {
     goExploitsPage()
 }
 
-function goLastExploitsPage(latest_exploits_page) {
+function goLastExploitsPage(last_exploits_page) {
     document.getElementById("current-view").value = "exploits";
-    document.getElementById("exploit-page-number").value = latest_exploits_page;
+    document.getElementById("exploit-page-number").value = last_exploits_page;
     goExploitsPage()
 }
 
-function nextShellcodesPage(latest_shellcodes_page) {
-    if (parseInt(document.getElementById("shellcode-page-number").value) < parseInt(latest_shellcodes_page)){
+function nextShellcodesPage(last_shellcodes_page) {
+    if (parseInt(document.getElementById("shellcode-page-number").value) < parseInt(last_shellcodes_page)){
         document.getElementById("current-view").value = "shellcodes";
         document.getElementById("shellcode-page-number").value = parseInt(document.getElementById("shellcode-page-number").value) + 1;
         document.getElementById("hid-s-page").value = document.getElementById("shellcode-page-number").value;
