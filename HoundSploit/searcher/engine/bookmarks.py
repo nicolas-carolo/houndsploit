@@ -5,6 +5,7 @@ from HoundSploit.searcher.db_manager.session_manager import start_session
 from HoundSploit.searcher.db_manager.result_set import queryset2list
 from HoundSploit.searcher.utils.csv import add_bookmark_to_csv, delete_bookmark_from_csv
 from HoundSploit.searcher.utils.file import check_file_existence
+from HoundSploit.searcher.utils.constants import N_RESULTS_FOR_PAGE
 from datetime import datetime
 
 
@@ -85,7 +86,8 @@ def get_bookmarks_list():
     return bookmarks_list
 
 
-def get_filtered_bookmarks_list(key_words_list):
+def get_filtered_bookmarks_list(searched_text):
+    bookmarks_list = get_bookmarks_list()
     exploits_list = Exploit.search(searched_text)
     shellcodes_list = Shellcode.search(searched_text)
     results_list = exploits_list + shellcodes_list
@@ -95,3 +97,11 @@ def get_filtered_bookmarks_list(key_words_list):
             if result.description == bookmark.description:
                 filtered_bookmarks_list.append(bookmark)
     return filtered_bookmarks_list
+
+
+def get_index_first_bookmark_result(current_bookmarks_page):
+    return (int(current_bookmarks_page) - 1) * N_RESULTS_FOR_PAGE
+
+
+def get_index_last_bookmark_result(index_first_result):
+    return index_first_result + N_RESULTS_FOR_PAGE

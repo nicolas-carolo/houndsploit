@@ -27,9 +27,9 @@ from HoundSploit.server.responses.details import render_vulnerability_details
 from HoundSploit.server.responses.error_page import render_error_page
 from HoundSploit.server.responses.settings import render_settings
 from HoundSploit.server.responses.suggestions import render_suggestions
+from HoundSploit.server.responses.bookmarks import render_bookmarks
 from HoundSploit.searcher.engine.updates import install_updates, check_db_changes,check_software_changes, check_no_updates
-from HoundSploit.searcher.engine.bookmarks import new_bookmark, is_bookmarked, remove_bookmark,\
-    get_bookmarks_list, get_filtered_bookmarks_list
+from HoundSploit.searcher.engine.bookmarks import new_bookmark, is_bookmarked, remove_bookmark
 from HoundSploit.searcher.engine.suggestions import new_suggestion
 
 def request_search_results():
@@ -356,31 +356,5 @@ def request_delete_suggestion():
 
 
 def request_bookmarks_manager():
-    key_words_list = []
     searched_text, current_bookmarks_page = get_bookmarks_request_params(request)
-
-    if searched_text == "":
-        bookmarks_list = get_bookmarks_list()
-    else:
-        key_words_list = (str(searched_text).upper()).split()
-        bookmarks_list = get_filtered_bookmarks_list(key_words_list)
-    n_bookmarks = len(bookmarks_list)
-
-    latest_bookmarks_page = get_n_needed_pages_for_showing_results(n_bookmarks)
-
-    if current_bookmarks_page < 1:
-        current_bookmarks_page = 1
-        index_first_result = 0
-    elif current_bookmarks_page > latest_bookmarks_page:
-        current_bookmarks_page = latest_bookmarks_page
-        index_first_result = (int(current_bookmarks_page) - 1) * N_RESULTS_FOR_PAGE
-    else:
-        index_first_result = (int(current_bookmarks_page) - 1) * N_RESULTS_FOR_PAGE
-    index_last_result = index_first_result + N_RESULTS_FOR_PAGE
-    bookmarks_list = bookmarks_list[index_first_result:index_last_result]
-    bookmarks_list = highlight_keywords_in_description(key_words_list, bookmarks_list)
-
-    return render_template('bookmarks.html', searched_text=searched_text,
-                            bookmarks_list=bookmarks_list,
-                            current_bookmarks_page=current_bookmarks_page,
-                            latest_bookmarks_page=latest_bookmarks_page)
+    return render_bookmarks(searched_text, current_bookmarks_page)
