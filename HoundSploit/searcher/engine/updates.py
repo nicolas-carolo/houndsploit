@@ -6,6 +6,7 @@ import time
 from datetime import datetime
 from HoundSploit.searcher.utils.constants import BASE_DIR, EXPLOITDB_PATH
 from HoundSploit.searcher.utils.file import check_file_existence
+from HoundSploit.searcher.engine.csv2sqlite import create_db
 
 
 INSTALLER_CMD = {
